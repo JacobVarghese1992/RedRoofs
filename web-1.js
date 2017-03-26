@@ -136,7 +136,7 @@ $('li.result-item').each(function(){
         for(bb of bedbaths) {
             var bed
             // console.log(bb)
-            var row = {'url':url, 'address':address,'bed':parseInt(bb.split("/")[0]),'bath':parseInt(bb.split("/")[1]),'rent':parseFloat(rent), 'image':img, 'amenities':[], 'latitude':"", 'longitude':""}
+            var row = {'url':url, 'address':address,'bed':parseInt(bb.split("/")[0]),'bath':parseInt(bb.split("/")[1]),'rent':parseFloat(rent), 'image':img, 'amenities':[], 'latitude':"", 'longitude':"", agency:"CAPT"}
 
             if(isNaN(row.bed))
                 return;
@@ -229,7 +229,7 @@ for(var i=1; i<3;i++){
         }
       });
       if(amenities.length==0){
-        amenities.push('Online Payments Available');
+        amenities.push('OPA');
       }
       
       var min=0;
@@ -242,7 +242,7 @@ for(var i=1; i<3;i++){
           continue;    
         if(isNaN(rent[i]))
           continue;
-        names.push({'url':url, 'address':address,'bed':bed[i],'bath':bath,'rent':rent[i], 'amenities':amenities}); 
+        names.push({'url':url, 'address':address,'bed':bed[i],'bath':bath,'rent':rent[i], 'amenities':amenities, 'latitude':"", 'longitude':"",agency:"APT"}); 
       }
        
   });
@@ -313,7 +313,7 @@ pool.getConnection(function(err, connection){
 
     for (var i=0;i<names.length;i++) {
         //Insert a record.
-        connection.query(insertListing,[i,names[i].address,names[i].image,names[i].bed,names[i].bath,names[i].rent,"USD",5,names[i].url,names[i].latitude,names[i].longitude,"CAPT"], function(err,res){
+        connection.query(insertListing,[i,names[i].address,names[i].image,names[i].bed,names[i].bath,names[i].rent,"USD",5,names[i].url,names[i].latitude,names[i].longitude,names[i].agency], function(err,res){
             if(err) throw err;
             else {
                 console.log('Listing '+i+' has been inserted');

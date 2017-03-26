@@ -99,7 +99,7 @@ for (var i = 0; i < names.length; i++) {
 
 console.log("Fetching listings 2.....");
 
-for (var i = 1; i < 3; i++) {
+for (var i = 1; i < 2; i++) {
     var source_url = 'https://www.apartments.com/philadelphia-pa/' + i + '/';
     var childArgs = [
         path.join(__dirname, 'phantomjs-script.js'), source_url
@@ -110,7 +110,9 @@ for (var i = 1; i < 3; i++) {
     var html = html_file.toString();
     var $ = cheerio.load(html);
 
+    var count = 0;
     $('div.placardContainer').children().each(function() {
+        count ++;
         var url = $(this).find('a.placardTitle').attr('href');
         if (url == null || url == '') {
             console.log(url)
@@ -118,10 +120,12 @@ for (var i = 1; i < 3; i++) {
         }
         var address = $(this).find('div.location').text().trim();
         var bed = get_bed($(this).find('span.unitLabel').text());
-        var bath = 2;
+        var bath = bed;
         var rent = $(this).find('span.altRentDisplay').last().text().replace("$", "").split(" - ");
-        for (var i = 0; i < rent.length; i++)
-            rent[i] = parseInt(rent[i].replace(",", ""))
+        for (var i = 0; i < rent.length; i++){
+            rent[i] = parseInt(rent[i].replace(",", ""));            
+        }
+
         var amenities = [];
         $(this).find('ul.amenities').children().each(function() {
             temp = get_amenities_code($(this).attr('title'))
@@ -132,8 +136,15 @@ for (var i = 1; i < 3; i++) {
         if (amenities.length == 0) {
             amenities.push('OPA');
         }
-        var img = $(this).find('div.item').attr('style');
-        console.log(img)
+        var img = $(this).find('div.item').attr('data-image');
+
+        // if(count <= 1) {
+
+        // }
+        if(img == "") {
+            var img = $(this).find('div.item').attr('style').replace("background-image: url(", "").replace(");", "");        
+        }
+        // console.log(img);
         var min = 0;
         if (rent.length < bed.length)
             min = rent.length
@@ -150,6 +161,7 @@ for (var i = 1; i < 3; i++) {
                 'bed': bed[i],
                 'bath': bath,
                 'rent': rent[i],
+                'image': img,
                 'amenities': amenities,
                 'latitude': "",
                 'longitude': "",

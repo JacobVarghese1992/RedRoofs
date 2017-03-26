@@ -65,6 +65,12 @@ function get_amenities_code(amenities) {
         case 'Off-street parking':
             return 'OFSP'
             break;
+        case 'Dogs':
+            return 'PETF'
+            break;
+        case 'Cats':
+            return 'PETF'
+            break;
         case 'Pet Friendly':
             return 'PETF'
             break;
@@ -73,7 +79,22 @@ function get_amenities_code(amenities) {
             break;
         case 'Fenced in Green Space':
             return 'FGS'
-            break;                      
+            break;
+        case 'Air Conditioning':
+            return 'AIRC'
+            break;
+        case 'Washer/Dryer':
+            return 'WAD'
+            break;
+        case 'Dishwasher':
+            return 'DIS'
+            break;
+        case 'Parking':
+            return 'OFSP'
+            break;
+        case 'Fitness Center':
+            return 'FITC'
+            break;            
         default:
             'XXXX';
             break;
@@ -159,7 +180,77 @@ for (var i=0;i<names.length;i++) {
   console.log("Fetched "+(i+1)+" amenities. Please wait for " + names.length);
 };
 
+/////////////////////////////////////////////////////////////////////////////////////////////////
+console.log("Fetching listings 2.....");
+function get_bed(s){
+  if(s==null)
+    return 
+  temp=s.split(" - ")
+  if (temp.length<2)
+    temp=s.split("-")
+  for (var i=0;i<temp.length;i++){
+    if(temp[i]=="Studio" || temp[i]=="Studio "){
+      temp[i]=1;
+    }
+    else {
+      temp[i]=parseInt(temp[i].split(" ")[0])
+    }
+  }
+  return temp
+}
+for(var i=1; i<3;i++){
+  var source_url='https://www.apartments.com/philadelphia-pa/'+i+'/';
+  var childArgs = [
+    path.join(__dirname, 'phantomjs-script.js'),source_url
+  ];
 
+  var html_full;
+  html_file = childProcess.execFileSync(binPath, childArgs);
+  var html = html_file.toString();
+  var $ = cheerio.load(html);
+
+  $('div.placardContainer').children().each(function(){
+      var url=$(this).find('a.placardTitle').attr('href');
+      if(url==null || url==''){
+        console.log(url)
+        return
+      }
+      var address=$(this).find('div.location').text().trim();
+      var bed=get_bed($(this).find('span.unitLabel').text());
+      var bath=2;
+      var rent= $(this).find('span.altRentDisplay').last().text().replace("$","").split(" - ");
+      for(var i=0;i<rent.length;i++)
+        rent[i]=parseInt(rent[i].replace(",",""))
+      var amenities = [];
+      $(this).find('ul.amenities').children().each(function(){
+        temp=get_amenities_code($(this).attr('title'))
+        if(temp!='XXXX'){
+          amenities.push(temp);
+        }
+      });
+      if(amenities.length==0){
+        amenities.push('Online Payments Available');
+      }
+      
+      var min=0;
+      if(rent.length<bed.length)
+        min=rent.length
+      else
+        min=bed.length
+      for(var i=0;i<min;i++){
+        if(isNaN(bed[i]))
+          continue;    
+        if(isNaN(rent[i]))
+          continue;
+        names.push({'url':url, 'address':address,'bed':bed[i],'bath':bath,'rent':rent[i], 'amenities':amenities}); 
+      }
+       
+  });
+}
+console.log();
+console.log(names);
+console.log("Total listings after 2 fetched = " + names.length);
+////////////////////////////////////////////////////////////////////////////
 
 console.log();
 console.log("Fetching latitude and logitude. Please wait ... ");

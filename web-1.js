@@ -231,7 +231,8 @@ for(var i=1; i<3;i++){
       if(amenities.length==0){
         amenities.push('OPA');
       }
-      
+      var img= $(this).find('div.item').attr('style');
+      console.log(img)
       var min=0;
       if(rent.length<bed.length)
         min=rent.length

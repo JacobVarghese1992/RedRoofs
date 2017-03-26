@@ -7,7 +7,8 @@ var app     = express();
 var html;
 
 
-allamenities = []
+allamenities = [];
+latlongs = [];
 names=[];
 console.log("Fetching listings .....");
 var path = require('path');
@@ -115,7 +116,7 @@ $('li.result-item').each(function(){
         for(bb of bedbaths) {
             var bed
             // console.log(bb)
-            var row = {'url':url, 'address':address,'bed':parseInt(bb.split("/")[0]),'bath':parseInt(bb.split("/")[1]),'rent':parseFloat(rent), 'image':img, 'amenities':[], 'latitude':"", 'longitude':""}
+            var row = {'url':url, 'address':address,'bed':parseInt(bb.split("/")[0]),'bath':parseInt(bb.split("/")[1]),'rent':parseFloat(rent), 'image':img, 'amenities':[], 'latitude':"", 'longitude':"", "safety_rating":""}
 
             if(isNaN(row.bed))
                 return;
@@ -167,13 +168,23 @@ console.log();
 
 var url1 = "https://maps.googleapis.com/maps/api/geocode/json?address=";
 var url2 = "&key=AIzaSyA9mH4J_k2jjjGxtEHbSIebANgaxKHcMSs";
+var names_tmp = [];
 for (var i=0;i<names.length;i++) {
     var res = syncrequest('GET', url1+names[i].address+url2);
-    names[i].latitude = JSON.parse(res.getBody('utf8'))['results'][0]['geometry']['location']['lat'];
-    names[i].longitude = JSON.parse(res.getBody('utf8'))['results'][0]['geometry']['location']['lng'];
-    names[i].address = JSON.parse(res.getBody('utf8'))['results'][0]["formatted_address"];
+    if (JSON.parse(res.getBody('utf8'))['results'][0] == null) {
+    
+    } else {    
+        names[i].latitude = JSON.parse(res.getBody('utf8'))['results'][0]['geometry']['location']['lat'];
+        names[i].longitude = JSON.parse(res.getBody('utf8'))['results'][0]['geometry']['location']['lng'];
+        names[i].address = JSON.parse(res.getBody('utf8'))['results'][0]["formatted_address"];
+        var rowlatlon = {'latitude':names[i].latitude, 'longitude':names[i].longitude};
+        latlongs.push(rowlatlon);
+        names_tmp.push(names[i]);
+    }
 
-}  
+};
+
+names = names_tmp;  
 
 
 
@@ -181,13 +192,106 @@ var allamenities = allamenities.filter(function(elem, index, self) {
     return index == self.indexOf(elem);
 })
 
+// var latlongs = latlongs.filter(function(elem, index, self) {
+//     return index == self.indexOf(elem);
+// })
+
+
+
+var lls = latlongs;
+latlongs = lls.filter(function(item, pos) {
+    return lls.indexOf(item) == pos;
+})
+
 // console.log(fruits_without_duplicates);
 
 // console.log(names);  
 
-  
+
+var allCrimeData = [];
+var smallest = 99999999999999;
+var largest = 0;
+
+var getAllCrimes = function(db, callback) {
+
+    collection = db.collection('crimeStats');
+    collection.find({}).toArray(function(err, results){
+        allCrimeData = results;
+        getsafetyrating();
+        // console.log(allCrimeData); // output all records
+    });
+
+}    
 
 
+var MongoClient = require('mongodb').MongoClient
+  , assert = require('assert');
+// Connection URL
+// var url = 'mongodb://localhost:27017/myproject';
+var url = "mongodb://redroofs:redroofs@redroofs-shard-00-00-2lh9v.mongodb.net:27017,redroofs-shard-00-01-2lh9v.mongodb.net:27017,redroofs-shard-00-02-2lh9v.mongodb.net:27017/redroofsdb?ssl=true&replicaSet=redroofs-shard-0&authSource=admin"
+// Use connect method to connect to the server
+MongoClient.connect(url, function(err, db) {
+  assert.equal(null, err);
+  console.log("Connected successfully to server");
+
+  getAllCrimes(db, function() {
+    db.close();
+  });
+});
+
+
+
+
+var getsafetyrating = function(){
+    for (var i=0;i<names.length;i++) {
+        var sum = 0;
+        for(var j =0 ; j < allCrimeData.length; j++) {
+            var distance = calcCrow(parseFloat(allCrimeData[j].longitude), parseFloat(allCrimeData[j].latitude), parseFloat(names[i].latitude), parseFloat(names[i].longitude));
+            sum = sum + allCrimeData[j].crime_ucr / (distance*distance);
+        }
+        names[i].safety_rating = Math.floor(sum);
+        
+        if(smallest > names[i].safety_rating)
+            smallest = names[i].safety_rating;
+
+        if(largest < names[i].safety_rating)
+            largest = names[i].safety_rating;
+
+        console.log("safety_rating of " + i);
+
+
+    
+    }   
+
+    // console.log(names); 
+    updatelistingsDB();
+
+
+}
+
+
+function calcCrow(lat1, lon1, lat2, lon2) 
+{
+    var R = 6371; // km
+    var dLat = toRad(lat2-lat1);
+    var dLon = toRad(lon2-lon1);
+    var lat1 = toRad(lat1);
+    var lat2 = toRad(lat2);
+
+    var a = Math.sin(dLat/2) * Math.sin(dLat/2) +
+    Math.sin(dLon/2) * Math.sin(dLon/2) * Math.cos(lat1) * Math.cos(lat2); 
+    var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)); 
+    var d = R * c;
+    return d;
+}
+
+    // Converts numeric degrees to radians
+function toRad(Value) 
+{
+    return Value * Math.PI / 180;
+}
+
+function updatelistingsDB() {
 var mysql = require('mysql');
 
 var pool =  mysql.createPool({
@@ -222,7 +326,8 @@ pool.getConnection(function(err, connection){
 
     for (var i=0;i<names.length;i++) {
         //Insert a record.
-        connection.query(insertListing,[i,names[i].address,names[i].image,names[i].bed,names[i].bath,names[i].rent,"USD",5,names[i].url,names[i].latitude,names[i].longitude,"CAPT"], function(err,res){
+        var safety = Math.ceil(((names[i].safety_rating - smallest)/(largest-smallest))*5)
+        connection.query(insertListing,[i,names[i].address,names[i].image,names[i].bed,names[i].bath,names[i].rent,"USD",safety,names[i].url,names[i].latitude,names[i].longitude,"CAPT"], function(err,res){
             if(err) throw err;
             else {
                 console.log('Listing '+i+' has been inserted');
@@ -251,3 +356,4 @@ pool.getConnection(function(err, connection){
     // connection.release();//release the connection
 
 });
+}

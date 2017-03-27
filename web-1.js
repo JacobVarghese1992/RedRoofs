@@ -49,7 +49,8 @@ $('li.result-item').each(function() {
                 'amenities': [],
                 'latitude': "",
                 'longitude': "",
-                "safety_rating": ""
+                "safety_rating": "",
+                "agency":"CAPT"
             }
 
             if (isNaN(row.bed))
@@ -165,7 +166,7 @@ for (var i = 1; i < 2; i++) {
                 'amenities': amenities,
                 'latitude': "",
                 'longitude': "",
-                agency: "APT"
+                'agency': "APT"
             });
         }
 
@@ -321,7 +322,7 @@ function updatelistingsDB() {
         for (var i = 0; i < names.length; i++) {
             //Insert a record.
             var safety = Math.ceil(((names[i].safety_rating - smallest) / (largest - smallest)) * 5)
-            connection.query(insertListing, [i, names[i].address, names[i].image, names[i].bed, names[i].bath, names[i].rent, "USD", safety, names[i].url, names[i].latitude, names[i].longitude, "CAPT"], function(err, res) {
+            connection.query(insertListing, [i, names[i].address, names[i].image, names[i].bed, names[i].bath, names[i].rent, "USD", safety, names[i].url, names[i].latitude, names[i].longitude, names[i].agency], function(err, res) {
                 if (err) throw err;
                 else {
                     console.log('Listing ' + i + ' has been inserted');

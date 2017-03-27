@@ -121,7 +121,6 @@ for (var i = 1; i < 2; i++) {
         }
         var address = $(this).find('div.location').text().trim();
         var bed = get_bed($(this).find('span.unitLabel').text());
-        var bath = bed;
         var rent = $(this).find('span.altRentDisplay').last().text().replace("$", "").split(" - ");
         for (var i = 0; i < rent.length; i++){
             rent[i] = parseInt(rent[i].replace(",", ""));            
@@ -160,7 +159,7 @@ for (var i = 1; i < 2; i++) {
                 'url': url,
                 'address': address,
                 'bed': bed[i],
-                'bath': bath,
+                'bath': bed[i],
                 'rent': rent[i],
                 'image': img,
                 'amenities': amenities,
@@ -405,7 +404,7 @@ function get_amenities_code(amenities) {
             return 'OFSP'
             break;
         case 'Dogs':
-            return 'PETF'
+            return 'DOGS'
             break;
         case 'Cats':
             return 'PETF'

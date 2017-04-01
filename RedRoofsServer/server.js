@@ -81,5 +81,5 @@ app.get('/allcities', function(req, res) {
 
 });
 
-app.listen(4000);
-console.log('Listening on http://localhost:4000');
+app.listen(3000);
+console.log('Listening on 3000');

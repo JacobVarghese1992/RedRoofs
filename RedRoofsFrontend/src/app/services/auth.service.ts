@@ -9,7 +9,13 @@ declare var Auth0Lock: any;
 @Injectable()
 export class Auth {
   // Configure Auth0
-  lock = new Auth0Lock('AfYbEtejX21YS51c8zZxgDDyvFJqlaVw', 'jacobv1992.auth0.com', {});
+  options = {
+    closable: false,
+    auth: {
+      sso: true
+    }
+  };
+  lock = new Auth0Lock('AfYbEtejX21YS51c8zZxgDDyvFJqlaVw', 'jacobv1992.auth0.com', this.options);
 
   constructor() {
     // Add callback for lock `authenticated` event
@@ -32,6 +38,7 @@ export class Auth {
   public authenticated() {
     // Check if there's an unexpired JWT
     // This searches for an item in localStorage with key == 'id_token'
+    // console.log("Authenticcatd" + tokenNotExpired());
     return tokenNotExpired();
   }
 
@@ -39,5 +46,6 @@ export class Auth {
     // Remove token from localStorage
     localStorage.removeItem('id_token');
     localStorage.removeItem('profile');
+    localStorage.removeItem('lockopen');
   }
 }

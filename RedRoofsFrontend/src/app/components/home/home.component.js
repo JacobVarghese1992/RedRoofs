@@ -13,7 +13,15 @@ var auth_service_1 = require("../../services/auth.service");
 var HomeComponent = (function () {
     function HomeComponent(auth) {
         this.auth = auth;
+        this.authtmp = auth;
     }
+    HomeComponent.prototype.ngAfterViewChecked = function () {
+        console.log("Checking Auth  " + this.authtmp.authenticated());
+        if ((!this.authtmp.authenticated()) && (localStorage.getItem("lockopen") != "true")) {
+            localStorage.setItem('lockopen', "true");
+            this.authtmp.login();
+        }
+    };
     return HomeComponent;
 }());
 HomeComponent = __decorate([

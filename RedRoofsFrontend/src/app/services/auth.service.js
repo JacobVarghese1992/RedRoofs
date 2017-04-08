@@ -15,7 +15,13 @@ var Auth = (function () {
     function Auth() {
         var _this = this;
         // Configure Auth0
-        this.lock = new Auth0Lock('AfYbEtejX21YS51c8zZxgDDyvFJqlaVw', 'jacobv1992.auth0.com', {});
+        this.options = {
+            closable: false,
+            auth: {
+                sso: true
+            }
+        };
+        this.lock = new Auth0Lock('AfYbEtejX21YS51c8zZxgDDyvFJqlaVw', 'jacobv1992.auth0.com', this.options);
         // Add callback for lock `authenticated` event
         this.lock.on("authenticated", function (authResult) {
             _this.lock.getProfile(authResult.idToken, function (error, profile) {
@@ -34,12 +40,14 @@ var Auth = (function () {
     Auth.prototype.authenticated = function () {
         // Check if there's an unexpired JWT
         // This searches for an item in localStorage with key == 'id_token'
+        // console.log("Authenticcatd" + tokenNotExpired());
         return angular2_jwt_1.tokenNotExpired();
     };
     Auth.prototype.logout = function () {
         // Remove token from localStorage
         localStorage.removeItem('id_token');
         localStorage.removeItem('profile');
+        localStorage.removeItem('lockopen');
     };
     return Auth;
 }());

@@ -8,7 +8,18 @@ import {Auth} from '../../services/auth.service';
 })
 
 export class HomeComponent  {
+  authtmp :Auth;
 	constructor(private auth:Auth) {
-		
+    this.authtmp = auth;
+    
 	}
+
+  public ngAfterViewChecked(): void {
+    console.log("Checking Auth  " + this.authtmp.authenticated())
+
+    if ((!this.authtmp.authenticated()) && (localStorage.getItem("lockopen") != "true") ) {
+      localStorage.setItem('lockopen',"true");
+      this.authtmp.login();
+    }
+  } 
 }

@@ -1,0 +1,38 @@
+body, html {
+    height: 100%;
+    margin: 0;
+    background-color: #f04b4f;
+}
+
+.bg {
+    /* The image used */
+    background-image: url("http://pivotandpilot.com/wp-content/uploads/2015/10/5.MoveIn.gif");
+
+    /* Full height */
+    height: 90vh;
+    width: 95vh; 
+
+    /* Center and scale the image nicely */
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    /*margin-left: 50%;*/
+}
+
+.btn-primary {
+    background-color: #f04b4f;
+    color: white;
+}
+
+.btn-secondary {
+    background-color: #b1e3da;
+    color: #112542;
+}
+
+.panel-box {
+   background-color: #ffeee0
+}
+
+.dummy-height {
+    height: 10vh;
+}

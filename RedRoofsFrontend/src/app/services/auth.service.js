@@ -19,6 +19,11 @@ var Auth = (function () {
             closable: false,
             auth: {
                 sso: true
+            },
+            theme: {
+                // displayName: "RedRoofs",
+                primaryColor: "#f04b4f",
+                logo: "/logo.png"
             }
         };
         this.lock = new Auth0Lock('AfYbEtejX21YS51c8zZxgDDyvFJqlaVw', 'jacobv1992.auth0.com', this.options);

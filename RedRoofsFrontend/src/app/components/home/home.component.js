@@ -10,17 +10,33 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 var core_1 = require("@angular/core");
 var auth_service_1 = require("../../services/auth.service");
+var listings_service_1 = require("../../services/listings.service");
 var HomeComponent = (function () {
-    function HomeComponent(auth) {
+    function HomeComponent(auth, listingsService) {
         this.auth = auth;
+        this.listingsService = listingsService;
+        this.states = [
+            { value: 'PA', display: 'Pennsylvania' },
+            { value: 'NY', display: 'New York' }
+        ];
+        this.cities = [
+            { value: 'PA', display: 'Pennsylvania' },
+            { value: 'NY', display: 'New York' }
+        ];
         this.authtmp = auth;
+        this.listingsService.getAllStates().subscribe(function (states) {
+            console.log(states);
+        });
     }
     HomeComponent.prototype.ngAfterViewChecked = function () {
-        console.log("Checking Auth  " + this.authtmp.authenticated());
+        // console.log("Checking Auth  " + this.authtmp.authenticated())
         if ((!this.authtmp.authenticated()) && (localStorage.getItem("lockopen") != "true")) {
             localStorage.setItem('lockopen', "true");
             this.authtmp.login();
         }
+    };
+    HomeComponent.prototype.goToListings = function () {
+        // console.log(f);
     };
     return HomeComponent;
 }());
@@ -29,8 +45,9 @@ HomeComponent = __decorate([
         moduleId: module.id,
         selector: 'home',
         templateUrl: 'home.component.html',
+        providers: [listings_service_1.ListingsService]
     }),
-    __metadata("design:paramtypes", [auth_service_1.Auth])
+    __metadata("design:paramtypes", [auth_service_1.Auth, listings_service_1.ListingsService])
 ], HomeComponent);
 exports.HomeComponent = HomeComponent;
 //# sourceMappingURL=home.component.js.map

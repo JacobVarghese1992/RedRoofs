@@ -156,7 +156,7 @@ app.get('/amenities/:listing_id', function(req, res) {
 
 app.get('/allstates', function(req, res) {
 
-    var query = "SELECT DISTINCT state FROM StateCity";
+    var query = "SELECT DISTINCT state, state_text  FROM StateCity";
   	var table = [];
   	connection.query(query,table, function(err,result){
     	if(err) throw err;
@@ -169,7 +169,7 @@ app.get('/allstates', function(req, res) {
 
 app.get('/allcities', function(req, res) {
 
-    var query = "SELECT DISTINCT city FROM StateCity";
+    var query = "SELECT DISTINCT city, city_text FROM StateCity";
   	var table = [];
   	connection.query(query,table, function(err,result){
     	if(err) throw err;

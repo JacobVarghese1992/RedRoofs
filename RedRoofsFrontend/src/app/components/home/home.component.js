@@ -13,30 +13,39 @@ var auth_service_1 = require("../../services/auth.service");
 var listings_service_1 = require("../../services/listings.service");
 var HomeComponent = (function () {
     function HomeComponent(auth, listingsService) {
+        var _this = this;
         this.auth = auth;
         this.listingsService = listingsService;
-        this.states = [
-            { value: 'PA', display: 'Pennsylvania' },
-            { value: 'NY', display: 'New York' }
-        ];
-        this.cities = [
-            { value: 'PA', display: 'Pennsylvania' },
-            { value: 'NY', display: 'New York' }
-        ];
         this.authtmp = auth;
         this.listingsService.getAllStates().subscribe(function (states) {
-            console.log(states);
+            // console.log(states);
+            _this.states = states;
+            _this.getStateFromDropDown(_this.states[0].state);
+        });
+        this.listingsService.getAllCities().subscribe(function (cities) {
+            // console.log(cities);
+            _this.cities = cities;
+            _this.getCityFromDropDown(_this.cities[0].city);
         });
     }
     HomeComponent.prototype.ngAfterViewChecked = function () {
         // console.log("Checking Auth  " + this.authtmp.authenticated())
         if ((!this.authtmp.authenticated()) && (localStorage.getItem("lockopen") != "true")) {
+            // localStorage.id_token
             localStorage.setItem('lockopen', "true");
             this.authtmp.login();
         }
     };
     HomeComponent.prototype.goToListings = function () {
         // console.log(f);
+    };
+    HomeComponent.prototype.getStateFromDropDown = function (state) {
+        console.log("State Set as : " + state);
+        localStorage.setItem('user_state', state);
+    };
+    HomeComponent.prototype.getCityFromDropDown = function (city) {
+        console.log("City Set as : " + city);
+        localStorage.setItem('user_city', city);
     };
     return HomeComponent;
 }());

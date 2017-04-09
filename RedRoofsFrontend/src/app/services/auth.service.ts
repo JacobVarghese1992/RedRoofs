@@ -15,9 +15,9 @@ export class Auth {
       sso: true
     },
     theme: {
-      // displayName: "RedRoofs",
+      logo: "/logo.png",
       primaryColor: "#f04b4f",
-      logo: "/logo.png"
+      title: "RedRoofs"
     } 
   };
   lock = new Auth0Lock('AfYbEtejX21YS51c8zZxgDDyvFJqlaVw', 'jacobv1992.auth0.com', this.options);
@@ -31,6 +31,8 @@ export class Auth {
         }
         localStorage.setItem('id_token', authResult.idToken);
         localStorage.setItem('profile', JSON.stringify(profile));
+        // localStorage.setItem('lockopen',"true");
+        
       });
     });
   }

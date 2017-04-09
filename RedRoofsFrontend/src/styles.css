@@ -36,3 +36,20 @@ body, html {
 .dummy-height {
     height: 10vh;
 }
+
+.auth0-lock-name {
+    visibility: hidden;
+	position: relative;
+}
+
+.auth0-lock-name:after {
+	visibility: visible;
+	position: absolute;
+	top: 0;
+	left: 32%;
+	content: "RedRoofs";
+}
+
+body {
+    font-family: sans-serif;
+}    

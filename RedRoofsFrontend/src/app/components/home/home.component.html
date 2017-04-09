@@ -1,0 +1,65 @@
+<!--<h1> Welcome </h1>
+<div class="alert alert-danger" *ngIf="!auth.authenticated()"> You are not logged in</div>
+<div class="alert alert-success" *ngIf="auth.authenticated()"> You are logged in</div>-->
+<!--<video width="720" height="405" controls  poster="http://www.webestools.com/page/media/videoTag/BigBuckBunny.png">
+	<source src="http://www.webestools.com/page/media/videoTag/BigBuckBunny.mp4" type="video/mp4">
+	<source src="http://www.webestools.com/page/media/videoTag/BigBuckBunny.ogg" type="video/ogg">
+	<source src="http://www.webestools.com/page/media/videoTag/BigBuckBunny.webm" type="video/webm">
+	Your browser does not support the video tag or the file format of this video. <a href="http://www.webestools.com/">http://www.webestools.com/</a>
+</video>-->
+
+<!--<div class="home-page"></div>-->
+
+<!--<img src="http://pivotandpilot.com/wp-content/uploads/2015/10/5.MoveIn.gif" alt="Smiley face" height="100%" width="100%">-->
+<div class="row">
+   
+   <div class="col-sm-2"></div>
+   
+   <div class="col-sm-2">
+      
+	  <form #f="ngForm" novalidate>
+		 <div class="panel panel-default panel-box">
+    	 <div class="panel-body">
+
+         <div class="form-group" id="homepagebox">
+			 
+            <!-- We'll add our form controls here -->
+            <div>
+               <label>State</label><br/>
+               <select name="state" class="form-control">
+               <option *ngFor="let state of states" [value]="state.value">  
+               {{state.display}}
+               </option>
+               </select>
+            </div>
+
+            <br/>
+            
+			<div>
+               <label>City</label><br/>
+               <select name="city" class="form-control">
+               <option *ngFor="let city of cities" [value]="city.value">  
+               {{city.display}}
+               </option>
+               </select>
+            </div>
+            
+			<br/>
+            <button class="btn btn-primary btn-lg btn-block" type="submit" (click)="goToListings()">Submit</button>
+         
+		 </div>
+		 </div>
+		 </div> 
+      </form>
+	  
+	  <div class = "dummy-height"> </div>
+	  <div class = "dummy-height"> </div>
+	  <button class="btn btn-secondary btn-lg btn-block" type="submit" (click)="goToListings()">Favourites</button>
+   </div>
+   
+   <div class="col-sm-8">
+      <div class="bg"></div>
+   </div>
+</div>
+
+

@@ -1,0 +1,24 @@
+import { NgModule }      from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+import {routing, appRoutingProviders} from './app.routing';
+import { AppComponent }  from './app.component';
+import {AUTH_PROVIDERS} from 'angular2-jwt';
+import { FormsModule } from '@angular/forms';
+import {HomeComponent} from './components/home/home.component';
+import { HttpModule } from '@angular/http';
+
+import {ProfileComponent} from './components/profile/profile.component';
+
+import {Auth} from './services/auth.service';
+
+@NgModule({
+  imports:      [ BrowserModule, routing, FormsModule, HttpModule ],
+  declarations: [ AppComponent, HomeComponent, ProfileComponent ],
+  bootstrap:    [ AppComponent ],
+  providers: [
+  	appRoutingProviders,
+  	AUTH_PROVIDERS,
+  	Auth
+  ]
+})
+export class AppModule { }

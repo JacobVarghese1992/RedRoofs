@@ -1,0 +1,52 @@
+var express = require('express');
+var fs = require('fs');
+var request = require('request');
+var cheerio = require('cheerio');
+var app     = express();
+var html;
+
+names=[];
+console.log("Fetching listings .....");
+var path = require('path');
+var childProcess = require('child_process');
+var phantomjs = require('phantomjs-prebuilt');
+var binPath = phantomjs.path;
+ 
+var childArgs = [
+  path.join(__dirname, 'phantomjs-script.js'),'http://www.livecampusapts.com/Apartments/module/properties/'
+];
+
+var html_full;
+html_file = childProcess.execFileSync(binPath, childArgs);
+var html = html_file.toString();
+var $ = cheerio.load(html);
+
+$('li.result-item').each(function(){
+    var url=$(this).find('a.js-property-details').attr('href');
+    var address=$(this).find('a.prop-address').text().trim();
+    var bed_bath=$(this).find('p.description').text();
+    var rent= $(this).find('strong.stat-val').last().text();
+    names.push({'url':url, 'address':address,'bed_bath':bed_bath,'rent':rent, 'amenities':[]});  
+});
+console.log();
+console.log("Total listings fetched = " + names.length);
+console.log();
+console.log("Fetching amenities .....");
+for (var i=0;i<names.length;i++) {
+  var amenities = [];
+  var childArgs = [
+    path.join(__dirname, 'phantomjs-script.js'),names[i].url
+  ];
+
+  var html_file = childProcess.execFileSync(binPath, childArgs);
+  var html = html_file.toString();
+  var $ = cheerio.load(html);
+  $('span.amenity-name').each(function(){
+    amenities.push($(this).text());
+  });
+  names[i].amenities=amenities;
+  console.log("Fetched "+(i+1)+" amenities. Please wait for " + names.length);
+};
+
+
+console.log(names);

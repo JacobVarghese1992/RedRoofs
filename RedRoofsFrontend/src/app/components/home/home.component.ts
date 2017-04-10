@@ -42,10 +42,9 @@ export class HomeComponent  {
     }
   }
 
-  public goToListings() {
-        // console.log(f);
-  } 
-
+  public goToListings(): void {
+  
+  }
   public getStateFromDropDown(state: any) {
     console.log("State Set as : " + state);
     localStorage.setItem('user_state',state);

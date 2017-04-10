@@ -11,24 +11,46 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var core_1 = require("@angular/core");
 var auth_service_1 = require("../../services/auth.service");
 var listings_service_1 = require("../../services/listings.service");
-var HomeComponent = (function () {
-    function HomeComponent(auth, listingsService) {
+var ListingsComponent = (function () {
+    function ListingsComponent(auth, listingsService) {
         var _this = this;
         this.auth = auth;
         this.listingsService = listingsService;
+        this.settings = {
+            columns: {
+                listing_id: {
+                    title: 'ID'
+                },
+                address: {
+                    title: 'Address'
+                },
+                beds: {
+                    title: 'No. of Bedrooms'
+                },
+                baths: {
+                    title: 'No. of Bathrooms'
+                },
+                price: {
+                    title: 'Rent per Month'
+                },
+                safety_rating: {
+                    title: 'Safety Rank'
+                },
+                link: {
+                    title: 'Link'
+                },
+                Agent: {
+                    title: 'Agent'
+                }
+            }
+        };
         this.authtmp = auth;
-        this.listingsService.getAllStates().subscribe(function (states) {
-            // console.log(states);
-            _this.states = states;
-            _this.getStateFromDropDown(_this.states[0].state);
-        });
-        this.listingsService.getAllCities().subscribe(function (cities) {
-            // console.log(cities);
-            _this.cities = cities;
-            _this.getCityFromDropDown(_this.cities[0].city);
+        this.listingsService.getAllListings().subscribe(function (entries) {
+            _this.entries = entries;
+            console.log(entries[0]);
         });
     }
-    HomeComponent.prototype.ngAfterViewChecked = function () {
+    ListingsComponent.prototype.ngAfterViewChecked = function () {
         // console.log("Checking Auth  " + this.authtmp.authenticated())
         if ((!this.authtmp.authenticated()) && (localStorage.getItem("lockopen") != "true")) {
             // localStorage.id_token
@@ -36,26 +58,16 @@ var HomeComponent = (function () {
             this.authtmp.login();
         }
     };
-    HomeComponent.prototype.goToListings = function () {
-    };
-    HomeComponent.prototype.getStateFromDropDown = function (state) {
-        console.log("State Set as : " + state);
-        localStorage.setItem('user_state', state);
-    };
-    HomeComponent.prototype.getCityFromDropDown = function (city) {
-        console.log("City Set as : " + city);
-        localStorage.setItem('user_city', city);
-    };
-    return HomeComponent;
+    return ListingsComponent;
 }());
-HomeComponent = __decorate([
+ListingsComponent = __decorate([
     core_1.Component({
         moduleId: module.id,
-        selector: 'home',
-        templateUrl: 'home.component.html',
+        selector: 'listings',
+        template: "<ng2-smart-table [settings]=\"settings\" [source]=\"entries\"></ng2-smart-table>",
         providers: [listings_service_1.ListingsService]
     }),
     __metadata("design:paramtypes", [auth_service_1.Auth, listings_service_1.ListingsService])
-], HomeComponent);
-exports.HomeComponent = HomeComponent;
-//# sourceMappingURL=home.component.js.map
+], ListingsComponent);
+exports.ListingsComponent = ListingsComponent;
+//# sourceMappingURL=listings.component.js.map

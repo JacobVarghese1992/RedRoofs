@@ -7,7 +7,7 @@ import { FormsModule } from '@angular/forms';
 import {HomeComponent} from './components/home/home.component';
 import {ListingsComponent} from './components/listings/listings.component';
 import { HttpModule } from '@angular/http';
-import { Ng2SmartTableModule } from '../node_modules/ng2-smart-table';
+import { Ng2SmartTableModule } from 'ng2-smart-table';
 
 import {ProfileComponent} from './components/profile/profile.component';
 

@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import {Auth} from '../../services/auth.service';
 import{ListingsService} from '../../services/listings.service';
-import { Ng2SmartTableModule } from 'ng2-smart-table';
 
 @Component({
   moduleId: module.id,

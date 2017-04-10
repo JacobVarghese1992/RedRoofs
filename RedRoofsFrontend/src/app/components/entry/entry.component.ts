@@ -12,7 +12,7 @@ import{ListingsService} from '../../services/listings.service';
 
 export class EntryComponent  {
   authtmp :Auth;
-  houses :any;
+  houses: House[];
   settings = {
     columns: {
       listing_id: {

@@ -11,11 +11,10 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var core_1 = require("@angular/core");
 var auth_service_1 = require("../../services/auth.service");
 var listings_service_1 = require("../../services/listings.service");
+var http_1 = require("@angular/http");
 var EntryComponent = (function () {
-    function EntryComponent(auth, listingsService) {
-        var _this = this;
+    function EntryComponent(auth, http) {
         this.auth = auth;
-        this.listingsService = listingsService;
         this.settings = {
             columns: {
                 listing_id: {
@@ -51,11 +50,15 @@ var EntryComponent = (function () {
             }
         };
         this.authtmp = auth;
-        this.listingsService.getAllListings().subscribe(function (houses) {
-            _this.houses = houses;
-            console.log(houses[0]);
-        });
+        this.source = new ServerDataSource(http, { endPoint: 'http://ec2-52-91-32-196.compute-1.amazonaws.com/listings/PA/PHIL' });
     }
+    //constructor(private auth:Auth, private listingsService: ListingsService) {
+    //  this.authtmp = auth;
+    //  this.listingsService.getAllListings().subscribe(houses => {
+    //          this.houses = houses;
+    //          console.log(houses[0]);
+    //  })
+    //}
     EntryComponent.prototype.ngAfterViewChecked = function () {
         // console.log("Checking Auth  " + this.authtmp.authenticated())
         if ((!this.authtmp.authenticated()) && (localStorage.getItem("lockopen") != "true")) {
@@ -73,7 +76,7 @@ EntryComponent = __decorate([
         providers: [listings_service_1.ListingsService],
         templateUrl: 'entry.component.html',
     }),
-    __metadata("design:paramtypes", [auth_service_1.Auth, listings_service_1.ListingsService])
+    __metadata("design:paramtypes", [auth_service_1.Auth, http_1.Http])
 ], EntryComponent);
 exports.EntryComponent = EntryComponent;
 //# sourceMappingURL=entry.component.js.map

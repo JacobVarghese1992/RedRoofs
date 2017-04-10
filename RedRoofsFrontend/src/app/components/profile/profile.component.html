@@ -7,6 +7,7 @@
 		<h1> {{profile.nickname}}'s Profile </h1>
 		<p> Email: {{profile.name}} </p>
 		<p> Last Update: {{profile.created_at}} </p>
+		<ng2-smart-table [settings]="settings" [source]="data"></ng2-smart-table>
 	</div>		
 </div>	
 

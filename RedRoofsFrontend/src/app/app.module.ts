@@ -10,9 +10,10 @@ import { HttpModule } from '@angular/http';
 import {ProfileComponent} from './components/profile/profile.component';
 
 import {Auth} from './services/auth.service';
+import { Ng2SmartTableModule } from 'ng2-smart-table';
 
 @NgModule({
-  imports:      [ BrowserModule, routing, FormsModule, HttpModule ],
+  imports:      [ BrowserModule, routing, FormsModule, HttpModule, Ng2SmartTableModule ],
   declarations: [ AppComponent, HomeComponent, ProfileComponent ],
   bootstrap:    [ AppComponent ],
   providers: [

@@ -10,22 +10,25 @@ import{ListingsService} from '../../services/listings.service';
 
 export class HomeComponent  {
   authtmp :Auth;
-	states = [
-    { value: 'PA', display: 'Pennsylvania' },
-    { value: 'NY', display: 'New York' }
-  ];
-
-	cities = [
-    { value: 'PA', display: 'Pennsylvania' },
-    { value: 'NY', display: 'New York' }
-  ];
+	states: any;
+	cities: any;
 
   constructor(private auth:Auth, private listingsService: ListingsService) {
     this.authtmp = auth;
 
     this.listingsService.getAllStates().subscribe(states => {
-            console.log(states);
-        })
+            // console.log(states);
+            this.states = states;
+            this.getStateFromDropDown(this.states[0].state);
+    })
+    
+
+    this.listingsService.getAllCities().subscribe(cities => {
+            // console.log(cities);
+            this.cities = cities;
+            this.getCityFromDropDown(this.cities[0].city);
+
+    })
     
 	}
 
@@ -33,6 +36,7 @@ export class HomeComponent  {
     // console.log("Checking Auth  " + this.authtmp.authenticated())
 
     if ((!this.authtmp.authenticated()) && (localStorage.getItem("lockopen") != "true") ) {
+      // localStorage.id_token
       localStorage.setItem('lockopen',"true");
       this.authtmp.login();
     }
@@ -41,4 +45,14 @@ export class HomeComponent  {
   public goToListings() {
         // console.log(f);
   } 
+
+  public getStateFromDropDown(state: any) {
+    console.log("State Set as : " + state);
+    localStorage.setItem('user_state',state);
+  }
+
+  public getCityFromDropDown(city: any) {
+    console.log("City Set as : " + city);
+    localStorage.setItem('user_city',city);
+  }
 }

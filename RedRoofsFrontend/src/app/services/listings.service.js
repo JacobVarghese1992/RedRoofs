@@ -20,6 +20,10 @@ var ListingsService = (function () {
         return this.http.get('http://ec2-52-91-32-196.compute-1.amazonaws.com/allstates')
             .map(function (res) { return res.json(); });
     };
+    ListingsService.prototype.getAllCities = function () {
+        return this.http.get('http://ec2-52-91-32-196.compute-1.amazonaws.com/allcities')
+            .map(function (res) { return res.json(); });
+    };
     return ListingsService;
 }());
 ListingsService = __decorate([

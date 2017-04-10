@@ -21,9 +21,9 @@ var Auth = (function () {
                 sso: true
             },
             theme: {
-                // displayName: "RedRoofs",
+                logo: "/logo.png",
                 primaryColor: "#f04b4f",
-                logo: "/logo.png"
+                title: "RedRoofs"
             }
         };
         this.lock = new Auth0Lock('AfYbEtejX21YS51c8zZxgDDyvFJqlaVw', 'jacobv1992.auth0.com', this.options);
@@ -35,6 +35,7 @@ var Auth = (function () {
                 }
                 localStorage.setItem('id_token', authResult.idToken);
                 localStorage.setItem('profile', JSON.stringify(profile));
+                // localStorage.setItem('lockopen',"true");
             });
         });
     }

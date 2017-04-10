@@ -12,4 +12,9 @@ export class ListingsService {
         return this.http.get('http://ec2-52-91-32-196.compute-1.amazonaws.com/allstates')
             .map(res => res.json());
     }
+
+     getAllCities() {
+        return this.http.get('http://ec2-52-91-32-196.compute-1.amazonaws.com/allcities')
+            .map(res => res.json());
+    }
 }

@@ -16,6 +16,7 @@
    <div class="col-sm-2"></div>
    
    <div class="col-sm-2">
+	  <div class = "dummy-height"> </div>
       
 	  <form #f="ngForm" novalidate>
 		 <div class="panel panel-default panel-box">
@@ -26,9 +27,9 @@
             <!-- We'll add our form controls here -->
             <div>
                <label>State</label><br/>
-               <select name="state" class="form-control">
-               <option *ngFor="let state of states" [value]="state.value">  
-               {{state.display}}
+               <select name="state" class="form-control" #state (change)="getStateFromDropDown(state.value)">
+               <option *ngFor="let state of states" [value]="state.state">  
+               {{state.state_text}}
                </option>
                </select>
             </div>
@@ -37,9 +38,9 @@
             
 			<div>
                <label>City</label><br/>
-               <select name="city" class="form-control">
-               <option *ngFor="let city of cities" [value]="city.value">  
-               {{city.display}}
+               <select name="city" class="form-control" #city (change)="getCityFromDropDown(city.value)">
+               <option *ngFor="let city of cities" [value]="city.city">  
+               {{city.city_text}}
                </option>
                </select>
             </div>

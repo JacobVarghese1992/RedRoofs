@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import {Auth} from '../../services/auth.service';
 import{ListingsService} from '../../services/listings.service';
+import { LocalDataSource } from 'ng2-smart-table';
 
 @Component({
   moduleId: module.id,
@@ -70,5 +71,15 @@ export class EntryComponent  {
 }
  
 
- 
-
+interface House{
+  listing_id: string;
+  address: string;
+  beds: number;
+  baths: number;
+  price: number;
+  safety_rating: number;
+  link: string;
+  Agent: string;
+  image: string;
+  currency: string;
+}

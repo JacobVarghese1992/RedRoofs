@@ -11,6 +11,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var core_1 = require("@angular/core");
 var auth_service_1 = require("../../services/auth.service");
 var listings_service_1 = require("../../services/listings.service");
+var ng2_smart_table_1 = require("ng2-smart-table");
 var EntryComponent = (function () {
     function EntryComponent(auth, listingsService) {
         var _this = this;
@@ -51,9 +52,10 @@ var EntryComponent = (function () {
             }
         };
         this.authtmp = auth;
+        this.source = new ng2_smart_table_1.LocalDataSource();
         this.listingsService.getAllListings().subscribe(function (houses) {
-            _this.houses = houses;
             console.log(houses[0]);
+            _this.source.load(houses);
         });
     }
     EntryComponent.prototype.ngAfterViewChecked = function () {

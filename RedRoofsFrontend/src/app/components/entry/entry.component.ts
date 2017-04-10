@@ -13,7 +13,6 @@ import { LocalDataSource } from 'ng2-smart-table';
 
 export class EntryComponent  {
   authtmp :Auth;
-  houses: House[];
   settings = {
     columns: {
       listing_id: {
@@ -48,14 +47,16 @@ export class EntryComponent  {
       }
     
     }
-  };  
+  };
+  source: LocalDataSource;  
   constructor(private auth:Auth, private listingsService: ListingsService) {
     this.authtmp = auth;
+    this.source = new LocalDataSource();
     this.listingsService.getAllListings().subscribe(houses => {
-            this.houses = houses;
             console.log(houses[0]);
-
+            this.source.load(houses);
     })
+
     
   }
 
@@ -71,15 +72,3 @@ export class EntryComponent  {
 }
  
 
-interface House{
-  listing_id: string;
-  address: string;
-  beds: number;
-  baths: number;
-  price: number;
-  safety_rating: number;
-  link: string;
-  Agent: string;
-  image: string;
-  currency: string;
-}

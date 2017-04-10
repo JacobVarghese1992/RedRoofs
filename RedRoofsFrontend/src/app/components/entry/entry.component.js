@@ -41,6 +41,12 @@ var EntryComponent = (function () {
                 },
                 Agent: {
                     title: 'Agent'
+                },
+                image: {
+                    title: 'image'
+                },
+                currency: {
+                    title: 'currency'
                 }
             }
         };
@@ -64,8 +70,8 @@ EntryComponent = __decorate([
     core_1.Component({
         moduleId: module.id,
         selector: 'entry',
-        template: "<ng2-smart-table [settings]=\"settings\" [source]=\"houses\"></ng2-smart-table>",
-        providers: [listings_service_1.ListingsService]
+        providers: [listings_service_1.ListingsService],
+        templateUrl: 'entry.component.html',
     }),
     __metadata("design:paramtypes", [auth_service_1.Auth, listings_service_1.ListingsService])
 ], EntryComponent);

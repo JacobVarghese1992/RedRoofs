@@ -5,13 +5,14 @@ import{ListingsService} from '../../services/listings.service';
 @Component({
   moduleId: module.id,
   selector: 'entry',
-  template: `<ng2-smart-table [settings]="settings" [source]="houses"></ng2-smart-table>`,
-  providers: [ListingsService]
+  providers: [ListingsService],
+  templateUrl: 'entry.component.html',
+
 })
 
 export class EntryComponent  {
   authtmp :Auth;
-  houses :House[];
+  houses :any;
   settings = {
     columns: {
       listing_id: {
@@ -37,8 +38,13 @@ export class EntryComponent  {
       },
       Agent:{
         title: 'Agent'
+      },
+      image:{
+        title: 'image'
+      },
+      currency:{
+        title: 'currency'
       }
-    //image: string;
     
     }
   };  
@@ -63,17 +69,6 @@ export class EntryComponent  {
   }
 }
  
-  interface House{
-    listing_id: number;
-    address: string;
-    image: string;
-    beds: number;
-    baths: number;
-    price: number;
-    currency: string;
-    safety_rating: number;
-    link: string;
-    Agent:string;
-  }
+
  
 

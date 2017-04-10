@@ -47,6 +47,15 @@
       },
       'angular2-jwt': {
         "defaultExtension":'js'
+      },
+      'ng2-smart-table': {main: 'index.js', defaultExtension: 'js' },
+      'ng2-completer': {
+            main: 'index.js',
+            defaultExtension: 'js'
+      },
+      lodash: {
+            main: 'index.js',
+            defaultExtension: 'js'
       }
     }
   });

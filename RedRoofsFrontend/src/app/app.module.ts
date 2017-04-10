@@ -14,8 +14,8 @@ import {ProfileComponent} from './components/profile/profile.component';
 import {Auth} from './services/auth.service';
 
 @NgModule({
-  imports:      [ BrowserModule, routing, FormsModule, HttpModule],
-  declarations: [ AppComponent, HomeComponent, ProfileComponent, ListingsComponent,Ng2SmartTableModule],
+  imports:      [ BrowserModule, routing, FormsModule, HttpModule, Ng2SmartTableModule],
+  declarations: [ AppComponent, HomeComponent, ProfileComponent, ListingsComponent],
   bootstrap:    [ AppComponent ],
   providers: [
   	appRoutingProviders,

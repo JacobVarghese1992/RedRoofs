@@ -41,8 +41,8 @@ app.get('/listings/:state/:city', function(req, res) {
   	console.log(req.params.city)
 
 	// var query = 'INSERT INTO Listings(listing_id,address,beds,baths,price,currency,safety_rating,link,longitude,latitude,Agent_id) VALUE(?,?,?,?,?,?,?,?,?,?,?)';
-    var query = "SELECT L.listing_id,L.address,L.image,L.beds,L.baths,L.price,C.symbol AS " +
-			  "currency,L.safety_rating,L.link,R.description AS Agent FROM Listings AS L "+
+    var query = "SELECT L.listing_id,L.address,L.image,L.beds,L.baths,CONCAT(C.symbol,L.price) AS " +
+			  "price,L.safety_rating,L.link,R.description AS Agent FROM Listings AS L "+
 			  "INNER JOIN Currencies AS C "+
 			  "ON L.currency = C.currency "+
               "INNER JOIN RealEstateAgents AS R "+

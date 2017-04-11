@@ -15,9 +15,9 @@ export class EntryComponent  {
   authtmp :Auth;
   settings = {
     columns: {
-      listing_id: {
-        title: 'ID'
-      },
+      // listing_id: {
+      //   title: 'ID'
+      // },
       address:{
         title: 'Address'
       },
@@ -41,10 +41,11 @@ export class EntryComponent  {
       },
       image:{
         title: 'image'
-      },
-      currency:{
-        title: 'currency'
       }
+      // ,
+      // currency:{
+      //   title: 'currency'
+      // }
     
     }
   };

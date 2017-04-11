@@ -19,9 +19,9 @@ var EntryComponent = (function () {
         this.listingsService = listingsService;
         this.settings = {
             columns: {
-                listing_id: {
-                    title: 'ID'
-                },
+                // listing_id: {
+                //   title: 'ID'
+                // },
                 address: {
                     title: 'Address'
                 },
@@ -45,9 +45,6 @@ var EntryComponent = (function () {
                 },
                 image: {
                     title: 'image'
-                },
-                currency: {
-                    title: 'currency'
                 }
             }
         };

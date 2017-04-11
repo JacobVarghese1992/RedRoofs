@@ -38,13 +38,15 @@ var EntryComponent = (function () {
                     title: 'Safety Rank'
                 },
                 link: {
-                    title: 'Link'
+                    title: 'Link',
+                    type: 'html'
                 },
                 Agent: {
                     title: 'Agent'
                 },
                 image: {
-                    title: 'image'
+                    title: 'image',
+                    type: 'html'
                 },
                 currency: {
                     title: 'currency'
@@ -58,14 +60,6 @@ var EntryComponent = (function () {
             _this.source.load(houses);
         });
     }
-    EntryComponent.prototype.ngAfterViewChecked = function () {
-        // console.log("Checking Auth  " + this.authtmp.authenticated())
-        if ((!this.authtmp.authenticated()) && (localStorage.getItem("lockopen") != "true")) {
-            // localStorage.id_token
-            localStorage.setItem('lockopen', "true");
-            this.authtmp.login();
-        }
-    };
     return EntryComponent;
 }());
 EntryComponent = __decorate([
@@ -78,4 +72,15 @@ EntryComponent = __decorate([
     __metadata("design:paramtypes", [auth_service_1.Auth, listings_service_1.ListingsService])
 ], EntryComponent);
 exports.EntryComponent = EntryComponent;
+return "<img scr=\"value\" />";
+ngAfterViewChecked();
+void {
+    // console.log("Checking Auth  " + this.authtmp.authenticated())
+    if: function () { }
+}(!this.authtmp.authenticated()) && (localStorage.getItem("lockopen") != "true");
+{
+    // localStorage.id_token
+    localStorage.setItem('lockopen', "true");
+    this.authtmp.login();
+}
 //# sourceMappingURL=entry.component.js.map

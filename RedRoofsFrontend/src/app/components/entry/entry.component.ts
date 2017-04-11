@@ -34,13 +34,16 @@ export class EntryComponent  {
         title: 'Safety Rank'
       },
       link:{
-        title: 'Link'
+        title: 'Link',
+        type: 'html'
+
       },
       Agent:{
         title: 'Agent'
       },
       image:{
-        title: 'image'
+        title: 'image',
+        type: 'html'
       },
       currency:{
         title: 'currency'
@@ -59,7 +62,7 @@ export class EntryComponent  {
 
     
   }
-
+  public valuePrepareFunction: (value) => { return `<img scr="value" />` }
   public ngAfterViewChecked(): void {
     // console.log("Checking Auth  " + this.authtmp.authenticated())
 

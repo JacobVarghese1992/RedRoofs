@@ -51,6 +51,7 @@ var ProfileComponent = (function () {
             }
         ];
         this.profile = JSON.parse(localStorage.getItem('profile'));
+        console.log(this.profile.user_id);
     }
     return ProfileComponent;
 }());

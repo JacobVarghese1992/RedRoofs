@@ -1,7 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import {Auth} from '../../services/auth.service';
 import{ListingsService} from '../../services/listings.service';
 import { LocalDataSource } from 'ng2-smart-table';
+import { ViewCell } from 'ng2-smart-table';
+import {ButtonViewComponent} from './components/button-view/button-view.component';
+
 
 @Component({
   moduleId: module.id,
@@ -11,7 +14,8 @@ import { LocalDataSource } from 'ng2-smart-table';
 
 })
 
-export class EntryComponent  {
+export class EntryComponent implements OnInit {
+  profile :any;
   authtmp :Auth;
   settings = {
     columns: {
@@ -45,8 +49,11 @@ export class EntryComponent  {
         title: 'image',
         type: 'html'
       },
-      currency:{
-        title: 'currency'
+
+      fav: {
+        title: 'Add!',
+        type: 'custom',
+        renderComponent: ButtonViewComponent
       }
     
     }
@@ -54,15 +61,16 @@ export class EntryComponent  {
   source: LocalDataSource;  
   constructor(private auth:Auth, private listingsService: ListingsService) {
     this.authtmp = auth;
+    this.profile = JSON.parse(localStorage.getItem('profile'))
     this.source = new LocalDataSource();
     this.listingsService.getAllListings().subscribe(houses => {
-            console.log(houses[0]);
-            this.source.load(houses);
-    })
-
+        this.source.load(houses);
+        console.log(houses.length);
+    });
+    
     
   }
-  public valuePrepareFunction: (value) => { return `<img scr="value" />` }
+  ngOnInit(){}
   public ngAfterViewChecked(): void {
     // console.log("Checking Auth  " + this.authtmp.authenticated())
 

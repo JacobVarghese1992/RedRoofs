@@ -12,6 +12,7 @@ var core_1 = require("@angular/core");
 var auth_service_1 = require("../../services/auth.service");
 var listings_service_1 = require("../../services/listings.service");
 var ng2_smart_table_1 = require("ng2-smart-table");
+var button_view_component_1 = require("./components/button-view/button-view.component");
 var EntryComponent = (function () {
     function EntryComponent(auth, listingsService) {
         var _this = this;
@@ -48,18 +49,30 @@ var EntryComponent = (function () {
                     title: 'image',
                     type: 'html'
                 },
-                currency: {
-                    title: 'currency'
+                fav: {
+                    title: 'Add!',
+                    type: 'custom',
+                    renderComponent: button_view_component_1.ButtonViewComponent
                 }
             }
         };
         this.authtmp = auth;
+        this.profile = JSON.parse(localStorage.getItem('profile'));
         this.source = new ng2_smart_table_1.LocalDataSource();
         this.listingsService.getAllListings().subscribe(function (houses) {
-            console.log(houses[0]);
             _this.source.load(houses);
+            console.log(houses.length);
         });
     }
+    EntryComponent.prototype.ngOnInit = function () { };
+    EntryComponent.prototype.ngAfterViewChecked = function () {
+        // console.log("Checking Auth  " + this.authtmp.authenticated())
+        if ((!this.authtmp.authenticated()) && (localStorage.getItem("lockopen") != "true")) {
+            // localStorage.id_token
+            localStorage.setItem('lockopen', "true");
+            this.authtmp.login();
+        }
+    };
     return EntryComponent;
 }());
 EntryComponent = __decorate([
@@ -72,15 +85,4 @@ EntryComponent = __decorate([
     __metadata("design:paramtypes", [auth_service_1.Auth, listings_service_1.ListingsService])
 ], EntryComponent);
 exports.EntryComponent = EntryComponent;
-return "<img scr=\"value\" />";
-ngAfterViewChecked();
-void {
-    // console.log("Checking Auth  " + this.authtmp.authenticated())
-    if: function () { }
-}(!this.authtmp.authenticated()) && (localStorage.getItem("lockopen") != "true");
-{
-    // localStorage.id_token
-    localStorage.setItem('lockopen', "true");
-    this.authtmp.login();
-}
 //# sourceMappingURL=entry.component.js.map

@@ -3,6 +3,7 @@ import {Routes, RouterModule} from '@angular/router';
 
 import {HomeComponent} from './components/home/home.component';
 import {ProfileComponent} from './components/profile/profile.component';
+import {EntryComponent} from './components/entry/entry.component';
 
 const appRoutes: Routes=[
 	{
@@ -12,6 +13,10 @@ const appRoutes: Routes=[
 	{
 		path:'profile',
 		component:ProfileComponent
+	},
+	{
+		path:'entry',
+		component:EntryComponent
 	}
 ];
 

@@ -24,6 +24,10 @@ var ListingsService = (function () {
         return this.http.get('http://ec2-52-91-32-196.compute-1.amazonaws.com/allcities')
             .map(function (res) { return res.json(); });
     };
+    ListingsService.prototype.getAllListings = function () {
+        return this.http.get('http://ec2-52-91-32-196.compute-1.amazonaws.com/listings/PA/PHIL')
+            .map(function (res) { return res.json(); });
+    };
     return ListingsService;
 }());
 ListingsService = __decorate([

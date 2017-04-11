@@ -23,12 +23,12 @@ export class HomeComponent  {
     })
     
 
-    this.listingsService.getAllCities().subscribe(cities => {
-            // console.log(cities);
-            this.cities = cities;
-            this.getCityFromDropDown(this.cities[0].city);
+    // this.listingsService.getAllCities().subscribe(cities => {
+    //         // console.log(cities);
+    //         this.cities = cities;
+    //         this.getCityFromDropDown(this.cities[0].city);
 
-    })
+    // })
     
 	}
 
@@ -49,6 +49,13 @@ export class HomeComponent  {
   public getStateFromDropDown(state: any) {
     console.log("State Set as : " + state);
     localStorage.setItem('user_state',state);
+    this.listingsService.getAllCities(state).subscribe(cities => {
+              // console.log(cities);
+              this.cities = cities;
+              this.getCityFromDropDown(this.cities[0].city);
+
+    })
+
   }
 
   public getCityFromDropDown(city: any) {

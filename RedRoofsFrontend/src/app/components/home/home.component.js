@@ -22,11 +22,11 @@ var HomeComponent = (function () {
             _this.states = states;
             _this.getStateFromDropDown(_this.states[0].state);
         });
-        this.listingsService.getAllCities().subscribe(function (cities) {
-            // console.log(cities);
-            _this.cities = cities;
-            _this.getCityFromDropDown(_this.cities[0].city);
-        });
+        // this.listingsService.getAllCities().subscribe(cities => {
+        //         // console.log(cities);
+        //         this.cities = cities;
+        //         this.getCityFromDropDown(this.cities[0].city);
+        // })
     }
     HomeComponent.prototype.ngAfterViewChecked = function () {
         // console.log("Checking Auth  " + this.authtmp.authenticated())
@@ -40,8 +40,14 @@ var HomeComponent = (function () {
         // console.log(f);
     };
     HomeComponent.prototype.getStateFromDropDown = function (state) {
+        var _this = this;
         console.log("State Set as : " + state);
         localStorage.setItem('user_state', state);
+        this.listingsService.getAllCities(state).subscribe(function (cities) {
+            // console.log(cities);
+            _this.cities = cities;
+            _this.getCityFromDropDown(_this.cities[0].city);
+        });
     };
     HomeComponent.prototype.getCityFromDropDown = function (city) {
         console.log("City Set as : " + city);

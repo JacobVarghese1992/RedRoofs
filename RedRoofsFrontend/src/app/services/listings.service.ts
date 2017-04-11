@@ -13,8 +13,9 @@ export class ListingsService {
             .map(res => res.json());
     }
 
-     getAllCities() {
-        return this.http.get('http://ec2-52-91-32-196.compute-1.amazonaws.com/allcities')
+     getAllCities(state: string) {
+        var url = "http://ec2-52-91-32-196.compute-1.amazonaws.com/allcities/" + state;
+        return this.http.get(url)
             .map(res => res.json());
     }
     getAllListings() {

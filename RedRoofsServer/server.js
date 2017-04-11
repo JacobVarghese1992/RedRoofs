@@ -181,6 +181,20 @@ app.get('/allcities', function(req, res) {
 });
 
 
+app.get('/allcities/:state', function(req, res) {
+
+    var query = "SELECT DISTINCT city, city_text FROM StateCity WHERE state = ?";
+  	var table = [req.params.state];
+  	connection.query(query,table, function(err,result){
+    	if(err) throw err;
+    	else {
+        	res.json(result);
+    	}
+  	});
+
+});
+
+
 app.get('/listings_bd_bth/:state/:city/:bed/:bath', function(req, res) {
     // res.json(users);
     console.log(req.params.state)

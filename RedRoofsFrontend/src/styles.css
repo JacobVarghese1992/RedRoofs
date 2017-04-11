@@ -52,4 +52,13 @@ body, html {
 
 body {
     font-family: sans-serif;
+}
+
+table._ngcontent-c0 {
+    background-color: #ffeee0;
 }    
+
+[_nghost-c0] * {
+background-color: #ffeee0;
+font-size: initial;
+}

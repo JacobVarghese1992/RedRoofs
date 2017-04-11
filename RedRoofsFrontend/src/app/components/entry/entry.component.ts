@@ -40,7 +40,11 @@ export class EntryComponent  {
         title: 'Agent'
       },
       image:{
-        title: 'image'
+        title: 'image',
+        type: 'html',
+        valuePrepareFunction: (value: string) => { 
+          return "<img src='" + value + "' alt='Mountain View' style='width:100px !important;height:100px !important;'>";
+        }
       }
       // ,
       // currency:{

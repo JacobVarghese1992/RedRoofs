@@ -44,7 +44,11 @@ var EntryComponent = (function () {
                     title: 'Agent'
                 },
                 image: {
-                    title: 'image'
+                    title: 'image',
+                    type: 'html',
+                    valuePrepareFunction: function (value) {
+                        return "<img src='" + value + "' alt='Mountain View' style='width:100px !important;height:100px !important;'>";
+                    }
                 }
             }
         };

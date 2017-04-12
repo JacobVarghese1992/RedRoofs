@@ -42,12 +42,20 @@ app.get('/listings/:state/:city', function(req, res) {
 
 	// var query = 'INSERT INTO Listings(listing_id,address,beds,baths,price,currency,safety_rating,link,longitude,latitude,Agent_id) VALUE(?,?,?,?,?,?,?,?,?,?,?)';
     var query = "SELECT L.listing_id,L.address,L.image,L.beds,L.baths,CONCAT(C.symbol,L.price) AS " +
-			  "price,L.safety_rating,L.link,R.description AS Agent,CONCAT('fav-',L.listing_id) AS fav FROM Listings AS L "+
-			  "INNER JOIN Currencies AS C "+
-			  "ON L.currency = C.currency "+
-              "INNER JOIN RealEstateAgents AS R "+
-              "ON L.Agent_id = R.agent_id "+
-              "WHERE L.state= ? AND L.city= ?";
+"price,L.safety_rating,L.link,R.description AS Agent, AM.Amenity FROM Listings AS L " +
+"INNER JOIN Currencies AS C " +
+"ON L.currency = C.currency " +
+"INNER JOIN RealEstateAgents AS R " +
+"ON L.Agent_id = R.agent_id " +
+"INNER JOIN ( " +
+"SELECT IA.listing_id AS listing_id, GROUP_CONCAT(A.description  SEPARATOR ', ')AS Amenity " + 
+"FROM IncludedAmenities AS IA " +
+"INNER JOIN Amenities AS A " +
+"ON IA.amenity_id = A.amenity_id " + 
+"GROUP BY IA.listing_id " +
+") AS AM " +
+"ON L.listing_id = AM.listing_id " +
+"WHERE L.state= ? AND L.city= ? ";
   	var table = [req.params.state,req.params.city];
   	connection.query(query,table, function(err,result){
     	if(err) throw err;

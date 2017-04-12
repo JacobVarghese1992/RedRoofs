@@ -99,7 +99,7 @@ var EntryComponent = (function () {
         };
         this.authtmp = auth;
         this.source = new ng2_smart_table_1.LocalDataSource();
-        this.listingsService.getAllListings().subscribe(function (houses) {
+        this.listingsService.getAllListings(JSON.parse(localStorage.getItem("profile")).user_id).subscribe(function (houses) {
             console.log(houses[0]);
             _this.source.load(houses);
         });

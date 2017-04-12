@@ -25,8 +25,8 @@ var ListingsService = (function () {
         return this.http.get(url)
             .map(function (res) { return res.json(); });
     };
-    ListingsService.prototype.getAllListings = function () {
-        return this.http.get('http://ec2-52-91-32-196.compute-1.amazonaws.com/listings/PA/PHIL')
+    ListingsService.prototype.getAllListings = function (user_id) {
+        return this.http.get('http://ec2-52-91-32-196.compute-1.amazonaws.com/listings/PA/PHIL/' + user_id)
             .map(function (res) { return res.json(); });
     };
     return ListingsService;

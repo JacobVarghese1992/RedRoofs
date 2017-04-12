@@ -112,7 +112,7 @@ export class EntryComponent  {
   constructor(private auth:Auth, private listingsService: ListingsService) {
     this.authtmp = auth;
     this.source = new LocalDataSource();
-    this.listingsService.getAllListings().subscribe(houses => {
+    this.listingsService.getAllListings(JSON.parse(localStorage.getItem("profile")).user_id).subscribe(houses => {
             console.log(houses[0]);
             this.source.load(houses);
     })

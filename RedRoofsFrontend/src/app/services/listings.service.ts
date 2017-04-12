@@ -18,8 +18,8 @@ export class ListingsService {
         return this.http.get(url)
             .map(res => res.json());
     }
-    getAllListings() {
-        return this.http.get('http://ec2-52-91-32-196.compute-1.amazonaws.com/listings/PA/PHIL')
+    getAllListings(user_id: string) {
+        return this.http.get('http://ec2-52-91-32-196.compute-1.amazonaws.com/listings/PA/PHIL/'+user_id)
             .map(res => res.json());
     }
 }

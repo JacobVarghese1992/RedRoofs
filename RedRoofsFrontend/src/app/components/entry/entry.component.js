@@ -12,6 +12,46 @@ var core_1 = require("@angular/core");
 var auth_service_1 = require("../../services/auth.service");
 var listings_service_1 = require("../../services/listings.service");
 var ng2_smart_table_1 = require("ng2-smart-table");
+var http_1 = require("@angular/http");
+var http_2 = require("@angular/http");
+var ButtonViewComponent = (function () {
+    function ButtonViewComponent(http) {
+        this.http = http;
+    }
+    ButtonViewComponent.prototype.ngOnInit = function () {
+        this.renderValue = this.value.toString().toUpperCase();
+    };
+    ButtonViewComponent.prototype.showAlert = function () {
+        this.profile = JSON.parse(localStorage.getItem('profile'));
+        var data = new http_1.URLSearchParams();
+        data.append('user', this.profile.user_id);
+        data.append('listing', this.renderValue.split('-')[1]);
+        this.http
+            .post('http://ec2-52-91-32-196.compute-1.amazonaws.com/favourite', data)
+            .subscribe(function (data) {
+            alert('ok');
+        }, function (error) {
+            console.log(error.json());
+        });
+        //this.listingsService.addFavorite(,);
+        console.log(this.profile.user_id);
+        console.log(this.renderValue.split('-')[1]);
+        //alert(this.renderValue);
+    };
+    return ButtonViewComponent;
+}());
+__decorate([
+    core_1.Input(),
+    __metadata("design:type", Object)
+], ButtonViewComponent.prototype, "value", void 0);
+ButtonViewComponent = __decorate([
+    core_1.Component({
+        selector: 'button-view',
+        template: "\n    <button (click)=\"showAlert()\">{{ renderValue }}</button>\n  ",
+    }),
+    __metadata("design:paramtypes", [http_2.Http])
+], ButtonViewComponent);
+exports.ButtonViewComponent = ButtonViewComponent;
 var EntryComponent = (function () {
     function EntryComponent(auth, listingsService) {
         var _this = this;
@@ -56,7 +96,6 @@ var EntryComponent = (function () {
             }
         };
         this.authtmp = auth;
-        this.profile = JSON.parse(localStorage.getItem('profile'));
         this.source = new ng2_smart_table_1.LocalDataSource();
         this.listingsService.getAllListings().subscribe(function (houses) {
             _this.source.load(houses);

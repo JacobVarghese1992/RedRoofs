@@ -10,10 +10,12 @@ import {EntryComponent} from './components/entry/entry.component';
 import {ProfileComponent} from './components/profile/profile.component';
 import {Auth} from './services/auth.service';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
+import {ButtonViewComponent} from './components/entry/entry.component';
 
 @NgModule({
   imports:      [ BrowserModule, routing, FormsModule, HttpModule, Ng2SmartTableModule ],
-  declarations: [ AppComponent, HomeComponent,EntryComponent, ProfileComponent ],
+  entryComponents: [ ButtonViewComponent, ],
+  declarations: [ AppComponent, HomeComponent,EntryComponent, ProfileComponent, ButtonViewComponent ],
   bootstrap:    [ AppComponent ],
   providers: [
   	appRoutingProviders,

@@ -17,6 +17,7 @@ var entry_component_1 = require("./components/entry/entry.component");
 var profile_component_1 = require("./components/profile/profile.component");
 var auth_service_1 = require("./services/auth.service");
 var ng2_smart_table_1 = require("ng2-smart-table");
+var entry_component_2 = require("./components/entry/entry.component");
 var AppModule = (function () {
     function AppModule() {
     }
@@ -25,7 +26,8 @@ var AppModule = (function () {
 AppModule = __decorate([
     core_1.NgModule({
         imports: [platform_browser_1.BrowserModule, app_routing_1.routing, forms_1.FormsModule, http_1.HttpModule, ng2_smart_table_1.Ng2SmartTableModule],
-        declarations: [app_component_1.AppComponent, home_component_1.HomeComponent, entry_component_1.EntryComponent, profile_component_1.ProfileComponent],
+        entryComponents: [entry_component_2.ButtonViewComponent,],
+        declarations: [app_component_1.AppComponent, home_component_1.HomeComponent, entry_component_1.EntryComponent, profile_component_1.ProfileComponent, entry_component_2.ButtonViewComponent],
         bootstrap: [app_component_1.AppComponent],
         providers: [
             app_routing_1.appRoutingProviders,

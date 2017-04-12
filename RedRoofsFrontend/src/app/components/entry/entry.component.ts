@@ -3,6 +3,47 @@ import {Auth} from '../../services/auth.service';
 import{ListingsService} from '../../services/listings.service';
 import { LocalDataSource } from 'ng2-smart-table';
 import { ViewCell } from 'ng2-smart-table';
+import { URLSearchParams } from "@angular/http"
+import { Http } from "@angular/http"
+
+
+@Component({
+  selector: 'button-view',
+  template: `
+    <button (click)="showAlert()">{{ renderValue }}</button>
+  `,
+})
+export class ButtonViewComponent implements ViewCell, OnInit {
+  renderValue: string;
+  profile :any;
+  
+  @Input() value: string | number;
+
+  constructor(private http: Http) { }
+
+  ngOnInit() {
+    this.renderValue = this.value.toString().toUpperCase();
+  }
+
+  showAlert() {
+    this.profile = JSON.parse(localStorage.getItem('profile'));
+    let data = new URLSearchParams();
+    data.append('user', this.profile.user_id);
+    data.append('listing', this.renderValue.split('-')[1]);
+
+    this.http
+        .post('http://ec2-52-91-32-196.compute-1.amazonaws.com/favourite', data)
+        .subscribe(data => {
+           alert('ok');
+        }, error => {
+           console.log(error.json());
+        });
+    //this.listingsService.addFavorite(,);
+    console.log(this.profile.user_id);
+    console.log(this.renderValue.split('-')[1])
+    //alert(this.renderValue);
+  }
+}
 
 
 @Component({
@@ -14,7 +55,6 @@ import { ViewCell } from 'ng2-smart-table';
 })
 
 export class EntryComponent implements OnInit {
-  profile :any;
   authtmp :Auth;
   settings = {
     columns: {
@@ -60,7 +100,6 @@ export class EntryComponent implements OnInit {
   source: LocalDataSource;  
   constructor(private auth:Auth, private listingsService: ListingsService) {
     this.authtmp = auth;
-    this.profile = JSON.parse(localStorage.getItem('profile'))
     this.source = new LocalDataSource();
     this.listingsService.getAllListings().subscribe(houses => {
         this.source.load(houses);

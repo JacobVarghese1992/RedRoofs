@@ -35,7 +35,7 @@ app.get('/api/users', function(req, res) {
   res.json(users);
 });
 
-app.get('/listings/:state/:city', function(req, res) {
+app.get('/listings/:state/:city/:user_id', function(req, res) {
   	// res.json(users);
   	console.log(req.params.state)
   	console.log(req.params.city)
@@ -45,24 +45,32 @@ app.get('/listings/:state/:city', function(req, res) {
     var call2 = "\"'>Call</a>\"";
 
 	// var query = 'INSERT INTO Listings(listing_id,address,beds,baths,price,currency,safety_rating,link,longitude,latitude,Agent_id) VALUE(?,?,?,?,?,?,?,?,?,?,?)';
-    var query = "SELECT L.listing_id,L.address,L.image,L.beds,L.baths,CONCAT(C.symbol,L.price) AS " +
-"price,L.safety_rating,L.link, " + 
-"CONCAT(R.description," + sendmail1 + ",R.email_id," + sendmail2 + call1 + ",R.phone_no," + call2 + ") AS Agent, " + 
-"AM.Amenity,CONCAT('fav-',L.listing_id) AS fav FROM Listings AS L " +
-"INNER JOIN Currencies AS C " +
-"ON L.currency = C.currency " +
-"INNER JOIN RealEstateAgents AS R " +
-"ON L.Agent_id = R.agent_id " +
-"INNER JOIN ( " +
-"SELECT IA.listing_id AS listing_id, GROUP_CONCAT(A.description  SEPARATOR ', ')AS Amenity " + 
-"FROM IncludedAmenities AS IA " +
-"INNER JOIN Amenities AS A " +
-"ON IA.amenity_id = A.amenity_id " + 
-"GROUP BY IA.listing_id " +
-") AS AM " +
-"ON L.listing_id = AM.listing_id " +
-"WHERE L.state= ? AND L.city= ? ";
-  	var table = [req.params.state,req.params.city];
+//     var query = "SELECT L.listing_id,L.address,L.image,L.beds,L.baths,CONCAT(C.symbol,L.price) AS " +
+// "price,L.safety_rating,L.link, " + 
+// "CONCAT(R.description," + sendmail1 + ",R.email_id," + sendmail2 + call1 + ",R.phone_no," + call2 + ") AS Agent, " + 
+// "AM.Amenity,CONCAT('fav-',L.listing_id) AS fav FROM Listings AS L " +
+// "INNER JOIN Currencies AS C " +
+// "ON L.currency = C.currency " +
+// "INNER JOIN RealEstateAgents AS R " +
+// "ON L.Agent_id = R.agent_id " +
+// "INNER JOIN ( " +
+// "SELECT IA.listing_id AS listing_id, GROUP_CONCAT(A.description  SEPARATOR ', ')AS Amenity " + 
+// "FROM IncludedAmenities AS IA " +
+// "INNER JOIN Amenities AS A " +
+// "ON IA.amenity_id = A.amenity_id " + 
+// "GROUP BY IA.listing_id " +
+// ") AS AM " +
+// "ON L.listing_id = AM.listing_id " +
+// "WHERE L.state= ? AND L.city= ? ";
+
+    var query = "SELECT V.*, (F.listing_id IS NOT NULL) AS isfav, F.user_id " + 
+"FROM ViewListingsAmenities AS V " +
+"LEFT OUTER JOIN Favourites AS F " +
+"ON V.listing_id = F.listing_id " +
+"WHERE V.state = ? AND V.city = ? " +
+"HAVING user_id IS NULL OR user_id = ? "
+
+  	var table = [req.params.state,req.params.city, req.params.user_id];
   	connection.query(query,table, function(err,result){
     	if(err) throw err;
     	else {

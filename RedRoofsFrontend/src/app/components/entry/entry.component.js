@@ -12,43 +12,88 @@ var core_1 = require("@angular/core");
 var auth_service_1 = require("../../services/auth.service");
 var listings_service_1 = require("../../services/listings.service");
 var ng2_smart_table_1 = require("ng2-smart-table");
+var fav_component_1 = require("../fav/fav.component");
+// @Component({
+//   template: `
+//     <button (click)="showAlert()">{{ renderValue }}</button>
+//   `,
+// })
+// export class FavViewComponent implements ViewCell, OnInit {
+//   renderValue: string;
+//   @Input() value: string | number;
+//   constructor() { }
+//   ngOnInit() {
+//     this.renderValue = this.value.toString().toUpperCase();
+//   }
+//   showAlert() {
+//     alert(this.renderValue);
+//   }
+// }
 var EntryComponent = (function () {
     function EntryComponent(auth, listingsService) {
         var _this = this;
         this.auth = auth;
         this.listingsService = listingsService;
         this.settings = {
+            actions: false,
+            hideSubHeader: true,
             columns: {
                 // listing_id: {
                 //   title: 'ID'
                 // },
+                image: {
+                    title: '',
+                    type: 'html',
+                    valuePrepareFunction: function (value) {
+                        return "<img src='" + value + "' alt='Mountain View' style='width:100px !important;height:100px !important;'>";
+                    }
+                },
                 address: {
                     title: 'Address'
                 },
                 beds: {
-                    title: 'No. of Bedrooms'
+                    title: 'No. of Bedrooms',
+                    valuePrepareFunction: function (value) {
+                        return value + " bed(s)";
+                    }
                 },
                 baths: {
-                    title: 'No. of Bathrooms'
+                    title: 'No. of Bathrooms',
+                    valuePrepareFunction: function (value) {
+                        return value + " bath(s)";
+                    }
                 },
                 price: {
                     title: 'Rent per Month'
                 },
                 safety_rating: {
-                    title: 'Safety Rank'
-                },
-                link: {
-                    title: 'Link'
-                },
-                Agent: {
-                    title: 'Agent'
-                },
-                image: {
-                    title: 'image',
+                    title: 'Safety Rating',
                     type: 'html',
                     valuePrepareFunction: function (value) {
-                        return "<img src='" + value + "' alt='Mountain View' style='width:100px !important;height:100px !important;'>";
+                        var starhtml = "";
+                        var val = parseInt(value);
+                        for (var i = 1; i <= 5; i++) {
+                            if (i <= val) {
+                                starhtml = starhtml + "<span class='glyphicon glyphicon-star' aria-hidden='true'></span>";
+                            }
+                            else {
+                                starhtml = starhtml + "<span class='glyphicon glyphicon-star-empty' aria-hidden='true'></span>";
+                            }
+                        }
+                        return starhtml;
                     }
+                },
+                Amenity: {
+                    title: 'Amenities',
+                },
+                Agent: {
+                    title: 'Agent',
+                    type: 'html'
+                },
+                fav: {
+                    title: 'Fav',
+                    type: 'custom',
+                    renderComponent: fav_component_1.FavComponent,
                 }
             }
         };
@@ -66,6 +111,9 @@ var EntryComponent = (function () {
             localStorage.setItem('lockopen', "true");
             this.authtmp.login();
         }
+    };
+    EntryComponent.prototype.onUserRowSelect = function (event) {
+        console.log(event);
     };
     return EntryComponent;
 }());

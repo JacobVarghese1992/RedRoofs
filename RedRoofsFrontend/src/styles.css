@@ -59,6 +59,23 @@ table._ngcontent-c0 {
 }    
 
 [_nghost-c0] * {
-background-color: #ffeee0;
+background-color: white;
 font-size: initial;
+}
+
+[_nghost-c0] a {
+    color: #112542 !important;
+}
+
+[_nghost-c0] table tr td, [_nghost-c0] table tr th {
+
+    border: 0px !important;
+}
+.link {
+    color:blue !important;
+}
+
+
+.glyphicon {
+    font-family: 'Glyphicons Halflings' !important;
 }

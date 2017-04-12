@@ -12,7 +12,6 @@ var core_1 = require("@angular/core");
 var auth_service_1 = require("../../services/auth.service");
 var listings_service_1 = require("../../services/listings.service");
 var ng2_smart_table_1 = require("ng2-smart-table");
-var button_view_component_1 = require("./components/button-view/button-view.component");
 var EntryComponent = (function () {
     function EntryComponent(auth, listingsService) {
         var _this = this;
@@ -52,7 +51,7 @@ var EntryComponent = (function () {
                 fav: {
                     title: 'Add!',
                     type: 'custom',
-                    renderComponent: button_view_component_1.ButtonViewComponent
+                    renderComponent: ButtonViewComponent
                 }
             }
         };

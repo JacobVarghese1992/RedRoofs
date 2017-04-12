@@ -3,7 +3,6 @@ import {Auth} from '../../services/auth.service';
 import{ListingsService} from '../../services/listings.service';
 import { LocalDataSource } from 'ng2-smart-table';
 import { ViewCell } from 'ng2-smart-table';
-import {ButtonViewComponent} from './components/button-view/button-view.component';
 
 
 @Component({

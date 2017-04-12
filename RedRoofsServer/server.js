@@ -40,8 +40,8 @@ app.get('/listings/:state/:city', function(req, res) {
   	console.log(req.params.state)
   	console.log(req.params.city)
     var sendmail1 = "\"<br><a href='mailto:\"";
-    var sendmail2 = "\"'>Send Mail</a>\"";
-    var call1 = "\"<br><a href='mailto:\"";
+    var sendmail2 = "\"'>Send Mail</a>";
+    var call1 = "\"<br><a href='tel:\"";
     var call2 = "\"'>Call</a>\"";
 
 	// var query = 'INSERT INTO Listings(listing_id,address,beds,baths,price,currency,safety_rating,link,longitude,latitude,Agent_id) VALUE(?,?,?,?,?,?,?,?,?,?,?)';

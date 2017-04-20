@@ -77,7 +77,7 @@ app.get('/listings/:state/:city/:user_id/:price_range/:beds_range/:baths_range/:
 "AND beds >= ? AND beds <= ? " +
 "AND baths >= ? AND baths <= ? " +
 "AND Agent_id IN " + req.params.realtors +
-"HAVING user_id IS NULL OR user_id = ? ";
+" HAVING user_id IS NULL OR user_id = ? ";
 
   	var table = [req.params.state,req.params.city, price_range[0], price_range[1], beds_range[0], beds_range[1], baths_range[0], baths_range[1], req.params.user_id];
   	connection.query(query,table, function(err,result){
@@ -152,6 +152,21 @@ app.get('/allrealtors', function(req, res) {
     console.log(req.params.realtor)
 
     var query = "SELECT agent_id AS id, description AS name FROM RealEstateAgents";
+    var table = [];
+    connection.query(query,table, function(err,result){
+      if(err) throw err;
+      else {
+          res.json(result);
+      }
+    });
+
+});
+
+app.get('/allamenities', function(req, res) {
+
+    console.log(req.params.realtor)
+
+    var query = "SELECT description AS id, description AS name FROM Amenities";
     var table = [];
     connection.query(query,table, function(err,result){
       if(err) throw err;

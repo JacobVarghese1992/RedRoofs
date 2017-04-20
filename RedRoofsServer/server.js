@@ -135,7 +135,7 @@ app.get('/realtor/:realtor', function(req, res) {
 
     console.log(req.params.realtor)
 
-    var query = "SELECT * FROM RealEstateAgents WHERE agent_id = ?";
+    var query = "SELECT * FROM RealEstateAgents WHERE agent_id LIKE ?";
     var table = [req.params.realtor];
     connection.query(query,table, function(err,result){
       if(err) throw err;

@@ -35,7 +35,7 @@ app.get('/api/users', function(req, res) {
   res.json(users);
 });
 
-app.get('/listings/:state/:city/:user_id/:price_range/:beds_range/:baths_range', function(req, res) {
+app.get('/listings/:state/:city/:user_id/:price_range/:beds_range/:baths_range/:realtors', function(req, res) {
   	// res.json(users);
   	console.log(req.params.state)
   	console.log(req.params.city)
@@ -76,6 +76,7 @@ app.get('/listings/:state/:city/:user_id/:price_range/:beds_range/:baths_range',
 "AND price_sort >= ? AND price_sort <= ? " +
 "AND beds >= ? AND beds <= ? " +
 "AND baths >= ? AND baths <= ? " +
+"AND Agent_id IN " + req.params.realtors +
 "HAVING user_id IS NULL OR user_id = ? ";
 
   	var table = [req.params.state,req.params.city, price_range[0], price_range[1], beds_range[0], beds_range[1], baths_range[0], baths_range[1], req.params.user_id];

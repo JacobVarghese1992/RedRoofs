@@ -4,6 +4,8 @@ var jwt = require('express-jwt');
 var cors = require('cors');
 var mysql = require('mysql');
 var bodyParser = require('body-parser');
+var http = require('http');
+var parseString = require('xml2js').parseString;
 
 var connection =  mysql.createPool({
 	host : 'redroofs.clmzagnk9vbp.us-east-1.rds.amazonaws.com',
@@ -140,6 +142,55 @@ app.post('/favourite', function(req, res) {
     });
     // console.log(req.body)
 
+
+});
+
+app.get('/rss', function(req, res) {
+
+    // res.json(users);
+
+    // console.log(req.body.user)
+    // console.log(req.body.listing)
+
+    // var query = "INSERT INTO Favourites(user_id,listing_id) VALUE(?,?)";
+    // var table = [req.body.user,req.body.listing];
+    // connection.query(query,table, function(err,result){
+    //   if(err) { throw err;
+    //     res.json({"Message" : err});
+    //   } else 
+    //   {
+    //       res.json({"Message" : "Success"});
+    //   }
+    // });
+    // console.log(req.body)
+
+    //The url we want is: 'www.random.org/integers/?num=1&min=1&max=10&col=1&base=10&format=plain&rnd=new'
+    var options = {
+      host: 'www.phillyvoice.com',
+      path: '/feed/section/culture/'
+    };
+
+    callback = function(response) {
+      var str = '';
+
+      //another chunk of data has been recieved, so append it to `str`
+      response.on('data', function (chunk) {
+        str += chunk;
+      });
+
+      //the whole response has been recieved, so we just print it out here
+      response.on('end', function () {
+        // console.log(str);
+        parseString(str, function (err, result) {
+          // console.log(result.rss.channel[0].item0;]);
+          res.json(result.rss.channel[0].item[0]);
+        });
+
+
+      });
+    }
+
+    http.request(options, callback).end();
 
 });
 

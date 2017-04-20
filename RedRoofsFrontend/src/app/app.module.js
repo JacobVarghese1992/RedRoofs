@@ -18,6 +18,8 @@ var fav_component_1 = require("./components/fav/fav.component");
 var profile_component_1 = require("./components/profile/profile.component");
 var auth_service_1 = require("./services/auth.service");
 var ng2_smart_table_1 = require("ng2-smart-table");
+var ng2_nouislider_1 = require("ng2-nouislider");
+var angular_2_dropdown_multiselect_1 = require("angular-2-dropdown-multiselect");
 var AppModule = (function () {
     function AppModule() {
     }
@@ -25,7 +27,7 @@ var AppModule = (function () {
 }());
 AppModule = __decorate([
     core_1.NgModule({
-        imports: [platform_browser_1.BrowserModule, app_routing_1.routing, forms_1.FormsModule, http_1.HttpModule, ng2_smart_table_1.Ng2SmartTableModule],
+        imports: [platform_browser_1.BrowserModule, app_routing_1.routing, forms_1.FormsModule, http_1.HttpModule, ng2_smart_table_1.Ng2SmartTableModule, ng2_nouislider_1.NouisliderModule, angular_2_dropdown_multiselect_1.MultiselectDropdownModule],
         declarations: [app_component_1.AppComponent, home_component_1.HomeComponent, entry_component_1.EntryComponent, profile_component_1.ProfileComponent, fav_component_1.FavComponent],
         entryComponents: [fav_component_1.FavComponent],
         bootstrap: [app_component_1.AppComponent],

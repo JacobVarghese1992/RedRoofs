@@ -30,7 +30,11 @@
       'ng2-smart-table':'npm:ng2-smart-table',
       'ng2-completer':'npm:ng2-completer',
       'traceur':'npm:traceur/bin/traceur.js',
-      'lodash':'npm:lodash'
+      'lodash':'npm:lodash',
+      'nouislider': 'node_modules/nouislider',
+      'ng2-nouislider': 'node_modules/ng2-nouislider',
+      'angular-2-dropdown-multiselect': 'node_modules/angular-2-dropdown-multiselect/src/multiselect-dropdown.js'
+
     },
     // packages tells the System loader how to load when no filename and/or no extension
     packages: {
@@ -56,7 +60,14 @@
       lodash: {
             main: 'index.js',
             defaultExtension: 'js'
-      }
+      },
+      'nouislider': { main: 'distribute/nouislider.js', defaultExtension: 'js' },
+      'ng2-nouislider': { main: 'src/nouislider.js', defaultExtension: 'js' },
+      // 'angular-2-dropdown-multiselect': {
+      //   main: 'index.js',
+      //   defaultExtension: 'js'
+      // }
+
     }
   });
 })(this);

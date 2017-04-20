@@ -4,6 +4,8 @@ import{ListingsService} from '../../services/listings.service';
 import { LocalDataSource } from 'ng2-smart-table';
 import { ViewCell } from 'ng2-smart-table';
 import { FavComponent } from '../fav/fav.component';
+import { NouisliderModule } from 'ng2-nouislider';
+import { IMultiSelectOption } from 'angular-2-dropdown-multiselect';
 
 // @Component({
 //   template: `
@@ -37,7 +39,93 @@ import { FavComponent } from '../fav/fav.component';
 
 })
 
-export class EntryComponent  {
+export class EntryComponent implements OnInit {
+
+    optionsRealtorsModel: number[];
+    myRealtorsOptions: IMultiSelectOption[];
+    optionsAmenitiesModel: number[];
+    myAmenitiesOptions: IMultiSelectOption[];
+    
+    ngOnInit() {
+      this.myRealtorsOptions = []
+      this.listingsService.getAllRealtors().subscribe(realtors => {
+              // console.log(realtors);
+              this.myRealtorsOptions = realtors;
+              this.optionsRealtorsModel = [];
+              for(var i = 0; i < realtors.length; i++) {
+                this.optionsRealtorsModel.push(realtors[i].id)
+              }
+              this.listingsService.getAllListings(JSON.parse(localStorage.getItem("profile")).user_id, 
+                  JSON.stringify(this.pricerange),
+                  JSON.stringify(this.bedsrange),
+                  JSON.stringify(this.bathsrange),
+                  JSON.stringify(this.optionsRealtorsModel),
+                  JSON.stringify(this.optionsAmenitiesModel)
+                  ).subscribe(houses => {
+                  console.log(houses[0]);
+                  this.source.load(houses);
+              })
+      })
+      this.myAmenitiesOptions = []
+      this.listingsService.getAllAmenities().subscribe(amenities => {
+              // console.log(realtors);
+              this.myAmenitiesOptions = amenities;
+              this.optionsAmenitiesModel = [];
+              for(var i = 0; i < amenities.length; i++) {
+                this.optionsAmenitiesModel.push(amenities[i].id)
+              }
+              this.listingsService.getAllListings(JSON.parse(localStorage.getItem("profile")).user_id, 
+                  JSON.stringify(this.pricerange),
+                  JSON.stringify(this.bedsrange),
+                  JSON.stringify(this.bathsrange),
+                  JSON.stringify(this.optionsRealtorsModel),
+                  JSON.stringify(this.optionsAmenitiesModel)
+                  ).subscribe(houses => {
+                  console.log(houses[0]);
+                  this.source.load(houses);
+              })
+      })      
+
+
+
+    }
+    onChangeRealtorsOptions() {
+        console.log(this.optionsRealtorsModel);
+        this.listingsService.getAllListings(JSON.parse(localStorage.getItem("profile")).user_id, 
+          JSON.stringify(this.pricerange),
+          JSON.stringify(this.bedsrange),
+          JSON.stringify(this.bathsrange),
+          JSON.stringify(this.optionsRealtorsModel),
+          JSON.stringify(this.optionsAmenitiesModel)
+        ).subscribe(houses => {
+            console.log(houses[0]);
+            this.source.load(houses);
+        })
+    }
+
+    onChangeAmenitiesOptions() {
+        console.log(this.optionsAmenitiesModel);
+        this.listingsService.getAllListings(JSON.parse(localStorage.getItem("profile")).user_id, 
+          JSON.stringify(this.pricerange),
+          JSON.stringify(this.bedsrange),
+          JSON.stringify(this.bathsrange),
+          JSON.stringify(this.optionsRealtorsModel),
+          JSON.stringify(this.optionsAmenitiesModel)
+        ).subscribe(houses => {
+            console.log(houses[0]);
+            this.source.load(houses);
+        })
+    }
+    
+  pricerange=[0,5000];
+  bedsrange=[1,6];
+  bathsrange=[1,6];
+  // This gives values for the sort drop down
+  sorts = [ {code: 'ASC', text: 'Ascending'},{code: 'DESC', text: 'Descending'}];
+  
+  // This holds the sortings for all the fields
+  sortorders = {};
+  
   authtmp :Auth;
   settings = {
     actions: false,
@@ -110,12 +198,22 @@ export class EntryComponent  {
   };
   source: LocalDataSource;  
   constructor(private auth:Auth, private listingsService: ListingsService) {
+    this.optionsRealtorsModel = [];
+    this.optionsAmenitiesModel = [];
     this.authtmp = auth;
     this.source = new LocalDataSource();
-    this.listingsService.getAllListings(JSON.parse(localStorage.getItem("profile")).user_id).subscribe(houses => {
+    this.listingsService.getAllListings(JSON.parse(localStorage.getItem("profile")).user_id, 
+      JSON.stringify(this.pricerange),
+      JSON.stringify(this.bedsrange),
+      JSON.stringify(this.bathsrange),
+      JSON.stringify(this.optionsRealtorsModel),
+      JSON.stringify(this.optionsAmenitiesModel)
+    ).subscribe(houses => {
             console.log(houses[0]);
             this.source.load(houses);
     })
+
+    
 
     
   }
@@ -130,10 +228,58 @@ export class EntryComponent  {
     }
   }
 
+  public getRatingSortFromDropDown(sort:any) {
+    console.log("Sort Set as : " + sort);
+  }
+
 
   onUserRowSelect(event: any): void {
     console.log(event);
   }
+
+  onPriceChange(event: any) {
+    console.log(JSON.stringify(this.pricerange));
+        this.listingsService.getAllListings(JSON.parse(localStorage.getItem("profile")).user_id, 
+        JSON.stringify(this.pricerange),
+        JSON.stringify(this.bedsrange),
+        JSON.stringify(this.bathsrange),
+        JSON.stringify(this.optionsRealtorsModel),
+        JSON.stringify(this.optionsAmenitiesModel)
+        ).subscribe(houses => {
+            console.log(houses[0]);
+            this.source.load(houses);
+    })
+  }
+
+  onBedsChange(event: any) {
+    console.log(JSON.stringify(this.pricerange));
+    this.listingsService.getAllListings(JSON.parse(localStorage.getItem("profile")).user_id, 
+        JSON.stringify(this.pricerange),
+        JSON.stringify(this.bedsrange),
+        JSON.stringify(this.bathsrange),
+        JSON.stringify(this.optionsRealtorsModel),
+        JSON.stringify(this.optionsAmenitiesModel)
+        ).subscribe(houses => {
+            console.log(houses[0]);
+            this.source.load(houses);
+    })
+  }
+
+  onBathsChange(event: any) {
+    console.log(JSON.stringify(this.pricerange));
+        this.listingsService.getAllListings(JSON.parse(localStorage.getItem("profile")).user_id, 
+        JSON.stringify(this.pricerange),
+        JSON.stringify(this.bedsrange),
+        JSON.stringify(this.bathsrange),
+        JSON.stringify(this.optionsRealtorsModel),
+        JSON.stringify(this.optionsAmenitiesModel)
+        ).subscribe(houses => {
+            console.log(houses[0]);
+            this.source.load(houses);
+    })
+  }
+
+
 }
  
 

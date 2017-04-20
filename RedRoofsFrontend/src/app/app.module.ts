@@ -12,9 +12,11 @@ import {ProfileComponent} from './components/profile/profile.component';
 
 import {Auth} from './services/auth.service';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
+import { NouisliderModule } from 'ng2-nouislider';
+import { MultiselectDropdownModule } from 'angular-2-dropdown-multiselect';
 
 @NgModule({
-  imports:      [ BrowserModule, routing, FormsModule, HttpModule, Ng2SmartTableModule ],
+  imports:      [ BrowserModule, routing, FormsModule, HttpModule, Ng2SmartTableModule,  NouisliderModule, MultiselectDropdownModule],
   declarations: [ AppComponent, HomeComponent,EntryComponent, ProfileComponent, FavComponent ],
   entryComponents: [FavComponent],
   bootstrap:    [ AppComponent ],
@@ -22,6 +24,5 @@ import { Ng2SmartTableModule } from 'ng2-smart-table';
   	appRoutingProviders,
   	AUTH_PROVIDERS,
   	Auth
-  ]
-})
+  ]})
 export class AppModule { }

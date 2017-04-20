@@ -13,13 +13,26 @@ export class ListingsService {
             .map(res => res.json());
     }
 
+    getAllRealtors() {
+        return this.http.get('http://ec2-52-91-32-196.compute-1.amazonaws.com/allrealtors')
+            .map(res => res.json());
+    }
+    getAllAmenities() {
+        return this.http.get('http://ec2-52-91-32-196.compute-1.amazonaws.com/allamenities')
+            .map(res => res.json());
+    }
      getAllCities(state: string) {
         var url = "http://ec2-52-91-32-196.compute-1.amazonaws.com/allcities/" + state;
         return this.http.get(url)
             .map(res => res.json());
     }
-    getAllListings(user_id: string) {
-        return this.http.get('http://ec2-52-91-32-196.compute-1.amazonaws.com/listings/PA/PHIL/'+user_id)
+    getAllListings(user_id: string,price_range: string, beds_range: string, baths_range: string, realtors: string, amenities:string) {
+        realtors = realtors.replace("[","(").replace("]",")");
+        if(realtors == '()') {
+            realtors = '("")';
+        }
+        return this.http.get('http://ec2-52-91-32-196.compute-1.amazonaws.com/listings/PA/PHIL/'+
+        user_id+"/"+price_range+"/"+beds_range+"/"+baths_range+"/"+realtors+"/"+amenities)
             .map(res => res.json());
     }
 }

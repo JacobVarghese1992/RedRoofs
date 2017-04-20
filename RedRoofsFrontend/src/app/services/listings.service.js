@@ -20,13 +20,26 @@ var ListingsService = (function () {
         return this.http.get('http://ec2-52-91-32-196.compute-1.amazonaws.com/allstates')
             .map(function (res) { return res.json(); });
     };
+    ListingsService.prototype.getAllRealtors = function () {
+        return this.http.get('http://ec2-52-91-32-196.compute-1.amazonaws.com/allrealtors')
+            .map(function (res) { return res.json(); });
+    };
+    ListingsService.prototype.getAllAmenities = function () {
+        return this.http.get('http://ec2-52-91-32-196.compute-1.amazonaws.com/allamenities')
+            .map(function (res) { return res.json(); });
+    };
     ListingsService.prototype.getAllCities = function (state) {
         var url = "http://ec2-52-91-32-196.compute-1.amazonaws.com/allcities/" + state;
         return this.http.get(url)
             .map(function (res) { return res.json(); });
     };
-    ListingsService.prototype.getAllListings = function (user_id) {
-        return this.http.get('http://ec2-52-91-32-196.compute-1.amazonaws.com/listings/PA/PHIL/' + user_id)
+    ListingsService.prototype.getAllListings = function (user_id, price_range, beds_range, baths_range, realtors, amenities) {
+        realtors = realtors.replace("[", "(").replace("]", ")");
+        if (realtors == '()') {
+            realtors = '("")';
+        }
+        return this.http.get('http://ec2-52-91-32-196.compute-1.amazonaws.com/listings/PA/PHIL/' +
+            user_id + "/" + price_range + "/" + beds_range + "/" + baths_range + "/" + realtors + "/" + amenities)
             .map(function (res) { return res.json(); });
     };
     return ListingsService;

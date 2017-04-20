@@ -34,6 +34,13 @@ var EntryComponent = (function () {
         var _this = this;
         this.auth = auth;
         this.listingsService = listingsService;
+        this.pricerange = [0, 5000];
+        this.bedsrange = [1, 6];
+        this.bathsrange = [1, 6];
+        // This gives values for the sort drop down
+        this.sorts = [{ code: 'ASC', text: 'Ascending' }, { code: 'DESC', text: 'Descending' }];
+        // This holds the sortings for all the fields
+        this.sortorders = {};
         this.settings = {
             actions: false,
             hideSubHeader: true,
@@ -97,13 +104,60 @@ var EntryComponent = (function () {
                 }
             }
         };
+        this.optionsRealtorsModel = [];
+        this.optionsAmenitiesModel = [];
         this.authtmp = auth;
         this.source = new ng2_smart_table_1.LocalDataSource();
-        this.listingsService.getAllListings(JSON.parse(localStorage.getItem("profile")).user_id).subscribe(function (houses) {
+        this.listingsService.getAllListings(JSON.parse(localStorage.getItem("profile")).user_id, JSON.stringify(this.pricerange), JSON.stringify(this.bedsrange), JSON.stringify(this.bathsrange), JSON.stringify(this.optionsRealtorsModel), JSON.stringify(this.optionsAmenitiesModel)).subscribe(function (houses) {
             console.log(houses[0]);
             _this.source.load(houses);
         });
     }
+    EntryComponent.prototype.ngOnInit = function () {
+        var _this = this;
+        this.myRealtorsOptions = [];
+        this.listingsService.getAllRealtors().subscribe(function (realtors) {
+            // console.log(realtors);
+            _this.myRealtorsOptions = realtors;
+            _this.optionsRealtorsModel = [];
+            for (var i = 0; i < realtors.length; i++) {
+                _this.optionsRealtorsModel.push(realtors[i].id);
+            }
+            _this.listingsService.getAllListings(JSON.parse(localStorage.getItem("profile")).user_id, JSON.stringify(_this.pricerange), JSON.stringify(_this.bedsrange), JSON.stringify(_this.bathsrange), JSON.stringify(_this.optionsRealtorsModel), JSON.stringify(_this.optionsAmenitiesModel)).subscribe(function (houses) {
+                console.log(houses[0]);
+                _this.source.load(houses);
+            });
+        });
+        this.myAmenitiesOptions = [];
+        this.listingsService.getAllAmenities().subscribe(function (amenities) {
+            // console.log(realtors);
+            _this.myAmenitiesOptions = amenities;
+            _this.optionsAmenitiesModel = [];
+            for (var i = 0; i < amenities.length; i++) {
+                _this.optionsAmenitiesModel.push(amenities[i].id);
+            }
+            _this.listingsService.getAllListings(JSON.parse(localStorage.getItem("profile")).user_id, JSON.stringify(_this.pricerange), JSON.stringify(_this.bedsrange), JSON.stringify(_this.bathsrange), JSON.stringify(_this.optionsRealtorsModel), JSON.stringify(_this.optionsAmenitiesModel)).subscribe(function (houses) {
+                console.log(houses[0]);
+                _this.source.load(houses);
+            });
+        });
+    };
+    EntryComponent.prototype.onChangeRealtorsOptions = function () {
+        var _this = this;
+        console.log(this.optionsRealtorsModel);
+        this.listingsService.getAllListings(JSON.parse(localStorage.getItem("profile")).user_id, JSON.stringify(this.pricerange), JSON.stringify(this.bedsrange), JSON.stringify(this.bathsrange), JSON.stringify(this.optionsRealtorsModel), JSON.stringify(this.optionsAmenitiesModel)).subscribe(function (houses) {
+            console.log(houses[0]);
+            _this.source.load(houses);
+        });
+    };
+    EntryComponent.prototype.onChangeAmenitiesOptions = function () {
+        var _this = this;
+        console.log(this.optionsAmenitiesModel);
+        this.listingsService.getAllListings(JSON.parse(localStorage.getItem("profile")).user_id, JSON.stringify(this.pricerange), JSON.stringify(this.bedsrange), JSON.stringify(this.bathsrange), JSON.stringify(this.optionsRealtorsModel), JSON.stringify(this.optionsAmenitiesModel)).subscribe(function (houses) {
+            console.log(houses[0]);
+            _this.source.load(houses);
+        });
+    };
     EntryComponent.prototype.ngAfterViewChecked = function () {
         // console.log("Checking Auth  " + this.authtmp.authenticated())
         if ((!this.authtmp.authenticated()) && (localStorage.getItem("lockopen") != "true")) {
@@ -112,8 +166,35 @@ var EntryComponent = (function () {
             this.authtmp.login();
         }
     };
+    EntryComponent.prototype.getRatingSortFromDropDown = function (sort) {
+        console.log("Sort Set as : " + sort);
+    };
     EntryComponent.prototype.onUserRowSelect = function (event) {
         console.log(event);
+    };
+    EntryComponent.prototype.onPriceChange = function (event) {
+        var _this = this;
+        console.log(JSON.stringify(this.pricerange));
+        this.listingsService.getAllListings(JSON.parse(localStorage.getItem("profile")).user_id, JSON.stringify(this.pricerange), JSON.stringify(this.bedsrange), JSON.stringify(this.bathsrange), JSON.stringify(this.optionsRealtorsModel), JSON.stringify(this.optionsAmenitiesModel)).subscribe(function (houses) {
+            console.log(houses[0]);
+            _this.source.load(houses);
+        });
+    };
+    EntryComponent.prototype.onBedsChange = function (event) {
+        var _this = this;
+        console.log(JSON.stringify(this.pricerange));
+        this.listingsService.getAllListings(JSON.parse(localStorage.getItem("profile")).user_id, JSON.stringify(this.pricerange), JSON.stringify(this.bedsrange), JSON.stringify(this.bathsrange), JSON.stringify(this.optionsRealtorsModel), JSON.stringify(this.optionsAmenitiesModel)).subscribe(function (houses) {
+            console.log(houses[0]);
+            _this.source.load(houses);
+        });
+    };
+    EntryComponent.prototype.onBathsChange = function (event) {
+        var _this = this;
+        console.log(JSON.stringify(this.pricerange));
+        this.listingsService.getAllListings(JSON.parse(localStorage.getItem("profile")).user_id, JSON.stringify(this.pricerange), JSON.stringify(this.bedsrange), JSON.stringify(this.bathsrange), JSON.stringify(this.optionsRealtorsModel), JSON.stringify(this.optionsAmenitiesModel)).subscribe(function (houses) {
+            console.log(houses[0]);
+            _this.source.load(houses);
+        });
     };
     return EntryComponent;
 }());

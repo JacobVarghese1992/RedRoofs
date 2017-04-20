@@ -54,20 +54,20 @@ body {
     font-family: sans-serif;
 }
 
-table._ngcontent-c0 {
+table._ngcontent-c2 {
     background-color: #ffeee0;
 }    
 
-[_nghost-c0] * {
+[_nghost-c2] * {
 background-color: white;
 font-size: initial;
 }
 
-[_nghost-c0] a {
+[_nghost-c2] a {
     color: #112542 !important;
 }
 
-[_nghost-c0] table tr td, [_nghost-c0] table tr th {
+[_nghost-c2] table tr td, [_nghost-c2] table tr th {
 
     border: 0px !important;
 }
@@ -78,4 +78,34 @@ font-size: initial;
 
 .glyphicon {
     font-family: 'Glyphicons Halflings' !important;
+}
+
+table-cell-view-mode > div > div > img {
+    height: 300px;
+    width: 480px;
+}
+
+.noUi-connect {
+    background: #b1e3da;
+}
+
+.dropdown-menu>li>a:hover, .dropdown-menu>li>a:focus {
+    text-decoration: none;
+    color: black;
+     background-color: white; 
+}
+
+button[ng-reflect-klass="dropdown-toggle"] { 
+    width:100%;
+}
+
+button[ng-reflect-klass="dropdown-toggle"]:hover {
+    /*color: #ffffff;*/
+     background-color: #b1e3da 
+    /* border-color: #7a7a7a; */
+}
+button[ng-reflect-klass="dropdown-toggle"]:focus, button[ng-reflect-klass="dropdown-toggle"].focus {
+    /*color: #ffffff;*/
+     background-color: #b1e3da; 
+    /* border-color: #595959; */
 }

@@ -15,7 +15,6 @@ export class HomeComponent  {
 
   constructor(private auth:Auth, private listingsService: ListingsService) {
     this.authtmp = auth;
-
     this.listingsService.getAllStates().subscribe(states => {
             // console.log(states);
             this.states = states;

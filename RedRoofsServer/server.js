@@ -150,7 +150,7 @@ app.get('/allrealtors', function(req, res) {
 
     console.log(req.params.realtor)
 
-    var query = "SELECT * FROM RealEstateAgents";
+    var query = "SELECT agent_id AS id, description AS name FROM RealEstateAgents";
     var table = [];
     connection.query(query,table, function(err,result){
       if(err) throw err;

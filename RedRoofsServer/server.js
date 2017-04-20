@@ -135,8 +135,23 @@ app.get('/realtor/:realtor', function(req, res) {
 
     console.log(req.params.realtor)
 
-    var query = "SELECT * FROM RealEstateAgents WHERE agent_id LIKE ?";
+    var query = "SELECT * FROM RealEstateAgents WHERE agent_id = ?";
     var table = [req.params.realtor];
+    connection.query(query,table, function(err,result){
+      if(err) throw err;
+      else {
+          res.json(result);
+      }
+    });
+
+});
+
+app.get('/allrealtors', function(req, res) {
+
+    console.log(req.params.realtor)
+
+    var query = "SELECT * FROM RealEstateAgents";
+    var table = [];
     connection.query(query,table, function(err,result){
       if(err) throw err;
       else {

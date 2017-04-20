@@ -35,7 +35,7 @@ app.get('/api/users', function(req, res) {
   res.json(users);
 });
 
-app.get('/listings/:state/:city/:user_id/:price_range', function(req, res) {
+app.get('/listings/:state/:city/:user_id/:price_range/:beds_range/:baths_range', function(req, res) {
   	// res.json(users);
   	console.log(req.params.state)
   	console.log(req.params.city)
@@ -44,7 +44,9 @@ app.get('/listings/:state/:city/:user_id/:price_range', function(req, res) {
     var call1 = "<br><a href='tel:\"";
     var call2 = "\"'>Call</a>\"";
 
-    var range = JSON.parse(req.params.price_range);
+    var price_range = JSON.parse(req.params.price_range);
+    var beds_range = JSON.parse(req.params.beds_range);
+    var baths_range = JSON.parse(req.params.baths_range);
 
 
 	// var query = 'INSERT INTO Listings(listing_id,address,beds,baths,price,currency,safety_rating,link,longitude,latitude,Agent_id) VALUE(?,?,?,?,?,?,?,?,?,?,?)';
@@ -71,10 +73,12 @@ app.get('/listings/:state/:city/:user_id/:price_range', function(req, res) {
 "LEFT OUTER JOIN Favourites AS F " +
 "ON V.listing_id = F.listing_id " +
 "WHERE V.state = ? AND V.city = ? " +
-"AND price_sort >= ? AND AND price_sort <= ? " +
-"HAVING user_id IS NULL OR user_id = ? "
+"AND price_sort >= ? AND price_sort <= ? " +
+"AND beds >= ? AND beds <= ? " +
+"AND baths >= ? AND baths <= ? " +
+"HAVING user_id IS NULL OR user_id = ? ";
 
-  	var table = [req.params.state,req.params.city, range[0], range[1], req.params.user_id];
+  	var table = [req.params.state,req.params.city, price_range[0], price_range[1], beds_range[0], beds_range[1], baths_range[0], baths_range[1], req.params.user_id];
   	connection.query(query,table, function(err,result){
     	if(err) throw err;
     	else {

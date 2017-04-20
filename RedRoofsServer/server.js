@@ -183,7 +183,7 @@ app.get('/rss', function(req, res) {
         // console.log(str);
         parseString(str, function (err, result) {
           // console.log(result.rss.channel[0].item0;]);
-          res.json(result.rss.channel[0].item[0]);
+          res.json(result.rss.channel[0].item);
         });
 
 

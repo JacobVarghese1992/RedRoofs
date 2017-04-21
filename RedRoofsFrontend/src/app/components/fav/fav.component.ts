@@ -8,7 +8,9 @@ import {Observable} from 'rxjs/Rx';
 
 @Component({
   template: `
-     <div (click)="addToFav()"><span class="glyphicon glyphicon-heart" aria-hidden="true"></span></div>
+     <div (click)="addToFav()" *ngIf="ifTrue()"><span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span></div>
+     <div (click)="addToFav()" *ngIf="ifFalse()"><span class="glyphicon glyphicon-thumbs-down" aria-hidden="true"></span></div>
+
   `,
 })
 
@@ -28,6 +30,13 @@ export class FavComponent implements ViewCell, OnInit {
     alert(this.renderValue.split('-')[1]);
   }
 
+  ifTrue(){
+    return Number(this.renderValue.split('-')[2])==0
+  }
+
+  ifFalse(){
+    return Number(this.renderValue.split('-')[2])==1
+  }
   addToFav(){
     var body = {"user":JSON.parse(localStorage.getItem("profile")).user_id, "listing":Number(this.renderValue.split('-')[1])}
     let bodyString = JSON.stringify(body); // Stringify payload
@@ -39,7 +48,6 @@ export class FavComponent implements ViewCell, OnInit {
     return this.http.post(url, bodyString, options) // ...using post request
                     .map((res:Response) => res.json()) // ...and calling .json() on the response to return data
                     .catch((error:any) => Observable.throw(error.json().error || 'Server error'));//...errors if any
-     console.log("Response " + res);  
   }
 
 }

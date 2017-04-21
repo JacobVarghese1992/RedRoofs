@@ -21,6 +21,12 @@ var FavComponent = (function () {
     FavComponent.prototype.showAlert = function () {
         alert(this.renderValue.split('-')[1]);
     };
+    FavComponent.prototype.ifTrue = function () {
+        return Number(this.renderValue.split('-')[2]) == 0;
+    };
+    FavComponent.prototype.ifFalse = function () {
+        return Number(this.renderValue.split('-')[2]) == 1;
+    };
     FavComponent.prototype.addToFav = function () {
         var body = { "user": JSON.parse(localStorage.getItem("profile")).user_id, "listing": Number(this.renderValue.split('-')[1]) };
         var bodyString = JSON.stringify(body); // Stringify payload
@@ -32,7 +38,6 @@ var FavComponent = (function () {
         return this.http.post(url, bodyString, options) // ...using post request
             .map(function (res) { return res.json(); }) // ...and calling .json() on the response to return data
             .catch(function (error) { return Rx_1.Observable.throw(error.json().error || 'Server error'); }); //...errors if any
-        console.log("Response " + res);
     };
     return FavComponent;
 }());
@@ -42,7 +47,7 @@ __decorate([
 ], FavComponent.prototype, "value", void 0);
 FavComponent = __decorate([
     core_1.Component({
-        template: "\n     <div (click)=\"addToFav()\"><span class=\"glyphicon glyphicon-heart\" aria-hidden=\"true\"></span></div>\n  ",
+        template: "\n     <div (click)=\"addToFav()\" *ngIf=\"ifTrue()\"><span class=\"glyphicon glyphicon-thumbs-up\" aria-hidden=\"true\"></span></div>\n     <div (click)=\"addToFav()\" *ngIf=\"ifFalse()\"><span class=\"glyphicon glyphicon-thumbs-down\" aria-hidden=\"true\"></span></div>\n\n  ",
     }),
     __metadata("design:paramtypes", [http_1.Http])
 ], FavComponent);

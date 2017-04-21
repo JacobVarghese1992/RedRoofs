@@ -38,7 +38,7 @@ export class ListingsService {
         if(realtors == '()') {
             realtors = '("")';
         }
-        return this.http.get('http://ec2-52-91-32-196.compute-1.amazonaws.com/listings/PA/PHIL/'+
+        return this.http.get('http://ec2-52-91-32-196.compute-1.amazonaws.com/listings/'+localStorage.getItem("user_state")+'/'+localStorage.getItem("user_city")+'/'+
         user_id+"/"+price_range+"/"+beds_range+"/"+baths_range+"/"+realtors+"/"+amenities)
             .map(res => res.json());
     }

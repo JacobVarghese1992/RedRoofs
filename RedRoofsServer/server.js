@@ -61,26 +61,7 @@ app.get('/listings/:state/:city/:user_id/:price_range/:beds_range/:baths_range/:
       query_amenity = " Amenity LIKE '%' "
     }
 
-	// var query = 'INSERT INTO Listings(listing_id,address,beds,baths,price,currency,safety_rating,link,longitude,latitude,Agent_id) VALUE(?,?,?,?,?,?,?,?,?,?,?)';
-//     var query = "SELECT L.listing_id,L.address,L.image,L.beds,L.baths,CONCAT(C.symbol,L.price) AS " +
-// "price,L.safety_rating,L.link, " + 
-// "CONCAT(R.description," + sendmail1 + ",R.email_id," + sendmail2 + call1 + ",R.phone_no," + call2 + ") AS Agent, " + 
-// "AM.Amenity,CONCAT('fav-',L.listing_id) AS fav FROM Listings AS L " +
-// "INNER JOIN Currencies AS C " +
-// "ON L.currency = C.currency " +
-// "INNER JOIN RealEstateAgents AS R " +
-// "ON L.Agent_id = R.agent_id " +
-// "INNER JOIN ( " +
-// "SELECT IA.listing_id AS listing_id, GROUP_CONCAT(A.description  SEPARATOR ', ')AS Amenity " + 
-// "FROM IncludedAmenities AS IA " +
-// "INNER JOIN Amenities AS A " +
-// "ON IA.amenity_id = A.amenity_id " + 
-// "GROUP BY IA.listing_id " +
-// ") AS AM " +
-// "ON L.listing_id = AM.listing_id " +
-// "WHERE L.state= ? AND L.city= ? ";
-
-    var query = "SELECT V.*, CONCAT(V.fav, '-', (F.listing_id IS NOT NULL)) AS isfav, F.user_id " + 
+var query = "SELECT V.*, CONCAT(V.fav, '-', (F.listing_id IS NOT NULL)) AS isfav, F.user_id " + 
 "FROM ViewListingsAmenities AS V " +
 "LEFT OUTER JOIN Favourites AS F " +
 "ON V.listing_id = F.listing_id " +
@@ -99,6 +80,53 @@ app.get('/listings/:state/:city/:user_id/:price_range/:beds_range/:baths_range/:
         	res.json(result);
     	}
   	});
+
+});
+
+
+app.get('/favlistings/:state/:city/:user_id/:price_range/:beds_range/:baths_range/:realtors/:amenities', function(req, res) {
+    // res.json(users);
+    console.log(req.params.state)
+    console.log(req.params.city)
+    var sendmail1 = "\"<br><a href='mailto:\"";
+    var sendmail2 = "\"'>Send Mail</a>";
+    var call1 = "<br><a href='tel:\"";
+    var call2 = "\"'>Call</a>\"";
+
+    var price_range = JSON.parse(req.params.price_range);
+    var beds_range = JSON.parse(req.params.beds_range);
+    var baths_range = JSON.parse(req.params.baths_range);
+    var amenities = JSON.parse(req.params.amenities);
+
+    var query_amenity;
+    if(amenities.length > 0) {
+      query_amenity = " Amenity LIKE '%" + amenities[0] + "%' ";
+      for(var i = 1; i < amenities.length ; i++) {
+        query_amenity = query_amenity + " OR Amenity LIKE '%" + amenities[i] + "%' "
+      }
+    } else {
+      query_amenity = " Amenity LIKE '%' "
+    }
+
+var query = "SELECT V.*, CONCAT(V.fav, '-', (F.listing_id IS NOT NULL)) AS isfav, F.user_id " + 
+"FROM ViewListingsAmenities AS V " +
+"LEFT OUTER JOIN Favourites AS F " +
+"ON V.listing_id = F.listing_id " +
+"WHERE V.state = ? AND V.city = ? " +
+"AND price_sort >= ? AND price_sort <= ? " +
+"AND beds >= ? AND beds <= ? " +
+"AND baths >= ? AND baths <= ? " +
+"AND Agent_id IN " + req.params.realtors + " " +
+"AND ( " + query_amenity + " ) " +
+" HAVING user_id = ? ";
+
+    var table = [req.params.state,req.params.city, price_range[0], price_range[1], beds_range[0], beds_range[1], baths_range[0], baths_range[1], req.params.user_id];
+    connection.query(query,table, function(err,result){
+      if(err) throw err;
+      else {
+          res.json(result);
+      }
+    });
 
 });
 

@@ -26,6 +26,13 @@ export class ListingsService {
         return this.http.get(url)
             .map(res => res.json());
     }
+    
+    getAllRSS() {
+        var url = "http://ec2-52-91-32-196.compute-1.amazonaws.com/rss";
+        return this.http.get(url)
+            .map(res => res.json());
+    }
+
     getAllListings(user_id: string,price_range: string, beds_range: string, baths_range: string, realtors: string, amenities:string) {
         realtors = realtors.replace("[","(").replace("]",")");
         if(realtors == '()') {

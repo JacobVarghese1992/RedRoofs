@@ -11,6 +11,8 @@
 <!--<div class="home-page"></div>-->
 
 <!--<img src="http://pivotandpilot.com/wp-content/uploads/2015/10/5.MoveIn.gif" alt="Smiley face" height="100%" width="100%">-->
+
+
 <div class="row">
    
    <div class="col-sm-2"></div>
@@ -56,7 +58,38 @@
 	  
 	  <div class = "dummy-height"> </div>
 	  <div class = "dummy-height"> </div>
-	  <!--<button class="btn btn-secondary btn-lg btn-block" type="submit" (click)="goToListings()">Favourites</button>-->
+      <div class="panel panel-default panel-box">
+          <div class="panel-body">
+	      
+          <div class="scroll">
+              <div class="scrollitem">
+<!--text text text text text text text text text text text text text text text text text text text text text text text text
+text text text text text text text text text text text text text text text text text text text text text text text text
+text text text text text text text text text text text text text text text text text text text text text text text text
+text text text text text text text text text text text text text text text text text text text text text text text text
+text text text text text text text text text text text text text text text text text text text text text text text text
+text text text text text text text text text text text text text text text text text text text text text text text text
+text text text text text text text text text text text text text text text text text text text text text text text text
+text text text text text text text text text text text text text text text text text text text text text text text text
+text text text text text text text text text text text text text text text text text text text text text text text text
+text text text text text text text text text text text text text text text text text text text text text text text text
+text text text text text text text text text text text text text text text text text text text text text text text text
+text text text text text text text text text text text text text text text text text text text text text text text text-->
+            <div *ngFor="let item of rss">
+                <a href="{{item.link}}">{{item.title}}</a>
+                <br>
+                <br>
+            </div>
+</div>
+</div>
+
+
+
+
+          
+            <!--<button class="btn btn-secondary btn-lg btn-block" type="submit" (click)="goToListings()">Favourites</button>-->
+          </div>
+     </div>     
    </div>
    
    <div class="col-sm-8">

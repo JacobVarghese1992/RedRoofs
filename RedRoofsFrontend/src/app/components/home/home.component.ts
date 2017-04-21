@@ -12,6 +12,7 @@ export class HomeComponent  {
   authtmp :Auth;
 	states: any;
 	cities: any;
+  rss: any;
 
   constructor(private auth:Auth, private listingsService: ListingsService) {
     this.authtmp = auth;
@@ -19,6 +20,12 @@ export class HomeComponent  {
             // console.log(states);
             this.states = states;
             this.getStateFromDropDown(this.states[0].state);
+    })
+
+    this.listingsService.getAllRSS().subscribe(rss => {
+            // console.log(states);
+            this.rss = rss;
+            // this.getStateFromDropDown(this.states[0].state);
     })
     
 

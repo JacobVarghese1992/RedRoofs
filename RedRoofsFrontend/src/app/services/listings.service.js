@@ -33,6 +33,11 @@ var ListingsService = (function () {
         return this.http.get(url)
             .map(function (res) { return res.json(); });
     };
+    ListingsService.prototype.getAllRSS = function () {
+        var url = "http://ec2-52-91-32-196.compute-1.amazonaws.com/rss";
+        return this.http.get(url)
+            .map(function (res) { return res.json(); });
+    };
     ListingsService.prototype.getAllListings = function (user_id, price_range, beds_range, baths_range, realtors, amenities) {
         realtors = realtors.replace("[", "(").replace("]", ")");
         if (realtors == '()') {

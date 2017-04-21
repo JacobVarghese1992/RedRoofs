@@ -22,6 +22,11 @@ var HomeComponent = (function () {
             _this.states = states;
             _this.getStateFromDropDown(_this.states[0].state);
         });
+        this.listingsService.getAllRSS().subscribe(function (rss) {
+            // console.log(states);
+            _this.rss = rss;
+            // this.getStateFromDropDown(this.states[0].state);
+        });
         // this.listingsService.getAllCities().subscribe(cities => {
         //         // console.log(cities);
         //         this.cities = cities;

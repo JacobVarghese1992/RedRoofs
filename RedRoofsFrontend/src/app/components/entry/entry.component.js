@@ -97,7 +97,7 @@ var EntryComponent = (function () {
                     title: 'Agent',
                     type: 'html'
                 },
-                fav: {
+                isfav: {
                     title: 'Fav',
                     type: 'custom',
                     renderComponent: fav_component_1.FavComponent,

@@ -184,7 +184,7 @@ export class EntryComponent implements OnInit {
         title: 'Agent',
         type: 'html'
       },
-      fav: {
+      isfav: {
         title: 'Fav',
         type: 'custom',
         renderComponent: FavComponent,

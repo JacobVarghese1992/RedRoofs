@@ -80,7 +80,7 @@ app.get('/listings/:state/:city/:user_id/:price_range/:beds_range/:baths_range/:
 // "ON L.listing_id = AM.listing_id " +
 // "WHERE L.state= ? AND L.city= ? ";
 
-    var query = "SELECT V.*, (F.listing_id IS NOT NULL) AS isfav, F.user_id " + 
+    var query = "SELECT V.*, CONCAT(V.fav, '-', (F.listing_id IS NOT NULL)) AS isfav, F.user_id " + 
 "FROM ViewListingsAmenities AS V " +
 "LEFT OUTER JOIN Favourites AS F " +
 "ON V.listing_id = F.listing_id " +

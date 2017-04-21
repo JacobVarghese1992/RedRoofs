@@ -1,0 +1,55 @@
+
+
+
+<div class="row">
+    <div class="col-sm-1"></div>
+    <div class="col-sm-10">
+        <div class="panel panel-default">
+            <div class="panel-heading">Filters</div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-sm-2">Price Range: ${{ pricerange[0] }} to ${{ pricerange[1] }}</div>
+                    <div class="col-sm-10">
+                        <div class="noUiSlider"><nouislider [connect]="true" [min]="0" [max]="5000" [step]="1" [(ngModel)]="pricerange" (ngModelChange)="onPriceChange($event)"></nouislider></div>
+                    </div>
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col-sm-2">Bed(s): {{ bedsrange[0] }} to {{ bedsrange[1] }}</div>
+                    <div class="col-sm-3">
+                        <div class="noUiSlider"><nouislider [connect]="true" [min]="1" [max]="6" [step]="1" [(ngModel)]="bedsrange" (ngModelChange)="onBedsChange($event)"></nouislider></div>
+                    </div>
+                    <div class="col-sm-2"></div>
+                    <div class="col-sm-2">Bath(s): {{ bathsrange[0] }} to {{ bathsrange[1] }}</div>
+                    <div class="col-sm-3">
+                        <div class="noUiSlider"><nouislider [connect]="true" [min]="1" [max]="6" [step]="1" [(ngModel)]="bathsrange" (ngModelChange)="onBathsChange($event)"></nouislider></div>
+                    </div>
+                    
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col-sm-2">Realtors: </div>
+                    <div class="col-sm-3">
+                        <ss-multiselect-dropdown [options]="myRealtorsOptions" [(ngModel)]="optionsRealtorsModel" (ngModelChange)="onChangeRealtorsOptions($event)"></ss-multiselect-dropdown>
+                    </div>
+                    <div class="col-sm-2"></div>
+                    <div class="col-sm-2">Amenities Include: </div>
+                    <div class="col-sm-3">
+                        <ss-multiselect-dropdown [options]="myAmenitiesOptions" [(ngModel)]="optionsAmenitiesModel" (ngModelChange)="onChangeAmenitiesOptions($event)"></ss-multiselect-dropdown>
+                    </div>
+                    
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-1"></div>
+</div>
+
+<div class="row">
+    <div class="col-sm-1"></div>
+    <div class="col-sm-10">
+        <ng2-smart-table [settings]="settings" [source]="source" (userRowSelect)="onUserRowSelect($event)"></ng2-smart-table>
+    </div>
+    <div class="col-sm-1"></div>
+</div>

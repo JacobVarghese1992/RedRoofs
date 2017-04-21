@@ -55,7 +55,7 @@ export class FavoritePageComponent implements OnInit {
               for(var i = 0; i < realtors.length; i++) {
                 this.optionsRealtorsModel.push(realtors[i].id)
               }
-              this.listingsService.getAllListings(JSON.parse(localStorage.getItem("profile")).user_id, 
+              this.listingsService.getFavListings(JSON.parse(localStorage.getItem("profile")).user_id, 
                   JSON.stringify(this.pricerange),
                   JSON.stringify(this.bedsrange),
                   JSON.stringify(this.bathsrange),
@@ -74,7 +74,7 @@ export class FavoritePageComponent implements OnInit {
               for(var i = 0; i < amenities.length; i++) {
                 this.optionsAmenitiesModel.push(amenities[i].id)
               }
-              this.listingsService.getAllListings(JSON.parse(localStorage.getItem("profile")).user_id, 
+              this.listingsService.getFavListings(JSON.parse(localStorage.getItem("profile")).user_id, 
                   JSON.stringify(this.pricerange),
                   JSON.stringify(this.bedsrange),
                   JSON.stringify(this.bathsrange),
@@ -91,7 +91,7 @@ export class FavoritePageComponent implements OnInit {
     }
     onChangeRealtorsOptions() {
         console.log(this.optionsRealtorsModel);
-        this.listingsService.getAllListings(JSON.parse(localStorage.getItem("profile")).user_id, 
+        this.listingsService.getFavListings(JSON.parse(localStorage.getItem("profile")).user_id, 
           JSON.stringify(this.pricerange),
           JSON.stringify(this.bedsrange),
           JSON.stringify(this.bathsrange),
@@ -105,7 +105,7 @@ export class FavoritePageComponent implements OnInit {
 
     onChangeAmenitiesOptions() {
         console.log(this.optionsAmenitiesModel);
-        this.listingsService.getAllListings(JSON.parse(localStorage.getItem("profile")).user_id, 
+        this.listingsService.getFavListings(JSON.parse(localStorage.getItem("profile")).user_id, 
           JSON.stringify(this.pricerange),
           JSON.stringify(this.bedsrange),
           JSON.stringify(this.bathsrange),
@@ -202,7 +202,7 @@ export class FavoritePageComponent implements OnInit {
     this.optionsAmenitiesModel = [];
     this.authtmp = auth;
     this.source = new LocalDataSource();
-    this.listingsService.getAllListings(JSON.parse(localStorage.getItem("profile")).user_id, 
+    this.listingsService.getFavListings(JSON.parse(localStorage.getItem("profile")).user_id, 
       JSON.stringify(this.pricerange),
       JSON.stringify(this.bedsrange),
       JSON.stringify(this.bathsrange),
@@ -239,7 +239,7 @@ export class FavoritePageComponent implements OnInit {
 
   onPriceChange(event: any) {
     console.log(JSON.stringify(this.pricerange));
-        this.listingsService.getAllListings(JSON.parse(localStorage.getItem("profile")).user_id, 
+        this.listingsService.getFavListings(JSON.parse(localStorage.getItem("profile")).user_id, 
         JSON.stringify(this.pricerange),
         JSON.stringify(this.bedsrange),
         JSON.stringify(this.bathsrange),
@@ -253,7 +253,7 @@ export class FavoritePageComponent implements OnInit {
 
   onBedsChange(event: any) {
     console.log(JSON.stringify(this.pricerange));
-    this.listingsService.getAllListings(JSON.parse(localStorage.getItem("profile")).user_id, 
+    this.listingsService.getFavListings(JSON.parse(localStorage.getItem("profile")).user_id, 
         JSON.stringify(this.pricerange),
         JSON.stringify(this.bedsrange),
         JSON.stringify(this.bathsrange),
@@ -267,7 +267,7 @@ export class FavoritePageComponent implements OnInit {
 
   onBathsChange(event: any) {
     console.log(JSON.stringify(this.pricerange));
-        this.listingsService.getAllListings(JSON.parse(localStorage.getItem("profile")).user_id, 
+        this.listingsService.getFavListings(JSON.parse(localStorage.getItem("profile")).user_id, 
         JSON.stringify(this.pricerange),
         JSON.stringify(this.bedsrange),
         JSON.stringify(this.bathsrange),

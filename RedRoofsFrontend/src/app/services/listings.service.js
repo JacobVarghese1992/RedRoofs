@@ -47,6 +47,15 @@ var ListingsService = (function () {
             user_id + "/" + price_range + "/" + beds_range + "/" + baths_range + "/" + realtors + "/" + amenities)
             .map(function (res) { return res.json(); });
     };
+    ListingsService.prototype.getFavListings = function (user_id, price_range, beds_range, baths_range, realtors, amenities) {
+        realtors = realtors.replace("[", "(").replace("]", ")");
+        if (realtors == '()') {
+            realtors = '("")';
+        }
+        return this.http.get('http://ec2-52-91-32-196.compute-1.amazonaws.com/favlistings/PA/PHIL/' +
+            user_id + "/" + price_range + "/" + beds_range + "/" + baths_range + "/" + realtors + "/" + amenities)
+            .map(function (res) { return res.json(); });
+    };
     return ListingsService;
 }());
 ListingsService = __decorate([

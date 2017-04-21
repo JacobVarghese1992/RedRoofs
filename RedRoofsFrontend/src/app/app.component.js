@@ -13,6 +13,7 @@ var auth_service_1 = require("./services/auth.service");
 var AppComponent = (function () {
     function AppComponent(auth) {
         this.auth = auth;
+        this.localStoragetmp = localStorage;
     }
     return AppComponent;
 }());

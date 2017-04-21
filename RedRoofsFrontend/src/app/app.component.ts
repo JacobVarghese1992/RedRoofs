@@ -7,8 +7,9 @@ import {Auth} from './services/auth.service';
   templateUrl: 'app.component.html',
 })
 export class AppComponent  {
-	constructor(private auth:Auth) {
-    
+	localStoragetmp: any;
+  constructor(private auth:Auth) {
+    this.localStoragetmp = localStorage;
 		
 	}
 }

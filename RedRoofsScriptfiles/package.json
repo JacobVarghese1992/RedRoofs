@@ -9,8 +9,13 @@
   "author": "Jacob",
   "license": "ISC",
   "dependencies": {
+    "cheerio": "^0.22.0",
     "express": "^4.15.2",
     "fs": "0.0.1-security",
-    "mongodb": "^2.2.25"
+    "mongodb": "^2.2.25",
+    "mysql": "^2.13.0",
+    "phantomjs-prebuilt": "^2.1.14",
+    "request": "^2.81.0",
+    "sync-request": "^4.0.2"
   }
 }

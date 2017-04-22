@@ -128,8 +128,19 @@ export class FavoritePageComponent implements OnInit {
   
   authtmp :Auth;
   settings = {
-    actions: false,
+    // actions: true,
     hideSubHeader: true,
+    delete: {
+      confirmDelete: true,
+      deleteButtonContent: "&nbsp;&nbsp;&nbsp;<span class='glyphicon glyphicon-trash' ></span>"
+    },
+    edit: {
+      // confirmDelete: true,
+      editButtonContent: ""
+    },
+    
+    mode: "inline",
+    editable: false,
     columns: {
       // listing_id: {
       //   title: 'ID'
@@ -184,11 +195,11 @@ export class FavoritePageComponent implements OnInit {
         title: 'Agent',
         type: 'html'
       },
-      fav: {
-        title: 'Fav',
-        type: 'custom',
-        renderComponent: FavComponent,
-      }
+      // fav: {
+      //   title: 'Fav',
+      //   type: 'custom',
+      //   renderComponent: FavComponent,
+      // }
       // ,
       // currency:{
       //   title: 'currency'
@@ -234,7 +245,28 @@ export class FavoritePageComponent implements OnInit {
 
 
   onUserRowSelect(event: any): void {
-    console.log(event);
+    // console.log(event);
+  }
+
+  onDeletedConfirm(event: any): void {
+    var body = {"user":JSON.parse(localStorage.getItem("profile")).user_id, "listing":event.data.listing_id, "del": "true"}
+    let bodyString = JSON.stringify(body); // Stringify payload
+    this.listingsService.setFavourite(bodyString
+        ).subscribe(houses => {
+            // console.log(houses);
+    console.log(JSON.stringify(this.pricerange));
+        this.listingsService.getFavListings(JSON.parse(localStorage.getItem("profile")).user_id, 
+        JSON.stringify(this.pricerange),
+        JSON.stringify(this.bedsrange),
+        JSON.stringify(this.bathsrange),
+        JSON.stringify(this.optionsRealtorsModel),
+        JSON.stringify(this.optionsAmenitiesModel)
+        ).subscribe(houses => {
+            console.log(houses[0]);
+            this.source.load(houses);
+    })
+        })
+
   }
 
   onPriceChange(event: any) {

@@ -12,7 +12,6 @@ var core_1 = require("@angular/core");
 var auth_service_1 = require("../../services/auth.service");
 var listings_service_1 = require("../../services/listings.service");
 var ng2_smart_table_1 = require("ng2-smart-table");
-var fav_component_1 = require("../fav/fav.component");
 // @Component({
 //   template: `
 //     <button (click)="showAlert()">{{ renderValue }}</button>
@@ -42,8 +41,18 @@ var FavoritePageComponent = (function () {
         // This holds the sortings for all the fields
         this.sortorders = {};
         this.settings = {
-            actions: false,
+            // actions: true,
             hideSubHeader: true,
+            delete: {
+                confirmDelete: true,
+                deleteButtonContent: "&nbsp;&nbsp;&nbsp;<span class='glyphicon glyphicon-trash' ></span>"
+            },
+            edit: {
+                // confirmDelete: true,
+                editButtonContent: ""
+            },
+            mode: "inline",
+            editable: false,
             columns: {
                 // listing_id: {
                 //   title: 'ID'
@@ -97,11 +106,6 @@ var FavoritePageComponent = (function () {
                     title: 'Agent',
                     type: 'html'
                 },
-                fav: {
-                    title: 'Fav',
-                    type: 'custom',
-                    renderComponent: fav_component_1.FavComponent,
-                }
             }
         };
         this.optionsRealtorsModel = [];
@@ -170,7 +174,20 @@ var FavoritePageComponent = (function () {
         console.log("Sort Set as : " + sort);
     };
     FavoritePageComponent.prototype.onUserRowSelect = function (event) {
-        console.log(event);
+        // console.log(event);
+    };
+    FavoritePageComponent.prototype.onDeletedConfirm = function (event) {
+        var _this = this;
+        var body = { "user": JSON.parse(localStorage.getItem("profile")).user_id, "listing": event.data.listing_id, "del": "true" };
+        var bodyString = JSON.stringify(body); // Stringify payload
+        this.listingsService.setFavourite(bodyString).subscribe(function (houses) {
+            // console.log(houses);
+            console.log(JSON.stringify(_this.pricerange));
+            _this.listingsService.getFavListings(JSON.parse(localStorage.getItem("profile")).user_id, JSON.stringify(_this.pricerange), JSON.stringify(_this.bedsrange), JSON.stringify(_this.bathsrange), JSON.stringify(_this.optionsRealtorsModel), JSON.stringify(_this.optionsAmenitiesModel)).subscribe(function (houses) {
+                console.log(houses[0]);
+                _this.source.load(houses);
+            });
+        });
     };
     FavoritePageComponent.prototype.onPriceChange = function (event) {
         var _this = this;

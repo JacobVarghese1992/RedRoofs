@@ -32,7 +32,7 @@ $('li.result-item').each(function() {
     var address = $(this).find('a.prop-address').text().trim();
     var bed_bath = $(this).find('p.description').text();
     var rent = $(this).find('strong.stat-val').last().text().replace("from $", "");
-    var img = "http://www.livecampusapts.com" + $(this).find('img.prop-img').attr('src');
+    //var img = "http://www.livecampusapts.com" + $(this).find('img.prop-img').attr('src');
     var bedbaths = [];
     if (bed_bath.includes('Unit')) {
         bedbaths = get_bed_bath(bed_bath);
@@ -45,7 +45,7 @@ $('li.result-item').each(function() {
                 'bed': parseInt(bb.split("/")[0]),
                 'bath': parseInt(bb.split("/")[1]),
                 'rent': parseFloat(rent),
-                'image': img,
+                //'image': img,
                 'amenities': [],
                 'latitude': "",
                 'longitude': "",
@@ -91,6 +91,9 @@ for (var i = 0; i < names.length; i++) {
         }
 
     });
+    var img = $('div.galleria-image').find('img').attr('src');
+    // console.log(img)
+    names[i].image = img
     names[i].amenities = amenities;
     console.log("Fetched " + (i + 1) + " amenities. Please wait for " + names.length);
 };

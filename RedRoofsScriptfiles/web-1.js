@@ -45,7 +45,7 @@ $('li.result-item').each(function() {
                 'bed': parseInt(bb.split("/")[0]),
                 'bath': parseInt(bb.split("/")[1]),
                 'rent': parseFloat(rent),
-                'image': img,
+                //'image': img,
                 'amenities': [],
                 'latitude': "",
                 'longitude': "",
@@ -90,6 +90,9 @@ for (var i = 0; i < names.length; i++) {
         }
 
     });
+    var img = $('div.galleria-image').find('img').attr('src');
+    console.log(img)
+    names[i].image = img
     names[i].amenities = amenities;
     console.log("Fetched " + (i + 1) + " amenities. Please wait for " + names.length);
 };

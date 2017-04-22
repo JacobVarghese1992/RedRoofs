@@ -11,11 +11,13 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var core_1 = require("@angular/core");
 var auth_service_1 = require("../../services/auth.service");
 var listings_service_1 = require("../../services/listings.service");
+var router_1 = require("@angular/router");
 var HomeComponent = (function () {
-    function HomeComponent(auth, listingsService) {
+    function HomeComponent(auth, listingsService, router) {
         var _this = this;
         this.auth = auth;
         this.listingsService = listingsService;
+        this.router = router;
         this.authtmp = auth;
         this.listingsService.getAllStates().subscribe(function (states) {
             // console.log(states);
@@ -58,6 +60,9 @@ var HomeComponent = (function () {
         console.log("City Set as : " + city);
         localStorage.setItem('user_city', city);
     };
+    HomeComponent.prototype.goToListings = function () {
+        this.router.navigate(['/entry']);
+    };
     return HomeComponent;
 }());
 HomeComponent = __decorate([
@@ -67,7 +72,7 @@ HomeComponent = __decorate([
         templateUrl: 'home.component.html',
         providers: [listings_service_1.ListingsService]
     }),
-    __metadata("design:paramtypes", [auth_service_1.Auth, listings_service_1.ListingsService])
+    __metadata("design:paramtypes", [auth_service_1.Auth, listings_service_1.ListingsService, router_1.Router])
 ], HomeComponent);
 exports.HomeComponent = HomeComponent;
 //# sourceMappingURL=home.component.js.map

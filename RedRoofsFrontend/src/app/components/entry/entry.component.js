@@ -13,6 +13,7 @@ var auth_service_1 = require("../../services/auth.service");
 var listings_service_1 = require("../../services/listings.service");
 var ng2_smart_table_1 = require("ng2-smart-table");
 var fav_component_1 = require("../fav/fav.component");
+var router_1 = require("@angular/router");
 // @Component({
 //   template: `
 //     <button (click)="showAlert()">{{ renderValue }}</button>
@@ -30,10 +31,11 @@ var fav_component_1 = require("../fav/fav.component");
 //   }
 // }
 var EntryComponent = (function () {
-    function EntryComponent(auth, listingsService) {
+    function EntryComponent(auth, listingsService, router) {
         var _this = this;
         this.auth = auth;
         this.listingsService = listingsService;
+        this.router = router;
         this.pricerange = [0, 5000];
         this.bedsrange = [1, 6];
         this.bathsrange = [1, 6];
@@ -170,7 +172,8 @@ var EntryComponent = (function () {
         console.log("Sort Set as : " + sort);
     };
     EntryComponent.prototype.onUserRowSelect = function (event) {
-        console.log(event);
+        //console.log(event.data.link)
+        window.open(event.data.link);
     };
     EntryComponent.prototype.onPriceChange = function (event) {
         var _this = this;
@@ -205,7 +208,7 @@ EntryComponent = __decorate([
         providers: [listings_service_1.ListingsService],
         templateUrl: 'entry.component.html',
     }),
-    __metadata("design:paramtypes", [auth_service_1.Auth, listings_service_1.ListingsService])
+    __metadata("design:paramtypes", [auth_service_1.Auth, listings_service_1.ListingsService, router_1.Router])
 ], EntryComponent);
 exports.EntryComponent = EntryComponent;
 //# sourceMappingURL=entry.component.js.map

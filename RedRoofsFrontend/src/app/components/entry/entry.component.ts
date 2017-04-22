@@ -6,6 +6,8 @@ import { ViewCell } from 'ng2-smart-table';
 import { FavComponent } from '../fav/fav.component';
 import { NouisliderModule } from 'ng2-nouislider';
 import { IMultiSelectOption } from 'angular-2-dropdown-multiselect';
+import { Router } from '@angular/router';
+
 // @Component({
 //   template: `
 //     <button (click)="showAlert()">{{ renderValue }}</button>
@@ -196,7 +198,7 @@ export class EntryComponent implements OnInit {
     }
   };
   source: LocalDataSource;  
-  constructor(private auth:Auth, private listingsService: ListingsService) {
+  constructor(private auth:Auth, private listingsService: ListingsService, private router: Router) {
     this.optionsRealtorsModel = [];
     this.optionsAmenitiesModel = [];
     this.authtmp = auth;
@@ -233,7 +235,8 @@ export class EntryComponent implements OnInit {
 
 
   onUserRowSelect(event: any): void {
-    console.log(event);
+    //console.log(event.data.link)
+    window.open(event.data.link);
   }
 
   onPriceChange(event: any) {
@@ -263,6 +266,7 @@ export class EntryComponent implements OnInit {
             this.source.load(houses);
     })
   }
+  
 
   onBathsChange(event: any) {
     console.log(JSON.stringify(this.pricerange));

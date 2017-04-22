@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import {Auth} from '../../services/auth.service';
 import{ListingsService} from '../../services/listings.service';
+import { Router } from '@angular/router';
+
 @Component({
   moduleId: module.id,
   selector: 'home',
@@ -14,7 +16,7 @@ export class HomeComponent  {
 	cities: any;
   rss: any;
 
-  constructor(private auth:Auth, private listingsService: ListingsService) {
+  constructor(private auth:Auth, private listingsService: ListingsService,private router: Router) {
     this.authtmp = auth;
     this.listingsService.getAllStates().subscribe(states => {
             // console.log(states);
@@ -68,4 +70,9 @@ export class HomeComponent  {
     console.log("City Set as : " + city);
     localStorage.setItem('user_city',city);
   }
-}
+
+  public goToListings(){
+    this.router.navigate(['/entry']);
+  }
+
+  }  

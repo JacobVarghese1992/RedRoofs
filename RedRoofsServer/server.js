@@ -159,7 +159,7 @@ app.post('/favourite', function(req, res) {
     console.log(req.body.listing)
     console.log(req.body.del)
 
-    if(del = "false") {
+    if(req.body.del == "false") {
       var query = "INSERT INTO Favourites(user_id,listing_id) VALUE(?,?)";
       var table = [req.body.user,req.body.listing];
       connection.query(query,table, function(err,result){

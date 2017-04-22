@@ -32,14 +32,12 @@ var FavComponent = (function (_super) {
     FavComponent.prototype.ifFalse = function () {
         return Number(this.renderValue.split('-')[2]) == 1;
     };
-    FavComponent.prototype.addToFav = function () {
-        var body = { "user": JSON.parse(localStorage.getItem("profile")).user_id, "listing": Number(this.renderValue.split('-')[1]) };
+    FavComponent.prototype.addToFav = function (del) {
+        var body = { "user": JSON.parse(localStorage.getItem("profile")).user_id, "listing": Number(this.renderValue.split('-')[1]), "del": del };
         var bodyString = JSON.stringify(body); // Stringify payload
-        // this.listingsService.setFavourite(bodyString
-        //     ).subscribe(houses => {
-        //         // console.log(houses);
-        //     })
-        // //  this.cell.newValue = `hiiii`;   
+        this.listingsService.setFavourite(bodyString).subscribe(function (houses) {
+            // console.log(houses);
+        });
         if (this.ifTrue()) {
             var newval = "FAV-";
             newval = newval + this.renderValue.split('-')[1] + "-1";
@@ -59,7 +57,7 @@ __decorate([
 ], FavComponent.prototype, "value", void 0);
 FavComponent = __decorate([
     core_1.Component({
-        template: "\n     <div (click)=\"addToFav()\" *ngIf=\"ifTrue()\"><span class=\"glyphicon glyphicon-heart-empty\" aria-hidden=\"true\"></span></div>\n     <div (click)=\"addToFav()\" *ngIf=\"ifFalse()\"><span class=\"glyphicon glyphicon-heart\" aria-hidden=\"true\"></span></div>\n\n  ",
+        template: "\n     <div (click)=\"addToFav('false')\" *ngIf=\"ifTrue()\"><span class=\"glyphicon glyphicon-heart-empty\" aria-hidden=\"true\"></span></div>\n     <div (click)=\"addToFav('true')\" *ngIf=\"ifFalse()\"><span class=\"glyphicon glyphicon-heart\" aria-hidden=\"true\"></span></div>\n\n  ",
         providers: [listings_service_1.ListingsService],
     }),
     __metadata("design:paramtypes", [listings_service_1.ListingsService])

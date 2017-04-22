@@ -9,8 +9,8 @@ import { Cell, DefaultEditor, Editor } from 'ng2-smart-table';
 
 @Component({
   template: `
-     <div (click)="addToFav()" *ngIf="ifTrue()"><span class="glyphicon glyphicon-heart-empty" aria-hidden="true"></span></div>
-     <div (click)="addToFav()" *ngIf="ifFalse()"><span class="glyphicon glyphicon-heart" aria-hidden="true"></span></div>
+     <div (click)="addToFav('false')" *ngIf="ifTrue()"><span class="glyphicon glyphicon-heart-empty" aria-hidden="true"></span></div>
+     <div (click)="addToFav('true')" *ngIf="ifFalse()"><span class="glyphicon glyphicon-heart" aria-hidden="true"></span></div>
 
   `,
     providers: [ListingsService],
@@ -42,13 +42,14 @@ export class FavComponent extends DefaultEditor implements ViewCell, OnInit {
   ifFalse(){
     return Number(this.renderValue.split('-')[2])==1
   }
-  addToFav(){
-    var body = {"user":JSON.parse(localStorage.getItem("profile")).user_id, "listing":Number(this.renderValue.split('-')[1])}
+  addToFav(del: string){
+    var body = {"user":JSON.parse(localStorage.getItem("profile")).user_id, "listing":Number(this.renderValue.split('-')[1]), "del": del}
     let bodyString = JSON.stringify(body); // Stringify payload
     this.listingsService.setFavourite(bodyString
         ).subscribe(houses => {
             // console.log(houses);
         })
+
   
       if(this.ifTrue()) {
         var newval = "FAV-";

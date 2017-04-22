@@ -115,6 +115,23 @@ var EntryComponent = (function () {
     }
     EntryComponent.prototype.ngOnInit = function () {
         var _this = this;
+        this.source.onChanged().subscribe(function (changes) {
+            console.log(changes);
+            if (changes.action == "page") {
+                _this.listingsService.getAllRealtors().subscribe(function (realtors) {
+                    // console.log(realtors);
+                    _this.myRealtorsOptions = realtors;
+                    _this.optionsRealtorsModel = [];
+                    for (var i = 0; i < realtors.length; i++) {
+                        _this.optionsRealtorsModel.push(realtors[i].id);
+                    }
+                    _this.listingsService.getAllListings(JSON.parse(localStorage.getItem("profile")).user_id, JSON.stringify(_this.pricerange), JSON.stringify(_this.bedsrange), JSON.stringify(_this.bathsrange), JSON.stringify(_this.optionsRealtorsModel), JSON.stringify(_this.optionsAmenitiesModel)).subscribe(function (houses) {
+                        console.log(houses[0]);
+                        _this.source.load(houses);
+                    });
+                });
+            }
+        });
         this.myRealtorsOptions = [];
         this.listingsService.getAllRealtors().subscribe(function (realtors) {
             // console.log(realtors);

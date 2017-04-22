@@ -57,6 +57,13 @@ var EntryComponent = (function () {
                         return "<img src='" + value + "' alt='Mountain View' style='width:100px !important;height:100px !important;'>";
                     }
                 },
+                link: {
+                    title: '',
+                    type: 'html',
+                    valuePrepareFunction: function (value) {
+                        return "<a target='_blank' href='" + value + "' >Visit Site</a>";
+                    }
+                },
                 address: {
                     title: 'Address'
                 },
@@ -190,7 +197,7 @@ var EntryComponent = (function () {
     };
     EntryComponent.prototype.onUserRowSelect = function (event) {
         //console.log(event.data.link)
-        window.open(event.data.link);
+        //window.open(event.data.link);
     };
     EntryComponent.prototype.onPriceChange = function (event) {
         var _this = this;

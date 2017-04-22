@@ -166,6 +166,14 @@ export class EntryComponent implements OnInit {
           return "<img src='" + value + "' alt='Mountain View' style='width:100px !important;height:100px !important;'>";
         }
       },
+      link:{
+        title: '',
+        type: 'html',
+        valuePrepareFunction: (value: string) => { 
+          return "<a target='_blank' href='" + value + "' >Visit Site</a>";
+        }
+      },
+      
       address:{
         title: 'Address'
       },
@@ -260,7 +268,7 @@ export class EntryComponent implements OnInit {
 
   onUserRowSelect(event: any): void {
     //console.log(event.data.link)
-    window.open(event.data.link);
+    //window.open(event.data.link);
   }
 
   onPriceChange(event: any) {

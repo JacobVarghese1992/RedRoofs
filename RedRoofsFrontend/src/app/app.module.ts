@@ -9,6 +9,7 @@ import { HttpModule } from '@angular/http';
 import {EntryComponent} from './components/entry/entry.component';
 import {FavComponent} from './components/fav/fav.component';
 import {ProfileComponent} from './components/profile/profile.component';
+import {FavoritePageComponent} from './components/favoritePage/favoritePage.component';
 
 import {Auth} from './services/auth.service';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
@@ -17,7 +18,7 @@ import { MultiselectDropdownModule } from 'angular-2-dropdown-multiselect';
 
 @NgModule({
   imports:      [ BrowserModule, routing, FormsModule, HttpModule, Ng2SmartTableModule,  NouisliderModule, MultiselectDropdownModule],
-  declarations: [ AppComponent, HomeComponent,EntryComponent, ProfileComponent, FavComponent ],
+  declarations: [ AppComponent, HomeComponent,EntryComponent, ProfileComponent, FavComponent, FavoritePageComponent ],
   entryComponents: [FavComponent],
   bootstrap:    [ AppComponent ],
   providers: [

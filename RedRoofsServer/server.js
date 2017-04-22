@@ -157,17 +157,33 @@ app.post('/favourite', function(req, res) {
     // res.json(users);
     console.log(req.body.user)
     console.log(req.body.listing)
+    console.log(req.body.del)
 
-    var query = "INSERT INTO Favourites(user_id,listing_id) VALUE(?,?)";
-    var table = [req.body.user,req.body.listing];
-    connection.query(query,table, function(err,result){
-      if(err) { throw err;
-        res.json({"Message" : err});
-      } else 
-      {
+    if(req.body.del == "false") {
+      var query = "INSERT INTO Favourites(user_id,listing_id) VALUE(?,?)";
+      var table = [req.body.user,req.body.listing];
+      connection.query(query,table, function(err,result){
+        if(err) { throw err;
+          res.json({"Message" : err});
+        } else 
+        {
           res.json({"Message" : "Success"});
-      }
-    });
+        }
+      });      
+    } else {
+
+      var query = "DELETE FROM Favourites WHERE  user_id = ? AND listing_id = ?";
+      var table = [req.body.user,req.body.listing];
+      connection.query(query,table, function(err,result){
+        if(err) { throw err;
+          res.json({"Message" : err});
+        } else 
+        {
+          res.json({"Message" : "Success"});
+        }
+      });      
+    }
+
     // console.log(req.body)
 
 

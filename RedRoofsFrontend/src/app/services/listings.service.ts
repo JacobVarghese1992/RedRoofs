@@ -43,6 +43,16 @@ export class ListingsService {
             .map(res => res.json());
     }
 
+    getFavListings(user_id: string,price_range: string, beds_range: string, baths_range: string, realtors: string, amenities:string) {
+        realtors = realtors.replace("[","(").replace("]",")");
+        if(realtors == '()') {
+            realtors = '("")';
+        }
+        return this.http.get('http://ec2-52-91-32-196.compute-1.amazonaws.com/favlistings/PA/PHIL/'+
+        user_id+"/"+price_range+"/"+beds_range+"/"+baths_range+"/"+realtors+"/"+amenities)
+            .map(res => res.json());
+    }
+
     setFavourite(body: string) {
         // let headers    = new Headers({ 'Content-Type': 'application/json' }); // ... Set content type to JSON
         // let options    = new RequestOptions({ headers: headers }); // Create a request option
@@ -71,6 +81,4 @@ export class ListingsService {
                     
                        
     }
-
-    
 }

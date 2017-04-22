@@ -6,7 +6,6 @@ import { ViewCell } from 'ng2-smart-table';
 import { FavComponent } from '../fav/fav.component';
 import { NouisliderModule } from 'ng2-nouislider';
 import { IMultiSelectOption } from 'angular-2-dropdown-multiselect';
-import { Router } from '@angular/router';
 
 // @Component({
 //   template: `
@@ -34,13 +33,13 @@ import { Router } from '@angular/router';
 
 @Component({
   moduleId: module.id,
-  selector: 'entry',
+  selector: 'favoritePage',
   providers: [ListingsService],
-  templateUrl: 'entry.component.html',
+  templateUrl: 'favoritePage.component.html',
 
 })
 
-export class EntryComponent implements OnInit {
+export class FavoritePageComponent implements OnInit {
 
     optionsRealtorsModel: number[];
     myRealtorsOptions: IMultiSelectOption[];
@@ -48,30 +47,6 @@ export class EntryComponent implements OnInit {
     myAmenitiesOptions: IMultiSelectOption[];
     
     ngOnInit() {
-    this.source.onChanged().subscribe((changes) => {
-      console.log(changes);
-      if(changes.action == "page") {
-      this.listingsService.getAllRealtors().subscribe(realtors => {
-              // console.log(realtors);
-              this.myRealtorsOptions = realtors;
-              this.optionsRealtorsModel = [];
-              for(var i = 0; i < realtors.length; i++) {
-                this.optionsRealtorsModel.push(realtors[i].id)
-              }
-              this.listingsService.getAllListings(JSON.parse(localStorage.getItem("profile")).user_id, 
-                  JSON.stringify(this.pricerange),
-                  JSON.stringify(this.bedsrange),
-                  JSON.stringify(this.bathsrange),
-                  JSON.stringify(this.optionsRealtorsModel),
-                  JSON.stringify(this.optionsAmenitiesModel)
-                  ).subscribe(houses => {
-                  console.log(houses[0]);
-                  this.source.load(houses);
-              })
-      })
-      }
-    });
-      
       this.myRealtorsOptions = []
       this.listingsService.getAllRealtors().subscribe(realtors => {
               // console.log(realtors);
@@ -80,7 +55,7 @@ export class EntryComponent implements OnInit {
               for(var i = 0; i < realtors.length; i++) {
                 this.optionsRealtorsModel.push(realtors[i].id)
               }
-              this.listingsService.getAllListings(JSON.parse(localStorage.getItem("profile")).user_id, 
+              this.listingsService.getFavListings(JSON.parse(localStorage.getItem("profile")).user_id, 
                   JSON.stringify(this.pricerange),
                   JSON.stringify(this.bedsrange),
                   JSON.stringify(this.bathsrange),
@@ -99,7 +74,7 @@ export class EntryComponent implements OnInit {
               for(var i = 0; i < amenities.length; i++) {
                 this.optionsAmenitiesModel.push(amenities[i].id)
               }
-              this.listingsService.getAllListings(JSON.parse(localStorage.getItem("profile")).user_id, 
+              this.listingsService.getFavListings(JSON.parse(localStorage.getItem("profile")).user_id, 
                   JSON.stringify(this.pricerange),
                   JSON.stringify(this.bedsrange),
                   JSON.stringify(this.bathsrange),
@@ -116,7 +91,7 @@ export class EntryComponent implements OnInit {
     }
     onChangeRealtorsOptions() {
         console.log(this.optionsRealtorsModel);
-        this.listingsService.getAllListings(JSON.parse(localStorage.getItem("profile")).user_id, 
+        this.listingsService.getFavListings(JSON.parse(localStorage.getItem("profile")).user_id, 
           JSON.stringify(this.pricerange),
           JSON.stringify(this.bedsrange),
           JSON.stringify(this.bathsrange),
@@ -130,7 +105,7 @@ export class EntryComponent implements OnInit {
 
     onChangeAmenitiesOptions() {
         console.log(this.optionsAmenitiesModel);
-        this.listingsService.getAllListings(JSON.parse(localStorage.getItem("profile")).user_id, 
+        this.listingsService.getFavListings(JSON.parse(localStorage.getItem("profile")).user_id, 
           JSON.stringify(this.pricerange),
           JSON.stringify(this.bedsrange),
           JSON.stringify(this.bathsrange),
@@ -209,7 +184,7 @@ export class EntryComponent implements OnInit {
         title: 'Agent',
         type: 'html'
       },
-      isfav: {
+      fav: {
         title: 'Fav',
         type: 'custom',
         renderComponent: FavComponent,
@@ -222,12 +197,12 @@ export class EntryComponent implements OnInit {
     }
   };
   source: LocalDataSource;  
-  constructor(private auth:Auth, private listingsService: ListingsService, private router: Router) {
+  constructor(private auth:Auth, private listingsService: ListingsService) {
     this.optionsRealtorsModel = [];
     this.optionsAmenitiesModel = [];
     this.authtmp = auth;
     this.source = new LocalDataSource();
-    this.listingsService.getAllListings(JSON.parse(localStorage.getItem("profile")).user_id, 
+    this.listingsService.getFavListings(JSON.parse(localStorage.getItem("profile")).user_id, 
       JSON.stringify(this.pricerange),
       JSON.stringify(this.bedsrange),
       JSON.stringify(this.bathsrange),
@@ -259,13 +234,12 @@ export class EntryComponent implements OnInit {
 
 
   onUserRowSelect(event: any): void {
-    //console.log(event.data.link)
-    window.open(event.data.link);
+    console.log(event);
   }
 
   onPriceChange(event: any) {
     console.log(JSON.stringify(this.pricerange));
-        this.listingsService.getAllListings(JSON.parse(localStorage.getItem("profile")).user_id, 
+        this.listingsService.getFavListings(JSON.parse(localStorage.getItem("profile")).user_id, 
         JSON.stringify(this.pricerange),
         JSON.stringify(this.bedsrange),
         JSON.stringify(this.bathsrange),
@@ -279,7 +253,7 @@ export class EntryComponent implements OnInit {
 
   onBedsChange(event: any) {
     console.log(JSON.stringify(this.pricerange));
-    this.listingsService.getAllListings(JSON.parse(localStorage.getItem("profile")).user_id, 
+    this.listingsService.getFavListings(JSON.parse(localStorage.getItem("profile")).user_id, 
         JSON.stringify(this.pricerange),
         JSON.stringify(this.bedsrange),
         JSON.stringify(this.bathsrange),
@@ -290,11 +264,10 @@ export class EntryComponent implements OnInit {
             this.source.load(houses);
     })
   }
-  
 
   onBathsChange(event: any) {
     console.log(JSON.stringify(this.pricerange));
-        this.listingsService.getAllListings(JSON.parse(localStorage.getItem("profile")).user_id, 
+        this.listingsService.getFavListings(JSON.parse(localStorage.getItem("profile")).user_id, 
         JSON.stringify(this.pricerange),
         JSON.stringify(this.bedsrange),
         JSON.stringify(this.bathsrange),

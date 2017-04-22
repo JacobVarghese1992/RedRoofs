@@ -13,7 +13,6 @@ var auth_service_1 = require("../../services/auth.service");
 var listings_service_1 = require("../../services/listings.service");
 var ng2_smart_table_1 = require("ng2-smart-table");
 var fav_component_1 = require("../fav/fav.component");
-var router_1 = require("@angular/router");
 // @Component({
 //   template: `
 //     <button (click)="showAlert()">{{ renderValue }}</button>
@@ -30,12 +29,11 @@ var router_1 = require("@angular/router");
 //     alert(this.renderValue);
 //   }
 // }
-var EntryComponent = (function () {
-    function EntryComponent(auth, listingsService, router) {
+var FavoritePageComponent = (function () {
+    function FavoritePageComponent(auth, listingsService) {
         var _this = this;
         this.auth = auth;
         this.listingsService = listingsService;
-        this.router = router;
         this.pricerange = [0, 5000];
         this.bedsrange = [1, 6];
         this.bathsrange = [1, 6];
@@ -99,7 +97,7 @@ var EntryComponent = (function () {
                     title: 'Agent',
                     type: 'html'
                 },
-                isfav: {
+                fav: {
                     title: 'Fav',
                     type: 'custom',
                     renderComponent: fav_component_1.FavComponent,
@@ -110,30 +108,13 @@ var EntryComponent = (function () {
         this.optionsAmenitiesModel = [];
         this.authtmp = auth;
         this.source = new ng2_smart_table_1.LocalDataSource();
-        this.listingsService.getAllListings(JSON.parse(localStorage.getItem("profile")).user_id, JSON.stringify(this.pricerange), JSON.stringify(this.bedsrange), JSON.stringify(this.bathsrange), JSON.stringify(this.optionsRealtorsModel), JSON.stringify(this.optionsAmenitiesModel)).subscribe(function (houses) {
+        this.listingsService.getFavListings(JSON.parse(localStorage.getItem("profile")).user_id, JSON.stringify(this.pricerange), JSON.stringify(this.bedsrange), JSON.stringify(this.bathsrange), JSON.stringify(this.optionsRealtorsModel), JSON.stringify(this.optionsAmenitiesModel)).subscribe(function (houses) {
             console.log(houses[0]);
             _this.source.load(houses);
         });
     }
-    EntryComponent.prototype.ngOnInit = function () {
+    FavoritePageComponent.prototype.ngOnInit = function () {
         var _this = this;
-        this.source.onChanged().subscribe(function (changes) {
-            console.log(changes);
-            if (changes.action == "page") {
-                _this.listingsService.getAllRealtors().subscribe(function (realtors) {
-                    // console.log(realtors);
-                    _this.myRealtorsOptions = realtors;
-                    _this.optionsRealtorsModel = [];
-                    for (var i = 0; i < realtors.length; i++) {
-                        _this.optionsRealtorsModel.push(realtors[i].id);
-                    }
-                    _this.listingsService.getAllListings(JSON.parse(localStorage.getItem("profile")).user_id, JSON.stringify(_this.pricerange), JSON.stringify(_this.bedsrange), JSON.stringify(_this.bathsrange), JSON.stringify(_this.optionsRealtorsModel), JSON.stringify(_this.optionsAmenitiesModel)).subscribe(function (houses) {
-                        console.log(houses[0]);
-                        _this.source.load(houses);
-                    });
-                });
-            }
-        });
         this.myRealtorsOptions = [];
         this.listingsService.getAllRealtors().subscribe(function (realtors) {
             // console.log(realtors);
@@ -142,7 +123,7 @@ var EntryComponent = (function () {
             for (var i = 0; i < realtors.length; i++) {
                 _this.optionsRealtorsModel.push(realtors[i].id);
             }
-            _this.listingsService.getAllListings(JSON.parse(localStorage.getItem("profile")).user_id, JSON.stringify(_this.pricerange), JSON.stringify(_this.bedsrange), JSON.stringify(_this.bathsrange), JSON.stringify(_this.optionsRealtorsModel), JSON.stringify(_this.optionsAmenitiesModel)).subscribe(function (houses) {
+            _this.listingsService.getFavListings(JSON.parse(localStorage.getItem("profile")).user_id, JSON.stringify(_this.pricerange), JSON.stringify(_this.bedsrange), JSON.stringify(_this.bathsrange), JSON.stringify(_this.optionsRealtorsModel), JSON.stringify(_this.optionsAmenitiesModel)).subscribe(function (houses) {
                 console.log(houses[0]);
                 _this.source.load(houses);
             });
@@ -155,29 +136,29 @@ var EntryComponent = (function () {
             for (var i = 0; i < amenities.length; i++) {
                 _this.optionsAmenitiesModel.push(amenities[i].id);
             }
-            _this.listingsService.getAllListings(JSON.parse(localStorage.getItem("profile")).user_id, JSON.stringify(_this.pricerange), JSON.stringify(_this.bedsrange), JSON.stringify(_this.bathsrange), JSON.stringify(_this.optionsRealtorsModel), JSON.stringify(_this.optionsAmenitiesModel)).subscribe(function (houses) {
+            _this.listingsService.getFavListings(JSON.parse(localStorage.getItem("profile")).user_id, JSON.stringify(_this.pricerange), JSON.stringify(_this.bedsrange), JSON.stringify(_this.bathsrange), JSON.stringify(_this.optionsRealtorsModel), JSON.stringify(_this.optionsAmenitiesModel)).subscribe(function (houses) {
                 console.log(houses[0]);
                 _this.source.load(houses);
             });
         });
     };
-    EntryComponent.prototype.onChangeRealtorsOptions = function () {
+    FavoritePageComponent.prototype.onChangeRealtorsOptions = function () {
         var _this = this;
         console.log(this.optionsRealtorsModel);
-        this.listingsService.getAllListings(JSON.parse(localStorage.getItem("profile")).user_id, JSON.stringify(this.pricerange), JSON.stringify(this.bedsrange), JSON.stringify(this.bathsrange), JSON.stringify(this.optionsRealtorsModel), JSON.stringify(this.optionsAmenitiesModel)).subscribe(function (houses) {
+        this.listingsService.getFavListings(JSON.parse(localStorage.getItem("profile")).user_id, JSON.stringify(this.pricerange), JSON.stringify(this.bedsrange), JSON.stringify(this.bathsrange), JSON.stringify(this.optionsRealtorsModel), JSON.stringify(this.optionsAmenitiesModel)).subscribe(function (houses) {
             console.log(houses[0]);
             _this.source.load(houses);
         });
     };
-    EntryComponent.prototype.onChangeAmenitiesOptions = function () {
+    FavoritePageComponent.prototype.onChangeAmenitiesOptions = function () {
         var _this = this;
         console.log(this.optionsAmenitiesModel);
-        this.listingsService.getAllListings(JSON.parse(localStorage.getItem("profile")).user_id, JSON.stringify(this.pricerange), JSON.stringify(this.bedsrange), JSON.stringify(this.bathsrange), JSON.stringify(this.optionsRealtorsModel), JSON.stringify(this.optionsAmenitiesModel)).subscribe(function (houses) {
+        this.listingsService.getFavListings(JSON.parse(localStorage.getItem("profile")).user_id, JSON.stringify(this.pricerange), JSON.stringify(this.bedsrange), JSON.stringify(this.bathsrange), JSON.stringify(this.optionsRealtorsModel), JSON.stringify(this.optionsAmenitiesModel)).subscribe(function (houses) {
             console.log(houses[0]);
             _this.source.load(houses);
         });
     };
-    EntryComponent.prototype.ngAfterViewChecked = function () {
+    FavoritePageComponent.prototype.ngAfterViewChecked = function () {
         // console.log("Checking Auth  " + this.authtmp.authenticated())
         if ((!this.authtmp.authenticated()) && (localStorage.getItem("lockopen") != "true")) {
             // localStorage.id_token
@@ -185,47 +166,46 @@ var EntryComponent = (function () {
             this.authtmp.login();
         }
     };
-    EntryComponent.prototype.getRatingSortFromDropDown = function (sort) {
+    FavoritePageComponent.prototype.getRatingSortFromDropDown = function (sort) {
         console.log("Sort Set as : " + sort);
     };
-    EntryComponent.prototype.onUserRowSelect = function (event) {
-        //console.log(event.data.link)
-        window.open(event.data.link);
+    FavoritePageComponent.prototype.onUserRowSelect = function (event) {
+        console.log(event);
     };
-    EntryComponent.prototype.onPriceChange = function (event) {
+    FavoritePageComponent.prototype.onPriceChange = function (event) {
         var _this = this;
         console.log(JSON.stringify(this.pricerange));
-        this.listingsService.getAllListings(JSON.parse(localStorage.getItem("profile")).user_id, JSON.stringify(this.pricerange), JSON.stringify(this.bedsrange), JSON.stringify(this.bathsrange), JSON.stringify(this.optionsRealtorsModel), JSON.stringify(this.optionsAmenitiesModel)).subscribe(function (houses) {
+        this.listingsService.getFavListings(JSON.parse(localStorage.getItem("profile")).user_id, JSON.stringify(this.pricerange), JSON.stringify(this.bedsrange), JSON.stringify(this.bathsrange), JSON.stringify(this.optionsRealtorsModel), JSON.stringify(this.optionsAmenitiesModel)).subscribe(function (houses) {
             console.log(houses[0]);
             _this.source.load(houses);
         });
     };
-    EntryComponent.prototype.onBedsChange = function (event) {
+    FavoritePageComponent.prototype.onBedsChange = function (event) {
         var _this = this;
         console.log(JSON.stringify(this.pricerange));
-        this.listingsService.getAllListings(JSON.parse(localStorage.getItem("profile")).user_id, JSON.stringify(this.pricerange), JSON.stringify(this.bedsrange), JSON.stringify(this.bathsrange), JSON.stringify(this.optionsRealtorsModel), JSON.stringify(this.optionsAmenitiesModel)).subscribe(function (houses) {
+        this.listingsService.getFavListings(JSON.parse(localStorage.getItem("profile")).user_id, JSON.stringify(this.pricerange), JSON.stringify(this.bedsrange), JSON.stringify(this.bathsrange), JSON.stringify(this.optionsRealtorsModel), JSON.stringify(this.optionsAmenitiesModel)).subscribe(function (houses) {
             console.log(houses[0]);
             _this.source.load(houses);
         });
     };
-    EntryComponent.prototype.onBathsChange = function (event) {
+    FavoritePageComponent.prototype.onBathsChange = function (event) {
         var _this = this;
         console.log(JSON.stringify(this.pricerange));
-        this.listingsService.getAllListings(JSON.parse(localStorage.getItem("profile")).user_id, JSON.stringify(this.pricerange), JSON.stringify(this.bedsrange), JSON.stringify(this.bathsrange), JSON.stringify(this.optionsRealtorsModel), JSON.stringify(this.optionsAmenitiesModel)).subscribe(function (houses) {
+        this.listingsService.getFavListings(JSON.parse(localStorage.getItem("profile")).user_id, JSON.stringify(this.pricerange), JSON.stringify(this.bedsrange), JSON.stringify(this.bathsrange), JSON.stringify(this.optionsRealtorsModel), JSON.stringify(this.optionsAmenitiesModel)).subscribe(function (houses) {
             console.log(houses[0]);
             _this.source.load(houses);
         });
     };
-    return EntryComponent;
+    return FavoritePageComponent;
 }());
-EntryComponent = __decorate([
+FavoritePageComponent = __decorate([
     core_1.Component({
         moduleId: module.id,
-        selector: 'entry',
+        selector: 'favoritePage',
         providers: [listings_service_1.ListingsService],
-        templateUrl: 'entry.component.html',
+        templateUrl: 'favoritePage.component.html',
     }),
-    __metadata("design:paramtypes", [auth_service_1.Auth, listings_service_1.ListingsService, router_1.Router])
-], EntryComponent);
-exports.EntryComponent = EntryComponent;
-//# sourceMappingURL=entry.component.js.map
+    __metadata("design:paramtypes", [auth_service_1.Auth, listings_service_1.ListingsService])
+], FavoritePageComponent);
+exports.FavoritePageComponent = FavoritePageComponent;
+//# sourceMappingURL=favoritePage.component.js.map

@@ -6,7 +6,6 @@ import { ViewCell } from 'ng2-smart-table';
 import { FavComponent } from '../fav/fav.component';
 import { NouisliderModule } from 'ng2-nouislider';
 import { IMultiSelectOption } from 'angular-2-dropdown-multiselect';
-
 // @Component({
 //   template: `
 //     <button (click)="showAlert()">{{ renderValue }}</button>
@@ -47,6 +46,30 @@ export class EntryComponent implements OnInit {
     myAmenitiesOptions: IMultiSelectOption[];
     
     ngOnInit() {
+    this.source.onChanged().subscribe((changes) => {
+      console.log(changes);
+      if(changes.action == "page") {
+      this.listingsService.getAllRealtors().subscribe(realtors => {
+              // console.log(realtors);
+              this.myRealtorsOptions = realtors;
+              this.optionsRealtorsModel = [];
+              for(var i = 0; i < realtors.length; i++) {
+                this.optionsRealtorsModel.push(realtors[i].id)
+              }
+              this.listingsService.getAllListings(JSON.parse(localStorage.getItem("profile")).user_id, 
+                  JSON.stringify(this.pricerange),
+                  JSON.stringify(this.bedsrange),
+                  JSON.stringify(this.bathsrange),
+                  JSON.stringify(this.optionsRealtorsModel),
+                  JSON.stringify(this.optionsAmenitiesModel)
+                  ).subscribe(houses => {
+                  console.log(houses[0]);
+                  this.source.load(houses);
+              })
+      })
+      }
+    });
+      
       this.myRealtorsOptions = []
       this.listingsService.getAllRealtors().subscribe(realtors => {
               // console.log(realtors);
@@ -184,7 +207,7 @@ export class EntryComponent implements OnInit {
         title: 'Agent',
         type: 'html'
       },
-      fav: {
+      isfav: {
         title: 'Fav',
         type: 'custom',
         renderComponent: FavComponent,

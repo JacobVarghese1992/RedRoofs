@@ -41,9 +41,9 @@ var HomeComponent = (function () {
             this.authtmp.login();
         }
     };
-    HomeComponent.prototype.goToListings = function () {
-        // console.log(f);
-    };
+    // public goToListings() {
+    //       // console.log(f);
+    // } 
     HomeComponent.prototype.getStateFromDropDown = function (state) {
         var _this = this;
         console.log("State Set as : " + state);

@@ -48,9 +48,9 @@ export class HomeComponent  {
     }
   }
 
-  public goToListings() {
-        // console.log(f);
-  } 
+  // public goToListings() {
+  //       // console.log(f);
+  // } 
 
   public getStateFromDropDown(state: any) {
     console.log("State Set as : " + state);

@@ -11,6 +11,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var core_1 = require("@angular/core");
 var http_1 = require("@angular/http");
 require("rxjs/add/operator/map");
+require("rxjs/Rx");
 var ListingsService = (function () {
     function ListingsService(http) {
         this.http = http;
@@ -46,6 +47,30 @@ var ListingsService = (function () {
         return this.http.get('http://ec2-52-91-32-196.compute-1.amazonaws.com/listings/' + localStorage.getItem("user_state") + '/' + localStorage.getItem("user_city") + '/' +
             user_id + "/" + price_range + "/" + beds_range + "/" + baths_range + "/" + realtors + "/" + amenities)
             .map(function (res) { return res.json(); });
+    };
+    ListingsService.prototype.setFavourite = function (body) {
+        // let headers    = new Headers({ 'Content-Type': 'application/json' }); // ... Set content type to JSON
+        // let options    = new RequestOptions({ headers: headers }); // Create a request option
+        // console.log(body);
+        // var url = "http://ec2-52-91-32-196.compute-1.amazonaws.com/favourite"
+        // // console.log(this.renderValue)
+        // return this.http.post(url, bodyString, options) // ...using post request
+        //             .map((res:Response) => res.json()) // ...and calling .json() on the response to return data
+        //             .catch((error:any) => Observable.throw(error.json().error || 'Server error'));//...errors if any 
+        var headers = new http_1.Headers({
+            'Content-Type': "application/json"
+        });
+        var options = new http_1.RequestOptions({
+            headers: headers
+        });
+        console.log(body);
+        var url = "http://ec2-52-91-32-196.compute-1.amazonaws.com/favourite";
+        return this.http.post(url, body, options)
+            .map(function (res) {
+            res.json();
+        }).do(function (data) {
+            // console.log('response', data);
+        });
     };
     return ListingsService;
 }());

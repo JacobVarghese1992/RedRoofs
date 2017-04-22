@@ -6,30 +6,29 @@ import { ViewCell } from 'ng2-smart-table';
 import { Http, Response,Headers, RequestOptions } from '@angular/http';
 import {Observable} from 'rxjs/Rx';
 
+
 @Component({
   template: `
-     <div (click)="addToFav()" *ngIf="ifTrue()"><span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span></div>
-     <div (click)="addToFav()" *ngIf="ifFalse()"><span class="glyphicon glyphicon-thumbs-down" aria-hidden="true"></span></div>
+     <div (click)="addToFav()" *ngIf="ifTrue()"><span class="glyphicon glyphicon-heart-empty" aria-hidden="true"></span></div>
+     <div (click)="addToFav()" *ngIf="ifFalse()"><span class="glyphicon glyphicon-heart" aria-hidden="true"></span></div>
 
   `,
+    providers: [ListingsService],
 })
 
 export class FavComponent implements ViewCell, OnInit {
-
+  
   renderValue: string;
 
   @Input() value: string | number;
 
-  constructor(private http: Http) { }
+  constructor(private listingsService: ListingsService) { }
 
   ngOnInit() {
     this.renderValue = this.value.toString().toUpperCase();
   }
 
-  showAlert() {
-    alert(this.renderValue.split('-')[1]);
-  }
-
+  
   ifTrue(){
     return Number(this.renderValue.split('-')[2])==0
   }
@@ -40,14 +39,12 @@ export class FavComponent implements ViewCell, OnInit {
   addToFav(){
     var body = {"user":JSON.parse(localStorage.getItem("profile")).user_id, "listing":Number(this.renderValue.split('-')[1])}
     let bodyString = JSON.stringify(body); // Stringify payload
-    let headers    = new Headers({ 'Content-Type': 'application/json' }); // ... Set content type to JSON
-    let options    = new RequestOptions({ headers: headers }); // Create a request option
-    console.log(bodyString);
-    var url = "http://ec2-52-91-32-196.compute-1.amazonaws.com/favourite"
-    // console.log(this.renderValue)
-    return this.http.post(url, bodyString, options) // ...using post request
-                    .map((res:Response) => res.json()) // ...and calling .json() on the response to return data
-                    .catch((error:any) => Observable.throw(error.json().error || 'Server error'));//...errors if any
+    this.listingsService.setFavourite(bodyString
+        ).subscribe(houses => {
+            // console.log(houses);
+        })
+      
+
   }
 
 }

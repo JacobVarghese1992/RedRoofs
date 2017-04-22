@@ -6,7 +6,6 @@ import { ViewCell } from 'ng2-smart-table';
 import { FavComponent } from '../fav/fav.component';
 import { NouisliderModule } from 'ng2-nouislider';
 import { IMultiSelectOption } from 'angular-2-dropdown-multiselect';
-
 // @Component({
 //   template: `
 //     <button (click)="showAlert()">{{ renderValue }}</button>

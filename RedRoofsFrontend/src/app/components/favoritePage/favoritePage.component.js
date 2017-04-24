@@ -164,11 +164,11 @@ var FavoritePageComponent = (function () {
     };
     FavoritePageComponent.prototype.ngAfterViewChecked = function () {
         // console.log("Checking Auth  " + this.authtmp.authenticated())
-        if ((!this.authtmp.authenticated()) && (localStorage.getItem("lockopen") != "true")) {
-            // localStorage.id_token
-            localStorage.setItem('lockopen', "true");
-            this.authtmp.login();
-        }
+        // if ((!this.authtmp.authenticated()) && (localStorage.getItem("lockopen") != "true") ) {
+        //   // localStorage.id_token
+        //   localStorage.setItem('lockopen',"true");
+        //   this.authtmp.login();
+        // }
     };
     FavoritePageComponent.prototype.getRatingSortFromDropDown = function (sort) {
         console.log("Sort Set as : " + sort);

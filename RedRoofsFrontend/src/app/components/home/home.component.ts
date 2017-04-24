@@ -15,7 +15,7 @@ export class HomeComponent  {
 	states: any;
 	cities: any;
   rss: any;
-
+  localStoragetmp: any;
   constructor(private auth:Auth, private listingsService: ListingsService,private router: Router) {
     this.authtmp = auth;
     this.listingsService.getAllStates().subscribe(states => {
@@ -30,7 +30,7 @@ export class HomeComponent  {
             // this.getStateFromDropDown(this.states[0].state);
     })
     
-
+    this.localStoragetmp = localStorage;
     // this.listingsService.getAllCities().subscribe(cities => {
     //         // console.log(cities);
     //         this.cities = cities;
@@ -43,11 +43,11 @@ export class HomeComponent  {
   public ngAfterViewChecked(): void {
     // console.log("Checking Auth  " + this.authtmp.authenticated())
 
-    if ((!this.authtmp.authenticated()) && (localStorage.getItem("lockopen") != "true") ) {
-      // localStorage.id_token
-      localStorage.setItem('lockopen',"true");
-      this.authtmp.login();
-    }
+    // if ((!this.authtmp.authenticated()) && (localStorage.getItem("lockopen") != "true") ) {
+    //   // localStorage.id_token
+    //   localStorage.setItem('lockopen',"true");
+    //   this.authtmp.login();
+    // }
   }
 
   // public goToListings() {
@@ -73,6 +73,10 @@ export class HomeComponent  {
 
   public goToListings(){
     this.router.navigate(['/entry']);
+  }
+
+  public goToFavourites(){
+    this.router.navigate(['/favpage']);
   }
 
   }  

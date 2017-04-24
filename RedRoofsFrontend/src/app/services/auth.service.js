@@ -33,7 +33,7 @@ var Auth = (function () {
                 if (error) {
                     throw new Error(error);
                 }
-                localStorage.setItem('id_token', authResult.idToken);
+                // localStorage.setItem('id_token', authResult.idToken);
                 localStorage.setItem('profile', JSON.stringify(profile));
                 // localStorage.setItem('lockopen',"true");
             });

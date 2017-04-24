@@ -4,6 +4,7 @@ var home_component_1 = require("./components/home/home.component");
 var profile_component_1 = require("./components/profile/profile.component");
 var entry_component_1 = require("./components/entry/entry.component");
 var favoritePage_component_1 = require("./components/favoritePage/favoritePage.component");
+var auth_guard_1 = require("./auth.guard");
 var appRoutes = [
     {
         path: '',
@@ -15,11 +16,13 @@ var appRoutes = [
     },
     {
         path: 'entry',
-        component: entry_component_1.EntryComponent
+        component: entry_component_1.EntryComponent,
+        canActivate: [auth_guard_1.AuthGuard]
     },
     {
         path: 'favpage',
-        component: favoritePage_component_1.FavoritePageComponent
+        component: favoritePage_component_1.FavoritePageComponent,
+        canActivate: [auth_guard_1.AuthGuard]
     }
 ];
 exports.appRoutingProviders = [];

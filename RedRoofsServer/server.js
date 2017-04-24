@@ -10,9 +10,9 @@ var parseString = require('xml2js').parseString;
 var connection =  mysql.createPool({
 	host : 'redroofs.clmzagnk9vbp.us-east-1.rds.amazonaws.com',
 	user : 'redroofs',
-	password: 'redroofs',
+	password: 'redroofsclient',
 	port     : '3306',
-	database: 'redroofs'
+	database: 'redroofsclient'
 });
 
 

@@ -19,14 +19,15 @@
    
    <div class="col-sm-2">
 	  <div class = "dummy-height"> </div>
-      <button class="btn btn-secondary btn-lg btn-block" type="submit" (click)="goToListings()">Favourites</button>
+      <button class="btn btn-secondary btn-lg btn-block" type="submit" (click)="goToFavourites()" *ngIf="localStoragetmp.getItem('profile')">Favourites</button>
       <br>
 	  <form #f="ngForm" novalidate>
 		 <div class="panel panel-default panel-box">
     	 <div class="panel-body">
-
-         <div class="form-group" id="homepagebox">
-			 
+         <button class="btn btn-primary btn-lg btn-block" type="submit" (click)="auth.login()" *ngIf="!localStoragetmp.getItem('profile')">Login</button>
+         <div class="form-group" id="homepagebox" *ngIf="localStoragetmp.getItem('profile')">
+			
+            
             <!-- We'll add our form controls here -->
             <div>
                <label>State</label><br/>
@@ -76,7 +77,7 @@
 
 
           
-            <!--<button class="btn btn-secondary btn-lg btn-block" type="submit" (click)="goToListings()">Favourites</button>-->
+            <!--<button class="btn btn-secondary btn-lg btn-block" type="submit" (click)="goToFavourites()">Favourites</button>-->
           </div>
      </div>     
    </div>

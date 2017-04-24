@@ -15,7 +15,7 @@ import {Auth} from './services/auth.service';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
 import { NouisliderModule } from 'ng2-nouislider';
 import { MultiselectDropdownModule } from 'angular-2-dropdown-multiselect';
-
+import {AuthGuard} from './auth.guard';
 @NgModule({
   imports:      [ BrowserModule, routing, FormsModule, HttpModule, Ng2SmartTableModule,  NouisliderModule, MultiselectDropdownModule],
   declarations: [ AppComponent, HomeComponent,EntryComponent, ProfileComponent, FavComponent, FavoritePageComponent ],
@@ -24,6 +24,7 @@ import { MultiselectDropdownModule } from 'angular-2-dropdown-multiselect';
   providers: [
   	appRoutingProviders,
   	AUTH_PROVIDERS,
-  	Auth
+  	Auth,
+    AuthGuard
   ]})
 export class AppModule { }

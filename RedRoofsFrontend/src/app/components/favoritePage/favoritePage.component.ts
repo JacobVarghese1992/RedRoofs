@@ -232,11 +232,11 @@ export class FavoritePageComponent implements OnInit {
   public ngAfterViewChecked(): void {
     // console.log("Checking Auth  " + this.authtmp.authenticated())
 
-    if ((!this.authtmp.authenticated()) && (localStorage.getItem("lockopen") != "true") ) {
-      // localStorage.id_token
-      localStorage.setItem('lockopen',"true");
-      this.authtmp.login();
-    }
+    // if ((!this.authtmp.authenticated()) && (localStorage.getItem("lockopen") != "true") ) {
+    //   // localStorage.id_token
+    //   localStorage.setItem('lockopen',"true");
+    //   this.authtmp.login();
+    // }
   }
 
   public getRatingSortFromDropDown(sort:any) {

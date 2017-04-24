@@ -29,6 +29,7 @@ var HomeComponent = (function () {
             _this.rss = rss;
             // this.getStateFromDropDown(this.states[0].state);
         });
+        this.localStoragetmp = localStorage;
         // this.listingsService.getAllCities().subscribe(cities => {
         //         // console.log(cities);
         //         this.cities = cities;
@@ -37,11 +38,11 @@ var HomeComponent = (function () {
     }
     HomeComponent.prototype.ngAfterViewChecked = function () {
         // console.log("Checking Auth  " + this.authtmp.authenticated())
-        if ((!this.authtmp.authenticated()) && (localStorage.getItem("lockopen") != "true")) {
-            // localStorage.id_token
-            localStorage.setItem('lockopen', "true");
-            this.authtmp.login();
-        }
+        // if ((!this.authtmp.authenticated()) && (localStorage.getItem("lockopen") != "true") ) {
+        //   // localStorage.id_token
+        //   localStorage.setItem('lockopen',"true");
+        //   this.authtmp.login();
+        // }
     };
     // public goToListings() {
     //       // console.log(f);
@@ -62,6 +63,9 @@ var HomeComponent = (function () {
     };
     HomeComponent.prototype.goToListings = function () {
         this.router.navigate(['/entry']);
+    };
+    HomeComponent.prototype.goToFavourites = function () {
+        this.router.navigate(['/favpage']);
     };
     return HomeComponent;
 }());

@@ -5,7 +5,7 @@ import {HomeComponent} from './components/home/home.component';
 import {ProfileComponent} from './components/profile/profile.component';
 import {EntryComponent} from './components/entry/entry.component';
 import {FavoritePageComponent} from './components/favoritePage/favoritePage.component';
-
+import {AuthGuard} from './auth.guard';
 
 const appRoutes: Routes=[
 	{
@@ -18,11 +18,13 @@ const appRoutes: Routes=[
 	},
 	{
 		path:'entry',
-		component:EntryComponent
+		component:EntryComponent,
+		canActivate: [AuthGuard]
 	},
 	{
 		path:'favpage',
-		component:FavoritePageComponent
+		component:FavoritePageComponent,
+		canActivate: [AuthGuard]
 	}
 ];
 

@@ -21,6 +21,7 @@ var auth_service_1 = require("./services/auth.service");
 var ng2_smart_table_1 = require("ng2-smart-table");
 var ng2_nouislider_1 = require("ng2-nouislider");
 var angular_2_dropdown_multiselect_1 = require("angular-2-dropdown-multiselect");
+var auth_guard_1 = require("./auth.guard");
 var AppModule = (function () {
     function AppModule() {
     }
@@ -35,7 +36,8 @@ AppModule = __decorate([
         providers: [
             app_routing_1.appRoutingProviders,
             angular2_jwt_1.AUTH_PROVIDERS,
-            auth_service_1.Auth
+            auth_service_1.Auth,
+            auth_guard_1.AuthGuard
         ]
     })
 ], AppModule);

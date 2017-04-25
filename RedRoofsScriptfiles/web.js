@@ -1,3 +1,15 @@
+var schedule = require('node-schedule');
+
+var rule = new schedule.RecurrenceRule();
+rule.dayOfWeek = [0, new schedule.Range(1, 6)];
+rule.hour = 23;
+rule.minute = 59;
+ 
+var j = schedule.scheduleJob(rule, function(){
+
+
+
+
 var express = require('express');
 var fs = require('fs');
 var request = require('request');
@@ -483,3 +495,4 @@ function get_bed(s) {
     }
     return temp
 }
+});

@@ -424,7 +424,7 @@ function get_amenities_code(amenities) {
         case 'Air Conditioning':
             return 'AIRC'
             break;
-        case 'Washer/Dryer':
+        case 'Washer Dryer':
             return 'WAD'
             break;
         case 'Dishwasher':

@@ -6,7 +6,7 @@ import { ViewCell } from 'ng2-smart-table';
 import { FavComponent } from '../fav/fav.component';
 import { NouisliderModule } from 'ng2-nouislider';
 import { IMultiSelectOption } from 'angular-2-dropdown-multiselect';
-
+import { IMultiSelectSettings } from 'angular-2-dropdown-multiselect';
 // @Component({
 //   template: `
 //     <button (click)="showAlert()">{{ renderValue }}</button>
@@ -45,6 +45,7 @@ export class FavoritePageComponent implements OnInit {
     myRealtorsOptions: IMultiSelectOption[];
     optionsAmenitiesModel: number[];
     myAmenitiesOptions: IMultiSelectOption[];
+    dropDownSettings: IMultiSelectSettings;
     
     ngOnInit() {
       this.myRealtorsOptions = []
@@ -152,6 +153,13 @@ export class FavoritePageComponent implements OnInit {
           return "<img src='" + value + "' alt='Mountain View' style='width:100px !important;height:100px !important;'>";
         }
       },
+      link:{
+        title: '',
+        type: 'html',
+        valuePrepareFunction: (value: string) => { 
+          return "<a target='_blank' href='" + value + "' >Visit Site</a>";
+        }
+      },
       address:{
         title: 'Address'
       },
@@ -213,6 +221,11 @@ export class FavoritePageComponent implements OnInit {
     this.optionsAmenitiesModel = [];
     this.authtmp = auth;
     this.source = new LocalDataSource();
+    this.dropDownSettings = {
+      enableSearch: true,
+      showCheckAll: true,
+      showUncheckAll: true
+    };
     this.listingsService.getFavListings(JSON.parse(localStorage.getItem("profile")).user_id, 
       JSON.stringify(this.pricerange),
       JSON.stringify(this.bedsrange),

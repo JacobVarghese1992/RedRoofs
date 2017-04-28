@@ -64,6 +64,13 @@ var FavoritePageComponent = (function () {
                         return "<img src='" + value + "' alt='Mountain View' style='width:100px !important;height:100px !important;'>";
                     }
                 },
+                link: {
+                    title: '',
+                    type: 'html',
+                    valuePrepareFunction: function (value) {
+                        return "<a target='_blank' href='" + value + "' >Visit Site</a>";
+                    }
+                },
                 address: {
                     title: 'Address'
                 },
@@ -112,6 +119,11 @@ var FavoritePageComponent = (function () {
         this.optionsAmenitiesModel = [];
         this.authtmp = auth;
         this.source = new ng2_smart_table_1.LocalDataSource();
+        this.dropDownSettings = {
+            enableSearch: true,
+            showCheckAll: true,
+            showUncheckAll: true
+        };
         this.listingsService.getFavListings(JSON.parse(localStorage.getItem("profile")).user_id, JSON.stringify(this.pricerange), JSON.stringify(this.bedsrange), JSON.stringify(this.bathsrange), JSON.stringify(this.optionsRealtorsModel), JSON.stringify(this.optionsAmenitiesModel)).subscribe(function (houses) {
             console.log(houses[0]);
             _this.source.load(houses);

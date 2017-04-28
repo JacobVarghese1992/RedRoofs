@@ -57,7 +57,7 @@ __decorate([
 ], FavComponent.prototype, "value", void 0);
 FavComponent = __decorate([
     core_1.Component({
-        template: "\n     <div (click)=\"addToFav('false')\" *ngIf=\"ifTrue()\"><span class=\"glyphicon glyphicon-heart-empty\" aria-hidden=\"true\"></span></div>\n     <div (click)=\"addToFav('true')\" *ngIf=\"ifFalse()\"><span class=\"glyphicon glyphicon-heart\" aria-hidden=\"true\"></span></div>\n\n  ",
+        template: "\n     <div (click)=\"addToFav('false')\" *ngIf=\"ifTrue()\"><span class=\"glyphicon glyphicon-heart-empty favb\" aria-hidden=\"true\"></span></div>\n     <div (click)=\"addToFav('true')\" *ngIf=\"ifFalse()\"><span class=\"glyphicon glyphicon-heart favb\" aria-hidden=\"true\"></span></div>\n\n  ",
         providers: [listings_service_1.ListingsService],
     }),
     __metadata("design:paramtypes", [listings_service_1.ListingsService])

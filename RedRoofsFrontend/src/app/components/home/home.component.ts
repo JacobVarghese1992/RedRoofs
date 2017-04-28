@@ -18,6 +18,9 @@ export class HomeComponent  {
   localStoragetmp: any;
   constructor(private auth:Auth, private listingsService: ListingsService,private router: Router) {
     this.authtmp = auth;
+    // if(!auth.authenticated()) {
+    //   this.authtmp.login();
+    // }
     this.listingsService.getAllStates().subscribe(states => {
             // console.log(states);
             this.states = states;
@@ -40,7 +43,7 @@ export class HomeComponent  {
     
 	}
 
-  public ngAfterViewChecked(): void {
+  public ngAfterContentInit(): void {
     // console.log("Checking Auth  " + this.authtmp.authenticated())
 
     // if ((!this.authtmp.authenticated()) && (localStorage.getItem("lockopen") != "true") ) {
@@ -48,6 +51,12 @@ export class HomeComponent  {
     //   localStorage.setItem('lockopen',"true");
     //   this.authtmp.login();
     // }
+
+    // if(!localStorage.getItem('profile')) {
+    //   this.authtmp.login();
+    // }
+
+
   }
 
   // public goToListings() {

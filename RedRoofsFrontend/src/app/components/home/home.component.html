@@ -20,6 +20,8 @@
    <div class="col-sm-2">
 	  <div class = "dummy-height"> </div>
       <button class="btn btn-secondary btn-lg btn-block" type="submit" (click)="goToFavourites()" *ngIf="localStoragetmp.getItem('profile')">Favourites</button>
+      <!--<button class="btn btn-secondary btn-lg btn-block" type="submit" (click)="goToFavourites()" *ngIf="localStoragetmp.getItem('profile')">Favourites</button>-->
+      
       <br>
 	  <form #f="ngForm" novalidate>
 		 <div class="panel panel-default panel-box">
@@ -66,7 +68,7 @@
           <div class="scroll">
               <div class="scrollitem">
             <div *ngFor="let item of rss">
-                <a href="{{item.link}}">{{item.title}}</a>
+                <a href="{{item.link}}" target="_blank">{{item.title}}</a>
                 <br>
                 <br>
             </div>

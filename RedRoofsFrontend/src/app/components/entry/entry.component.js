@@ -117,6 +117,12 @@ var EntryComponent = (function () {
         this.optionsAmenitiesModel = [];
         this.authtmp = auth;
         this.source = new ng2_smart_table_1.LocalDataSource();
+        // Settings configuration
+        this.dropDownSettings = {
+            enableSearch: true,
+            showCheckAll: true,
+            showUncheckAll: true
+        };
         this.listingsService.getAllListings(JSON.parse(localStorage.getItem("profile")).user_id, JSON.stringify(this.pricerange), JSON.stringify(this.bedsrange), JSON.stringify(this.bathsrange), JSON.stringify(this.optionsRealtorsModel), JSON.stringify(this.optionsAmenitiesModel)).subscribe(function (houses) {
             console.log(houses[0]);
             _this.source.load(houses);

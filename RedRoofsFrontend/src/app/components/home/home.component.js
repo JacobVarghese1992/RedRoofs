@@ -19,6 +19,9 @@ var HomeComponent = (function () {
         this.listingsService = listingsService;
         this.router = router;
         this.authtmp = auth;
+        // if(!auth.authenticated()) {
+        //   this.authtmp.login();
+        // }
         this.listingsService.getAllStates().subscribe(function (states) {
             // console.log(states);
             _this.states = states;
@@ -36,11 +39,14 @@ var HomeComponent = (function () {
         //         this.getCityFromDropDown(this.cities[0].city);
         // })
     }
-    HomeComponent.prototype.ngAfterViewChecked = function () {
+    HomeComponent.prototype.ngAfterContentInit = function () {
         // console.log("Checking Auth  " + this.authtmp.authenticated())
         // if ((!this.authtmp.authenticated()) && (localStorage.getItem("lockopen") != "true") ) {
         //   // localStorage.id_token
         //   localStorage.setItem('lockopen',"true");
+        //   this.authtmp.login();
+        // }
+        // if(!localStorage.getItem('profile')) {
         //   this.authtmp.login();
         // }
     };

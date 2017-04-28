@@ -157,3 +157,19 @@ button[ng-reflect-klass="dropdown-toggle"]:focus, button[ng-reflect-klass="dropd
     color: black;
     background-color: #b1e3da;
 }
+
+button {
+    width: 100%
+}
+
+.favb:after {
+        font-size: x-large !important;
+        transition: all 0.8s !important;
+}
+
+.favb:active:after {
+    padding: 0 !important;
+    margin: 0 !important;
+    opacity: 1 !important;
+    transition: 0s !important;
+}

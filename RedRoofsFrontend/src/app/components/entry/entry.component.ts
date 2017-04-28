@@ -1,11 +1,12 @@
 import { Component, OnInit, Input } from '@angular/core';
-import {Auth} from '../../services/auth.service';
-import{ListingsService} from '../../services/listings.service';
+import { Auth} from '../../services/auth.service';
+import { ListingsService} from '../../services/listings.service';
 import { LocalDataSource } from 'ng2-smart-table';
 import { ViewCell } from 'ng2-smart-table';
 import { FavComponent } from '../fav/fav.component';
 import { NouisliderModule } from 'ng2-nouislider';
 import { IMultiSelectOption } from 'angular-2-dropdown-multiselect';
+import { IMultiSelectSettings } from 'angular-2-dropdown-multiselect';
 import { Router } from '@angular/router';
 
 // @Component({
@@ -46,7 +47,8 @@ export class EntryComponent implements OnInit {
     myRealtorsOptions: IMultiSelectOption[];
     optionsAmenitiesModel: number[];
     myAmenitiesOptions: IMultiSelectOption[];
-    
+    dropDownSettings: IMultiSelectSettings;
+
     ngOnInit() {
     this.source.onChanged().subscribe((changes) => {
       console.log(changes);
@@ -235,6 +237,13 @@ export class EntryComponent implements OnInit {
     this.optionsAmenitiesModel = [];
     this.authtmp = auth;
     this.source = new LocalDataSource();
+    // Settings configuration
+    this.dropDownSettings = {
+      enableSearch: true,
+      showCheckAll: true,
+      showUncheckAll: true
+    };
+
     this.listingsService.getAllListings(JSON.parse(localStorage.getItem("profile")).user_id, 
       JSON.stringify(this.pricerange),
       JSON.stringify(this.bedsrange),

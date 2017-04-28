@@ -35,7 +35,7 @@
                     <div class="col-sm-2"></div>
                     <div class="col-sm-2">Amenities Include: </div>
                     <div class="col-sm-3">
-                        <ss-multiselect-dropdown [options]="myAmenitiesOptions" [(ngModel)]="optionsAmenitiesModel" (ngModelChange)="onChangeAmenitiesOptions($event)"></ss-multiselect-dropdown>
+                        <ss-multiselect-dropdown [options]="myAmenitiesOptions" [settings]="dropDownSettings" [(ngModel)]="optionsAmenitiesModel" (ngModelChange)="onChangeAmenitiesOptions($event)"></ss-multiselect-dropdown>
                     </div>
                     
                 </div>

@@ -9,8 +9,8 @@ import { Cell, DefaultEditor, Editor } from 'ng2-smart-table';
 
 @Component({
   template: `
-     <div (click)="addToFav('false')" *ngIf="ifTrue()"><span class="glyphicon glyphicon-heart-empty" aria-hidden="true"></span></div>
-     <div (click)="addToFav('true')" *ngIf="ifFalse()"><span class="glyphicon glyphicon-heart" aria-hidden="true"></span></div>
+     <div (click)="addToFav('false')" *ngIf="ifTrue()"><span class="glyphicon glyphicon-heart-empty favb" aria-hidden="true"></span></div>
+     <div (click)="addToFav('true')" *ngIf="ifFalse()"><span class="glyphicon glyphicon-heart favb" aria-hidden="true"></span></div>
 
   `,
     providers: [ListingsService],
